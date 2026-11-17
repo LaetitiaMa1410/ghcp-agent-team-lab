@@ -49,8 +49,8 @@ In this lab your team will:
 
 <div class="tip" data-title="Three paths, one mission">
 
-> On the [Choose your path](#choose-your-path) page you pick **Guided**, **Standard** or **Expert**.
-> All paths solve the same mission in the same time, and all teams meet again for the [pitch](#task-4--pitch).
+> On the [Choose your path](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=3) page you pick **Guided**, **Standard** or **Expert**.
+> All paths solve the same mission in the same time, and all teams meet again for the [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=11).
 
 </div>
 
@@ -184,18 +184,18 @@ Pick the path that fits your team. You can switch to an easier path at any time 
 | **For you if…** | you want to learn the approach step by step | you know the building blocks and want to apply them | you've built custom agents before and want a challenge |
 | **You get** | copy-paste prompts and explanations for every step | goals, expected results and hints | the mission and a set of constraints |
 | **Extras** | — | — | orchestrator, skills, CLI, consistency tests |
-| **Start** | [**→ Guided path**](#guided-1--architecture-session) | [**→ Standard path**](#standard-1--architecture-session) | [**→ Expert path**](#expert-path) |
+| **Start** | [**→ Guided path**](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) | [**→ Standard path**](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7) | [**→ Expert path**](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=10) |
 
 <div class="tip" data-title="Mixed team?">
 
 > Choose the path for the *least* experienced member. Experienced members can pick bonus items from the
-> [Expert path](#expert-path) while the team waits for an agent to finish.
+> [Expert path](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=10) while the team waits for an agent to finish.
 
 </div>
 
 <div class="warning" data-title="Keep an eye on the clock">
 
-> All paths end at minute 52 with the [pitch](#task-4--pitch). If you're behind, use the checkpoint and move on —
+> All paths end at minute 52 with the [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=11). If you're behind, use the checkpoint and move on —
 > a finished pipeline with the reference agents is better than a perfect architecture without a result.
 
 </div>
@@ -307,7 +307,7 @@ Then the driver shares `architecture.md` with the team.
 
 > **You should have:** `architecture.md` with a diagram, handoff contracts, agent cards and shared guardrails.
 >
-> Now compare with the [reference architecture](#reference-solution). Different is fine — can you explain *why* yours is different?
+> Now compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=12). Different is fine — can you explain *why* yours is different?
 >
 > **Behind schedule?** Copy the reference and continue:
 >
@@ -471,7 +471,7 @@ Apply the change, then re-run **that agent and every agent after it**. Did the p
 > **You should have:** `out/sales-briefing.md` and at least one improvement to an agent.
 > See an example result in [`solutions/sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/solutions/sample-output).
 >
-> **Next:** prepare your [pitch](#task-4--pitch).
+> **Next:** prepare your [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=11).
 
 </div>
 
@@ -531,7 +531,7 @@ A reviewer in a fresh chat isn't biased by the conversation that produced the de
 
 <div class="info" data-title="✅ Checkpoint 1">
 
-> Compare with the [reference architecture](#reference-solution). **Behind schedule?**
+> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=12). **Behind schedule?**
 > `cp solutions/architecture.md architecture.md` (PowerShell: `Copy-Item solutions/architecture.md architecture.md`).
 
 </div>
@@ -579,7 +579,7 @@ what to do with missing or ambiguous data · what *not* to do because another ag
 
 <div class="info" data-title="✅ Checkpoint 2">
 
-> **Behind schedule?** Copy the reference agents — see the commands in [Guided 2](#guided-2--build-the-agent-team).
+> **Behind schedule?** Copy the reference agents — see the commands in [Guided 2](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5).
 
 </div>
 
@@ -594,7 +594,7 @@ what to do with missing or ambiguous data · what *not* to do because another ag
 **Goal:** produce Sabine's briefing, find what's wrong and fix it at the source.
 
 1. Run the agents in order — **new chat per agent**, check each handoff file before you continue.
-2. Go through the [quality checklist](#quality-checklist) — every trap handled correctly is a point 🥚.
+2. Go through the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — every trap handled correctly is a point 🥚.
 3. Compare results within your team. Same agents, same data — same briefing?
 4. Fix at least one problem **in an agent file** (never in `out/`), then re-run that agent and everything after it.
 
@@ -611,7 +611,7 @@ a **minimal** change. Small, targeted instruction fixes beat long rule lists.
 - [ ] `out/sales-briefing.md` exists and follows Sabine's rules.
 - [ ] You fixed at least one problem by changing an agent's instructions.
 
-**Next:** prepare your [pitch](#task-4--pitch).
+**Next:** prepare your [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=11).
 
 ---
 
@@ -630,7 +630,7 @@ You know the building blocks. Same mission, fewer rails, more constraints.
 | 1 | An `architecture.md` with diagram, handoff contracts, agent cards — **and a "rejected alternatives" section** explaining at least two designs you didn't choose. |
 | 2 | Use Copilot as a **sparring partner** for the design — and have the design reviewed in a **fresh context** before you build. |
 | 3 | Shared rules in `AGENTS.md`, roles in `.github/agents/`. **Least privilege**: justify every tool an agent gets. |
-| 4 | A briefing that passes the [quality checklist](#quality-checklist). |
+| 4 | A briefing that passes the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6). |
 
 ### Challenges — pick at least two
 
@@ -651,7 +651,7 @@ You know the building blocks. Same mission, fewer rails, more constraints.
 
 <div class="info" data-title="✅ Checkpoint">
 
-> The [reference solution](#reference-solution) includes an orchestrator (`solutions/agents/lead-orchestrator.agent.md`)
+> The [reference solution](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=12) includes an orchestrator (`solutions/agents/lead-orchestrator.agent.md`)
 > that was tested end to end with the Copilot CLI.
 
 </div>
