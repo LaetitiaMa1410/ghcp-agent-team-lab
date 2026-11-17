@@ -17,7 +17,8 @@ Run these custom agents as subagents, **one after another**, each with the instr
 After each step, check that the expected file exists and is not empty. If not, stop and report which step failed.
 
 ## Quality gate
-When all four files exist, check `out/sales-briefing.md` against the rules in `MISSION.md` and `AGENTS.md`:
+When all four files exist, check `out/sales-briefing.md` against the rules in `MISSION.md` and `AGENTS.md`.
+If the `quality-check` skill is available, use it. Otherwise check at least:
 - exactly 6 meetings, no existing customers among them,
 - no e-mail addresses anywhere in `out/`,
 - every "why now" has evidence,

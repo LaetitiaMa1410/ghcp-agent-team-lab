@@ -15,7 +15,8 @@ Run these custom agents as subagents with the instruction "Run your step for the
 After each step, check that the expected files exist and are not empty. If not, stop and report which agent failed.
 
 ## Quality gate
-Check `out/partner-cockpit.md` against `MISSION.md` and `AGENTS.md`:
+Check `out/partner-cockpit.md` against `MISSION.md` and `AGENTS.md`.
+If the `quality-check` skill is available, use it. Otherwise check at least:
 - all 6 sections present, max. ~2 pages,
 - launch date and household numbers consistent with the newest sources,
 - no e-mail addresses or phone numbers anywhere in `out/`,

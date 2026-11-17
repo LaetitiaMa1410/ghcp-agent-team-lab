@@ -8,7 +8,7 @@ design a team of **specialized agents** — and build, run and improve it locall
 | | |
 | --- | --- |
 | **Duration** | 60 minutes, teams of 3–4 |
-| **Level** | Step-by-step with copy-paste prompts and checkpoints |
+| **Level** | Step-by-step with copy-paste prompts and checkpoints — plus 🚀 bonus challenges (orchestrator, skill, hook) for fast teams |
 | **You need** | VS Code, GitHub Copilot, this repository |
 | **You don't need** | Deployments, API keys, internet research, GitHub issues or pull requests |
 
@@ -45,7 +45,7 @@ ghcp-agent-team-lab/
 |   |-- MISSION.md       the use case — start here
 |   |-- data/            fictional input data (read-only)
 |   |-- out/             your agents write their results here
-|   `-- solutions/       reference architecture, agents and sample output
+|   `-- solutions/       reference architecture, agents, bonus skill & hook, sample output
 |-- partner-cockpit/     use case B — same structure
 |-- docs/workshop.md     the lab (rendered on moaw.dev)
 `-- facilitator/         notes for trainers

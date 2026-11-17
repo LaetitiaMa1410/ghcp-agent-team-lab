@@ -256,7 +256,7 @@ Pick the 2–3 findings that matter most and let your **Agent** chat update `arc
 <div class="info" data-title="✅ Checkpoint 1">
 
 > **You should have:** `architecture.md` with diagram, handoff contracts, agent cards and shared guardrails.
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4#reference-solutions) — can you explain *why* yours is different?
+> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
 >
 > **Behind schedule?** `cp solutions/architecture.md architecture.md` (PowerShell: `Copy-Item solutions/architecture.md architecture.md`)
 
@@ -410,7 +410,151 @@ Apply the change and re-run **that agent and every agent after it**. Did the pro
 > **You should have:** the final result in `out/` and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4).
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) — or, if you have time left, take on a [🚀 bonus challenge](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4).
+
+</div>
+
+---
+
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
+
+# 🚀 Bonus challenges
+
+**For teams that finished checkpoint 3 early.** Pick any challenge, in any order — each one extends the agent team you already have.
+When the pitch starts, stop and pitch what you have.
+
+| | Challenge | Time | You learn |
+| --- | --- | --- | --- |
+| 🎛️ | **B1 · Orchestrator** — one agent runs the whole team | ~10 min | Subagents, delegation, least privilege |
+| 🧰 | **B2 · Skill** — turn the quality checklist into a reusable skill | ~8 min | When to use a skill instead of instructions or an agent |
+| 🪝 | **B3 · Hook** — make `data/` *really* read-only | ~8 min | Instructions ask, hooks enforce |
+
+## B1 · Orchestrator
+
+Right now **you** are the orchestrator: you start every agent and check every file. An **orchestrator agent** does that for you —
+it calls your agents as **subagents** (each with its own, fresh context) and checks the result. Sabine or Jonas then need just **one prompt**.
+
+**Agent**, new chat:
+
+```text
+#file:architecture.md
+Create .github/agents/orchestrator.agent.md — a coordinator that runs our agents as subagents.
+
+Frontmatter:
+- name: orchestrator
+- description: one sentence
+- tools: ['agent', 'read', 'search']   (it delegates and reads, but never writes files itself)
+
+Body:
+- for each step from architecture.md: which agent to call, the instruction to pass ("Run your step."),
+  and the file it must produce in out/
+- after each step, check that the file exists and is not empty; otherwise stop and report which agent failed
+- run agents that don't depend on each other in parallel, if architecture.md allows it
+- finish with a quality gate: PASS or FAIL, with findings and which agent to fix
+```
+
+Select **orchestrator** in the agent picker and send *"Prepare the result for Sabine."* (A) or *"Prepare the partner cockpit for meeting 2."* (B).
+Watch the subagents appear in the chat. A full run takes **4–6 minutes**.
+
+💬 **Think about it:** Why does the orchestrator have no `edit` tool? What happens to its context compared to running everything in one chat?
+
+## B2 · Skill
+
+Your quality checklist from task 3b is useful again and again — for every run, and for every reviewer.
+That's what **skills** are for: a folder with instructions (and optionally scripts or templates) that Copilot loads **only when needed**.
+
+| Put it in… | when it is… |
+| --- | --- |
+| `AGENTS.md` | a rule that **always** applies to every agent |
+| `.github/agents/*.agent.md` | a **role** with its own tools and responsibility |
+| `.github/skills/*/SKILL.md` | a **reusable capability** that any agent (or you) can use **on demand** |
+
+**Agent**, new chat — paste your checklist from task 3b at the end:
+
+```text
+Create a project skill in .github/skills/quality-check/SKILL.md.
+
+Frontmatter:
+- name: quality-check
+- description: what it checks and when to use it (one sentence)
+
+Body:
+- read MISSION.md, AGENTS.md and all files in out/; verify claims against data/; never change any file
+- one check per checklist item below, each with a clear "pass when" condition
+- output: a table  # | check | PASS/FAIL | evidence , then an overall PASS or FAIL,
+  and for every FAIL the agent in .github/agents/ that caused it and the missing instruction
+
+Checklist:
+<paste the checklist for your use case>
+```
+
+**Test it:** new chat, **Agent**, type `/quality-check` and send. Not there? Check **Chat: Open Customizations → Skills**.
+Did B1? Add one line to your orchestrator's quality gate: *"Use the quality-check skill."*
+
+## B3 · Hook
+
+`AGENTS.md` says *"`data/` is read-only"*. But that's a **request** to the model — it usually follows it, but nothing *enforces* it.
+A **hook** is a command that runs at a fixed point in the agent's workflow — for example **before every tool call** — and can **deny** it.
+Deterministic, outside the model.
+
+<div class="warning" data-title="Stretch challenge — check the prerequisites first">
+
+> - **Node.js** installed (`node --version`) — the hook script is JavaScript.
+> - Hooks are a **preview** feature and may be **disabled by your organization**. Use the **Copilot** session target (not *Local*) if your VS Code offers the choice.
+> - Copilot loads hooks from `.github/hooks/` at the **root of the Git repository**. You opened a subfolder, so run `git init` once in your use case folder.
+> - The folder must be **trusted** (Workspace Trust).
+
+</div>
+
+**Agent**, new chat:
+
+```text
+Create a Copilot hook that makes data/ read-only:
+
+1. .github/hooks/protect-data.json
+   { "version": 1, "hooks": { "preToolUse": [ { "type": "command",
+     "command": "node .github/hooks/protect-data.cjs", "timeoutSec": 10 } ] } }
+
+2. .github/hooks/protect-data.cjs
+   - read the event JSON from stdin; fields: cwd, toolName, toolArgs (object or JSON string)
+   - if the tool changes files (edit, create, apply_patch, ...) and a target path is inside data/,
+     print {"permissionDecision":"deny","permissionDecisionReason":"data/ is read-only. Write to out/ instead."}
+   - otherwise print {}
+```
+
+**Test it** — send a fake "edit a file in `data/`" event to your hook script, exactly as Copilot would:
+
+```bash
+echo '{"cwd":".","toolName":"edit","toolArgs":{"path":"data/test.md"}}' | node .github/hooks/protect-data.cjs
+```
+
+```powershell
+'{"cwd":".","toolName":"edit","toolArgs":{"path":"data/test.md"}}' | node .github/hooks/protect-data.cjs
+```
+
+Expected: `{"permissionDecision":"deny",...}`. Change the path to `out/test.md` → expected: `{}`.
+
+Now try it live: **new chat** (hooks load when a session starts), **Agent**: *"Try to create data/hook-test.md with the line TEST and tell me exactly what happened."*
+Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. The hook is the **safety net** for the day they don't.
+
+💬 **Think about it:** Which of your other rules should be **enforced** by a hook instead of just being **asked for** in `AGENTS.md`?
+
+<div class="info" data-title="✅ Reference solutions">
+
+> Orchestrator: `solutions/agents/lead-orchestrator.agent.md` (A) / `concierge.agent.md` (B) · skill and hook: `solutions/bonus/`.
+> To install the reference skill and hook:
+>
+> ```bash
+> # macOS / Linux
+> mkdir -p .github/skills .github/hooks && cp -R solutions/bonus/skills/quality-check .github/skills/ && cp solutions/bonus/hooks/* .github/hooks/
+> ```
+>
+> ```powershell
+> # Windows PowerShell
+> New-Item -ItemType Directory -Force .github/skills, .github/hooks | Out-Null; Copy-Item -Recurse solutions/bonus/skills/quality-check .github/skills/; Copy-Item solutions/bonus/hooks/* .github/hooks/
+> ```
+>
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5).
 
 </div>
 
@@ -483,6 +627,7 @@ Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 | Design review in a fresh chat | Context hygiene, AI-assisted review |
 | `AGENTS.md` + `.agent.md` | Custom instructions, custom agents, least privilege |
 | Check every handoff, fix the agent not the output | Human in the loop, *miss → diagnosis → fix* |
+| 🚀 Bonus: orchestrator, skill, hook | Subagents, reusable skills, deterministic guardrails |
 
 1. **Understand before you build.** 15 minutes of architecture with Copilot saves hours of re-prompting.
 2. **Small agents, clear contracts.** One responsibility, one output file, explicit structure.
