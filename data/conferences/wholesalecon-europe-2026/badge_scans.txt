@@ -1,0 +1,7 @@
+# Badge scanner export, Contoso Wholesale booth, WholesaleCon Europe 2026 (synthetic)
+Name;Firma;Position;Scan-Zeit
+Kaya, Emre;Nordwave;Head of Network Planning;2026-10-21 10:14
+Moreau, Claire;PocketMobile;Head of Roaming & Interconnect;2026-10-21 11:02
+Svensson, Erik;Brightloop IoT;Business Development Manager;2026-10-21 13:47
+Okafor, Daniel;Andes Telecom;Senior Engineer;2026-10-22 09:31
+Petrova, Nadia;Arcadia Voice Hub;Director Voice Termination;2026-10-22 10:05

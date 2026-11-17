@@ -1,0 +1,32 @@
+{
+  "event": "WholesaleCon Europe 2026 (synthetic)",
+  "exhibitors": [
+    {
+      "exhibitor_name": "Skyline Cloud",
+      "booth": "B12",
+      "contacts": [
+        { "full_name": "Oliver Grant", "role": "Peering Coordinator" }
+      ]
+    },
+    {
+      "exhibitor_name": "Vantage Subsea Systems",
+      "booth": "C03",
+      "contacts": [
+        { "full_name": "Mei Tanaka", "role": "Head of Capacity Sales" },
+        { "full_name": "Rafael Costa", "role": "Solutions Architect" }
+      ]
+    },
+    {
+      "exhibitor_name": "Arcadia Voice Hub Ltd",
+      "booth": "A07",
+      "contacts": [
+        { "full_name": "Nadia Petrova", "role": "Director Voice Termination" }
+      ]
+    },
+    {
+      "exhibitor_name": "Helix Data Centers",
+      "booth": "D21",
+      "contacts": []
+    }
+  ]
+}

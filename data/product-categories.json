@@ -1,0 +1,33 @@
+{
+  "_note": "Illustrative product categories for the workshop. Contoso Wholesale is a fictional company.",
+  "product_categories": [
+    {
+      "id": "ip-transit",
+      "name": "IP Transit & Peering",
+      "description": "Global internet connectivity for ISPs, content and cloud providers.",
+      "target_segments": ["ISP", "Content/OTT", "Cloud/Data Center", "Carrier"],
+      "signals": ["ip transit", "peering", "upstream", "cdn", "content", "eyeball", "internet service provider"]
+    },
+    {
+      "id": "voice",
+      "name": "International Voice",
+      "description": "Voice termination and interconnect into European fixed and mobile networks.",
+      "target_segments": ["Carrier", "Voice Hub"],
+      "signals": ["voice", "termination", "interconnect", "sms", "a2p"]
+    },
+    {
+      "id": "mobile-iot",
+      "name": "Mobile & IoT Wholesale",
+      "description": "Roaming, MVNO access and IoT connectivity on European mobile networks.",
+      "target_segments": ["MVNO", "IoT", "Carrier"],
+      "signals": ["roaming", "mvno", "sim", "esim", "iot", "nb-iot", "lte-m", "wholesale mobile"]
+    },
+    {
+      "id": "capacity",
+      "name": "Backbone Capacity & Data Center Interconnect",
+      "description": "Wavelengths, Ethernet and dark fiber between European hubs and data centers.",
+      "target_segments": ["Carrier", "Cloud/Data Center", "Subsea", "ISP"],
+      "signals": ["capacity", "wavelength", "dark fiber", "backbone", "backhaul", "data center interconnect", "long-haul", "subsea"]
+    }
+  ]
+}
