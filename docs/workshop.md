@@ -435,7 +435,7 @@ prompt from `architecture.md` — then review them one by one.
 **Goal:** produce Sabine's briefing, find what's wrong and fix it at the source.
 
 1. Run the agents in order — **new chat per agent**, check each handoff file before you continue.
-2. Go through the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2) (Guided 3b) — every trap handled correctly is a point 🥚.
+2. Go through the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2#3b--quality-checklist-) (Guided 3b) — every trap handled correctly is a point 🥚.
 3. Compare results within your team. Same agents, same data — same briefing?
 4. Fix at least one problem **in an agent file** (never in `out/`), then re-run that agent and everything after it.
 
@@ -467,7 +467,7 @@ Same mission, fewer rails, more constraints.
 | 1 | `architecture.md` with diagram, handoff contracts, agent cards — **and "rejected alternatives"**: at least two designs you didn't choose, and why. |
 | 2 | Copilot as **sparring partner** for the design, and a review in a **fresh context** before you build. |
 | 3 | Shared rules in `AGENTS.md`, roles in `.github/agents/`. **Least privilege**: justify every tool an agent gets. |
-| 4 | A briefing that passes the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2) (Guided 3b). |
+| 4 | A briefing that passes the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2#3b--quality-checklist-) (Guided 3b). |
 
 ## Challenges — pick at least two
 
