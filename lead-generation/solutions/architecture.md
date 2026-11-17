@@ -34,7 +34,7 @@ flowchart LR
   class conf,prof,crm,cat,M src
 ```
 
-*Optional (expert path): a `lead-orchestrator` agent runs the four agents as subagents and checks the result.*
+*Optional (bonus): a `lead-orchestrator` agent runs the four agents as subagents and checks the result.*
 
 **Execution order:** `source-collector` → `company-analyst` → `lead-scorer` → `briefing-writer`.
 Each agent reads only the files it needs and writes exactly **one** file in `out/`.
@@ -77,5 +77,5 @@ Each agent reads only the files it needs and writes exactly **one** file in `out
 
 ## 6. Shared guardrails (→ `AGENTS.md`)
 
-Rules that apply to **every** agent live in [`AGENTS.reference.md`](AGENTS.reference.md) (copy it to `AGENTS.md` in the repo root to use it), not in each agent file:
+Rules that apply to **every** agent live in [`AGENTS.reference.md`](AGENTS.reference.md) (copy it to `AGENTS.md` in the workspace root to use it), not in each agent file:
 no internet, `data/` is read-only, only write to `out/`, no e-mail addresses in outputs, every claim needs a source.

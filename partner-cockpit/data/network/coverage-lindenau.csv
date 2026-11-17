@@ -1,0 +1,6 @@
+district,households,contoso_ftth_homes_passed,vdsl_max_mbit,stadtwerke_fiber_planned,funding_status,build_start
+Weststadt,6200,0,50,yes,approved,2027-03
+Am Mühlbach,4300,0,16,yes,approved,2027-04
+Altstadt,5100,0,100,yes,pending,unknown
+Zentrum,7400,6900,250,no,n/a,n/a
+Nordviertel,4900,3100,100,no,n/a,n/a

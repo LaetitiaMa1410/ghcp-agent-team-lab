@@ -1,0 +1,19 @@
+{
+  "_note": "INTERNAL. Assumptions from the Contoso partner consulting tool. Take-up = share of homes passed that become customers, cumulative at the end of each year after launch.",
+  "take_up_curves": {
+    "conservative": [0.06, 0.11, 0.15, 0.18, 0.20],
+    "base":         [0.08, 0.15, 0.21, 0.25, 0.28],
+    "ambitious":    [0.12, 0.22, 0.30, 0.36, 0.40]
+  },
+  "end_customer_arpu_eur_per_month": 42.0,
+  "partner_cost_per_line_eur_per_month": {
+    "own_network_with_network_operations_service": 9.5,
+    "contoso_fiber_access_basic": 24.5,
+    "contoso_vdsl_interim": 17.9
+  },
+  "one_time_partner_setup_cost_eur": {
+    "level_1_portal": 60000,
+    "level_2_bulk_api": 180000,
+    "level_3_fully_integrated": 650000
+  }
+}

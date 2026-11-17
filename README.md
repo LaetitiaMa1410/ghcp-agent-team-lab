@@ -1,6 +1,6 @@
 # 🤖 From Use Case to Agent Team
 
-A 60-minute hands-on lab for GitHub Copilot: take a real-world use case, run an **architecture session** with Copilot,
+A 60-minute hands-on lab for GitHub Copilot: pick one of two real-world sales use cases, run an **architecture session** with Copilot,
 design a team of **specialized agents** — and build, run and improve it locally in VS Code.
 
 ## 👉 [Open the lab](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/)
@@ -12,12 +12,15 @@ design a team of **specialized agents** — and build, run and improve it locall
 | **You need** | VS Code, GitHub Copilot, this repository |
 | **You don't need** | Deployments, API keys, internet research, GitHub issues or pull requests |
 
-## 🎯 The mission
+## 🎯 Two use cases — pick one
 
-Sabine, a Key Account Manager at the fictional carrier **Contoso Wholesale**, has 6 meeting slots at a conference.
-Participant lists come from three sources in three formats, company names are inconsistent, and nobody knows who is worth talking to.
+Both are set at the fictional carrier **Contoso Wholesale**.
 
-**Build a team of Copilot agents that tells her whom to meet, which product to pitch, and why.** → [`MISSION.md`](MISSION.md)
+| | 🎯 [Lead generation](lead-generation/MISSION.md) | 🤝 [Partner cockpit](partner-cockpit/MISSION.md) |
+| --- | --- | --- |
+| **Mission** | Tell Sabine whom to meet at a conference, which product to pitch, and why | Prepare Jonas's cockpit for meeting 2 with a municipal utility that wants to offer fiber |
+| **Data** | Participant lists in 3 formats, company profiles, CRM extract | Lead file, town & council data, network coverage, products, business case |
+| **Agent pattern** | Pipeline | Parallel perspectives → opposing scenarios → synthesis |
 
 ```mermaid
 flowchart LR
@@ -29,7 +32,7 @@ flowchart LR
 ```bash
 git clone https://github.com/LaetitiaMa1410/ghcp-agent-team-lab.git
 cd ghcp-agent-team-lab
-code .
+code lead-generation     # or: code partner-cockpit
 ```
 
 Then open the [lab](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/) and follow the steps.
@@ -38,12 +41,14 @@ Then open the [lab](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-
 
 ```text
 ghcp-agent-team-lab/
-|-- MISSION.md          the use case — start here
-|-- data/               fictional input data (read-only)
-|-- out/                your agents write their results here
-|-- solutions/          reference architecture, agents and sample output
-|-- docs/workshop.md    the lab (rendered on moaw.dev)
-`-- facilitator/        notes for trainers
+|-- lead-generation/     use case A — open this folder in VS Code
+|   |-- MISSION.md       the use case — start here
+|   |-- data/            fictional input data (read-only)
+|   |-- out/             your agents write their results here
+|   `-- solutions/       reference architecture, agents and sample output
+|-- partner-cockpit/     use case B — same structure
+|-- docs/workshop.md     the lab (rendered on moaw.dev)
+`-- facilitator/         notes for trainers
 ```
 
 > All companies, people and data in this repository are fictional.
