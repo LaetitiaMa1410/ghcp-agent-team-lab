@@ -3,7 +3,7 @@ published: true
 type: workshop
 title: "From Use Case to Agent Team"
 short_title: "From Use Case to Agent Team"
-description: A 60-minute hands-on lab. Take a real-world sales use case, run an architecture session with GitHub Copilot, design a team of specialized agents and build it — locally in VS Code, with three paths for every experience level.
+description: A 60-minute hands-on lab. Take a real-world sales use case, run an architecture session with GitHub Copilot, design a team of specialized agents and build it — locally in VS Code.
 level: intermediate
 authors:
   - Laetitia Maar
@@ -83,9 +83,7 @@ In two weeks Sabine attends **WholesaleCon Europe 2026**. She has **6 meeting sl
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Setup & choose your path
-
-## Setup
+# Setup
 
 You need **VS Code** with **GitHub Copilot** (signed in, Chat view: `Ctrl+Alt+I` / `Cmd+Ctrl+I`). Every team member gets their own copy:
 
@@ -106,7 +104,7 @@ ghcp-agent-team-lab/
 `-- solutions/        reference solution — no peeking before the checkpoints 🙈
 ```
 
-**Team roles**
+## Team roles
 
 | Role | Job |
 | --- | --- |
@@ -117,21 +115,9 @@ ghcp-agent-team-lab/
 Task 1 runs on the driver's screen; at the end the driver shares `architecture.md` (e.g. via team chat) and everyone saves it in their copy.
 From task 2 on, everyone works on their own machine and you compare results as a team.
 
-## Choose your path
-
-You can switch to an easier path at any time — every task ends with a **checkpoint** that lets you catch up.
-
-| | 🟢 Guided | 🔵 Standard | 🟣 Expert |
-| --- | --- | --- | --- |
-| **For you if…** | you want to learn the approach step by step | you know the building blocks and want to apply them | you've built custom agents before and want a challenge |
-| **You get** | copy-paste prompts and explanations | goals, expected results and hints | the mission, constraints and challenges |
-| **Start** | [**→ Guided path**](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2) | [**→ Standard path**](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=3) | [**→ Expert path**](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) |
-
 <div class="warning" data-title="Keep an eye on the clock">
 
-> Mixed team? Choose the path for the *least* experienced member. All paths end at **minute 52** with the
-> [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5). Behind? Use the checkpoint and move on —
-> a finished pipeline beats a perfect architecture without a result.
+> Every task ends with a **checkpoint**. Behind schedule? Use it and move on — a finished pipeline beats a perfect architecture without a result.
 
 </div>
 
@@ -139,7 +125,7 @@ You can switch to an easier path at any time — every task ends with a **checkp
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# 🟢 Guided path
+# Hands-on
 
 ## 1 · Architecture session
 
@@ -221,7 +207,7 @@ Pick the 2–3 findings that matter most and let your **Agent** chat update `arc
 <div class="info" data-title="✅ Checkpoint 1">
 
 > **You should have:** `architecture.md` with diagram, handoff contracts, agent cards and shared guardrails.
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) — can you explain *why* yours is different?
+> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=3) — can you explain *why* yours is different?
 >
 > **Behind schedule?** `cp solutions/architecture.md architecture.md` (PowerShell: `Copy-Item solutions/architecture.md architecture.md`)
 
@@ -348,142 +334,7 @@ Apply the change and re-run **that agent and every agent after it**. Did the pro
 
 > **You should have:** `out/sales-briefing.md` and at least one improved agent.
 > Example result: [`solutions/sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/solutions/sample-output).
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5).
-
-</div>
-
----
-
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
-
-# 🔵 Standard path
-
-## 1 · Architecture session
-
-**⏱ 20 minutes · together on the driver's screen**
-
-**Goal:** understand the use case with Copilot, decompose it into specialized agents and document the architecture — before any agent exists.
-
-**Deliverable:** `architecture.md` in the repo root with (1) the use case in one sentence, (2) a Mermaid diagram of data sources,
-agents and handoff files in `out/`, (3) handoff contracts (file, producer, consumers, structure), (4) agent cards
-(responsibility, reads, writes, tools, done when), (5) shared guardrails.
-
-**Suggested flow:** understand (Ask) → decompose (Ask) → write (Agent) → critique in a **fresh** chat (Ask) → improve.
-
-<details>
-<summary>💡 Hints</summary>
-
-- **Understand:** give Copilot a role and an answer structure, attach `MISSION.md`, point it to `data/` (ignore `solutions/`), and let it ask clarifying questions **one at a time**. 💼 Sabine answers.
-- **Decompose:** describe the process as steps first — input, output, judgement or rule? Good agents have **one** responsibility and a clear **output file**. Ask what would go wrong with a single agent.
-- **Review:** a reviewer in a fresh chat isn't biased by the conversation. Ask for the **top risks** (data quality, invented facts, personal data, existing customers) and missing handoffs — max. 8 bullets.
-
-</details>
-
-**Done when:**
-
-- [ ] Every data source appears in the diagram and is read by at least one agent.
-- [ ] Every agent writes exactly one file; every file has a consumer (or is the final briefing).
-- [ ] You can explain in one sentence why each agent exists.
-- [ ] The design was challenged at least once and you changed something.
-
-<div class="info" data-title="✅ Checkpoint 1">
-
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5). **Behind schedule?**
-> `cp solutions/architecture.md architecture.md` (PowerShell: `Copy-Item solutions/architecture.md architecture.md`)
-
-</div>
-
-## 2 · Build the agent team
-
-**⏱ 15 minutes · everyone on their own machine**
-
-**Goal:** turn the architecture into configuration Copilot can run.
-
-**Deliverables:** `AGENTS.md` with only rules shared by **all** agents, and one `.github/agents/<name>.agent.md` per agent card
-(frontmatter: `name`, `description`, `tools`).
-
-<details>
-<summary>💡 Hints</summary>
-
-| Put it in… | when it… |
-| --- | --- |
-| `AGENTS.md` | applies to every agent (no internet, `data/` read-only, no e-mails, quote sources) |
-| `.agent.md` | applies to one role (inputs, steps, output format, what *not* to do) |
-
-A good agent file has exact input paths, numbered steps, the exact output file and structure (matching the handoff contract),
-rules for missing or ambiguous data, what *not* to do, and least-privilege `tools`. You can generate all agents with **one**
-prompt from `architecture.md` — then review them one by one.
-
-</details>
-
-**Done when:**
-
-- [ ] All agents appear in the agent picker.
-- [ ] Each team member reviewed one agent against the handoff contract.
-- [ ] No guardrail is duplicated in the agent files.
-
-<div class="info" data-title="✅ Checkpoint 2">
-
-> **Behind schedule?** Copy the reference agents — see the commands in [Guided checkpoint 2](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2).
-
-</div>
-
-## 3 · Run, check & improve
-
-**⏱ 12 minutes · everyone on their own machine**
-
-**Goal:** produce Sabine's briefing, find what's wrong and fix it at the source.
-
-1. Run the agents in order — **new chat per agent**, check each handoff file before you continue.
-2. Go through the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2#3b--quality-checklist--4-min) (Guided 3b) — every trap handled correctly is a point 🥚.
-3. Compare results within your team. Same agents, same data — same briefing?
-4. Fix at least one problem **in an agent file** (never in `out/`), then re-run that agent and everything after it.
-
-<details>
-<summary>💡 Hint</summary>
-
-Ask Copilot which agent produced the wrong information and which instruction is missing or unclear — and for a
-**minimal** change. Small, targeted fixes beat long rule lists.
-
-</details>
-
-**Done when:** `out/sales-briefing.md` follows Sabine's rules, and you fixed at least one problem by changing an agent's instructions.
-**Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5).
-
----
-
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
-
-# 🟣 Expert path
-
-**⏱ 47 minutes until the pitch · your plan, your pace**
-
-Same mission, fewer rails, more constraints.
-
-## Must-haves
-
-| # | Requirement |
-| --- | --- |
-| 1 | `architecture.md` with diagram, handoff contracts, agent cards — **and "rejected alternatives"**: at least two designs you didn't choose, and why. |
-| 2 | Copilot as **sparring partner** for the design, and a review in a **fresh context** before you build. |
-| 3 | Shared rules in `AGENTS.md`, roles in `.github/agents/`. **Least privilege**: justify every tool an agent gets. |
-| 4 | A briefing that passes the [quality checklist](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2#3b--quality-checklist--4-min) (Guided 3b). |
-
-## Challenges — pick at least two
-
-| | Challenge | Building blocks |
-| --- | --- | --- |
-| **E1** | **Orchestrator.** A `lead-orchestrator` runs the whole pipeline from one prompt by calling your agents as **subagents** (`tools: ['agent', 'read', 'search']`) and reports `PASS`/`FAIL`. | Custom agents, subagents |
-| **E2** | **Quality gate as a skill.** Package the quality checklist as `.github/skills/briefing-quality-gate/SKILL.md` and use it after every run. | Agent skills |
-| **E3** | **Rules vs. LLM.** Let one agent use a small Python script (standard library only) for parsing or normalization. When are rules better than an LLM? | Tools, `execute` |
-| **E4** | **Headless run.** `copilot --agent lead-orchestrator -p "Run the full pipeline for WholesaleCon Europe 2026."` | Copilot CLI |
-| **E5** | **Consistency test.** Run the pipeline twice and compare. What is stable, what isn't? Make it more reproducible. | Context engineering |
-| **E6** | **Handoffs for humans.** Add `handoffs` so each agent offers a button for the next step (Local harness only). | Custom agents |
-
-<div class="tip" data-title="Done early?">
-
-> Help a Guided team with their design review — explaining *why* is the best test of your own architecture.
-> The [reference solution](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) includes a CLI-tested orchestrator.
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=3).
 
 </div>
 
@@ -520,7 +371,7 @@ What would it take to run this **for real** — real websites, a real CRM, hundr
 | `company-analyst` | Segment, current needs (with quotes) and existing-customer status per company | `out/company-insights.md` |
 | `lead-scorer` | High / Medium / Low fit per company and product category, with quoted reasons | `out/lead-scores.md` |
 | `briefing-writer` | Picks one decision maker per company and writes Sabine's briefing | `out/sales-briefing.md` |
-| `lead-orchestrator` *(expert)* | Runs the four agents as subagents and checks the result | – |
+| `lead-orchestrator` *(bonus)* | Runs the four agents as subagents and checks the result | – |
 
 **Key design decisions**
 
@@ -544,7 +395,6 @@ Files: [`architecture.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab
 | Design review in a fresh chat | Context hygiene, AI-assisted review |
 | `AGENTS.md` + `.agent.md` | Custom instructions, custom agents, least privilege |
 | Check every handoff, fix the agent not the output | Human in the loop, *miss → diagnosis → fix* |
-| Orchestrator, skills, CLI *(expert)* | Subagents, agent skills, Copilot CLI |
 
 1. **Understand before you build.** 15 minutes of architecture with Copilot saves hours of re-prompting.
 2. **Small agents, clear contracts.** One responsibility, one output file, explicit structure.

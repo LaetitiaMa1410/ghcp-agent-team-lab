@@ -11,7 +11,7 @@
 
 | Minute | What happens | Your cue |
 | --- | --- | --- |
-| 0–5 | Mission & setup, teams pick roles and path | Tell the story of Sabine — make it vivid. Push teams to pick a path within 1 min. |
+| 0–5 | Mission & setup, teams pick roles | Tell the story of Sabine — make it vivid. Push teams to pick roles within 1 min. |
 | 5–25 | Task 1 — Architecture session | Walk around. Ask teams: *"Why this agent? What does it hand over?"* At minute 20: "5 minutes left — start the critic review." |
 | 25–40 | Task 2 — Build the agent team | At minute 33: teams without agents should use checkpoint 2. |
 | 40–52 | Task 3 — Run, check & improve | Encourage comparing results within the team. Remind: fix the agent, not the output. |
@@ -56,5 +56,5 @@ with Helix, Vantage Subsea and Skyline Cloud as booth visits. Other choices are 
 ## Adapting the lab
 
 - **Shorter (45 min):** skip step 1d (critic review) and start Task 2 from the reference architecture.
-- **Longer (90 min):** let all teams do at least one Expert challenge, e.g. the orchestrator (E1) or the quality-gate skill (E2).
+- **Longer (90 min):** add a bonus: build an orchestrator that runs all agents as subagents (see `solutions/agents/lead-orchestrator.agent.md`), or package the quality checklist as an agent skill.
 - **Your own use case:** replace `MISSION.md` and `data/` — the lab structure stays the same.

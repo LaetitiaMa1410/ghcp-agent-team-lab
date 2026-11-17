@@ -8,7 +8,7 @@ design a team of **specialized agents** — and build, run and improve it locall
 | | |
 | --- | --- |
 | **Duration** | 60 minutes, teams of 3–4 |
-| **Level** | Three paths: 🟢 Guided · 🔵 Standard · 🟣 Expert |
+| **Level** | Step-by-step with copy-paste prompts and checkpoints |
 | **You need** | VS Code, GitHub Copilot, this repository |
 | **You don't need** | Deployments, API keys, internet research, GitHub issues or pull requests |
 
