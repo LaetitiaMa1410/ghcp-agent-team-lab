@@ -678,7 +678,7 @@ and in both Copilot writes the implementation while your team reviews it.
 | **You run it** | In the VS Code chat | In your terminal — and as an extension, as hosted agents in Microsoft Foundry |
 | **You need** | VS Code with GitHub Copilot | Additionally Python, uv, Azure CLI and a Foundry project with a model |
 | **Choose it if** | you want to test the design fast — or nobody on the team writes code | your team can read Python and wants a path to production |
-| **Continue with** | [👉 2a · Path 1 · GitHub Copilot custom agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) | [👉 2b · Path 2 · Pro-code agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) |
+| **Continue with** | [👉 Path 1 · GitHub Copilot custom agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) | [👉 Path 2 · Pro-code agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) |
 
 Decide as a team, then **everyone** opens the page of your path. Both pages end with your result in `out/` — then you meet again for the [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7).
 
@@ -686,7 +686,7 @@ Decide as a team, then **everyone** opens the page of your path. Both pages end 
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# 2a · Path 1 · GitHub Copilot custom agents
+# Path 1 · GitHub Copilot custom agents
 
 **Everyone on their own machine**
 
@@ -911,7 +911,7 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# 2b · Path 2 · Pro-code agents
+# Path 2 · Pro-code agents
 
 **Everyone on their own machine**
 
