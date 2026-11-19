@@ -320,6 +320,8 @@ lead-generation/   or   partner-cockpit/
 
 ## Team roles
 
+The roles below are **an example** of how you can work together as a team in this lab — adapt them to your team.
+
 | Role | Job |
 | --- | --- |
 | 🧑‍✈️ **Driver** | Shares the screen in task 1 and types the prompts. |
