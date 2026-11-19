@@ -330,7 +330,7 @@ a team of **custom agents**, run by an **orchestrator**, with you in the loop. N
 
 | Layer | What it is | Files |
 | --- | --- | --- |
-| 📐 **Design** | What the user needs and how the system works — reviewed by the team | `design/*.md`, `architecture.md`, `design/architecture.drawio` |
+| 📐 **Design** | What the user needs and how the system works — platform-neutral, reviewed by the team | `design/*.md`, `architecture.md`, `design/architecture.drawio` |
 | 🛡 **Shared guardrails** | Rules every agent follows: data protection, sources, where to write | `AGENTS.md` |
 | 🤖 **Custom agents** | One responsibility each, small context, least-privilege tools | `.github/agents/<agent>.agent.md` |
 | 🎛 **Orchestrator** | Runs the agents as subagents, step by step, and pauses at every human checkpoint | `.github/agents/orchestrator.agent.md` |
@@ -543,23 +543,28 @@ Tell Copilot what you changed, e.g. *"Option 2, but merge agents 3 and 4"* or *"
 
 ### 1e · Detailed design
 
-🎯 **Why:** Your decision becomes a **spec**. In task 2 Copilot builds your agents from `architecture.md` — every responsibility, handoff file or checkpoint that is missing here will be missing in your agents.
+🎯 **Why:** Your decision becomes a **spec**. `architecture.md` describes the agent system — pattern, flow, agents, handoffs, checkpoints — **independent of any platform**, so it works for both implementation paths: GitHub Copilot custom agents today, hosted agents in code later. Whatever is missing here will be missing in your agents.
 
 Switch to **Agent** in the **same chat** (so Copilot remembers your decision) and send:
 
 ```text
-#file:design/requirements.md
-Create architecture.md in the workspace root for the option we decided on. About 1-2 pages:
+#file:design/requirements.md #file:design/data-inventory.md
+Create architecture.md in the workspace root for the option we decided on. About 1-2 pages.
+Describe the agent system independent of any platform: no tool names, products, file paths or code.
+It must work as the spec for GitHub Copilot custom agents and for hosted agents built in code.
 
 1. The use case in one sentence.
-2. Our decision: one agent or a team, which option we chose, which one we rejected and why (max. 5 bullets).
-3. A Mermaid flowchart (left to right) with all data sources, the agents, the handoff files in out/,
-   and an orchestrator that runs the agents.
-4. A handoff contract table: file | producer | consumer(s) | content and structure (sections or columns).
-5. Agent cards as a table: agent | responsibility | reads | writes | tools | done when | user stories.
-   Tools follow least privilege: only 'read', 'search', 'edit'.
-6. The orchestrator: in which order (or in parallel) it runs the agents as subagents, where it pauses
-   (human checkpoints) and what the human checks at each. It only delegates and reads — tools 'agent', 'read', 'search'.
+2. Our decision: one agent or a team, the pattern we chose (e.g. pipeline, parallel experts with synthesis),
+   which option we rejected and why (max. 5 bullets).
+3. A Mermaid flowchart (left to right) with the data sources, the agents, the handoff artifacts between them,
+   the human checkpoints and the orchestrator that coordinates the flow.
+4. Handoff contracts as a table: artifact | producer | consumer(s) | content and structure (sections or fields).
+5. Agent cards as a table: agent | single responsibility | reads (data sources, artifacts) | produces |
+   capabilities it needs (e.g. read data, search, write its own artifact) | done when | user stories.
+   Least privilege: no agent gets a capability it doesn't need.
+6. The orchestration flow: which agents run in which order or in parallel, where the flow pauses for a
+   human checkpoint and what the human checks there, and what happens on a problem (which agent runs again).
+   The orchestrator only coordinates — it never produces content itself.
 7. Shared guardrails that apply to every agent.
 8. Traceability: every user story and non-functional requirement -> the agent(s) or guardrail that covers it.
    Flag any requirement that nothing covers.
@@ -570,10 +575,11 @@ Create architecture.md in the workspace root for the option we decided on. About
 > This is the **spec for your agents** — in task 2 Copilot builds them from it, line by line. Read it as a team:
 >
 > - Does it describe the option **you** decided on in 1d — not Copilot's favourite?
-> - **Agent cards:** one responsibility each, exact paths for reads and writes, least-privilege tools?
-> - **Handoff contracts:** does every file contain what the next agent needs?
+> - **Agent cards:** one responsibility each, clear inputs and outputs, least-privilege capabilities?
+> - **Handoff contracts:** does every artifact contain what the next agent needs?
 > - **Orchestrator:** is it clear what the human checks at each checkpoint?
 > - **Traceability:** fix every requirement flagged as uncovered.
+> - **Platform-neutral:** no tool names, file paths or products? Then it works for both implementation paths.
 
 </div>
 
@@ -590,12 +596,12 @@ Let Copilot draw the first version, then make it yours.
 Create design/architecture.drawio: an editable draw.io diagram of this architecture.
 - Valid, uncompressed draw.io XML: <mxfile><diagram name="Architecture"><mxGraphModel><root>,
   with the cells id="0" and id="1" parent="0"; every other cell has parent="1". No compressed content.
-- Layout left to right: data sources | agents with their handoff files | final result for the user.
+- Layout left to right: data sources | agents with their handoff artifacts | final result for the user.
   The orchestrator spans the top. Show a human checkpoint after every step or stage.
   Group agents that run in parallel in a dashed container.
 - Shapes and colours: data sources = cylinders (light blue; light red if personal or internal),
   agents = blue rounded rectangles with white text (name + one-line responsibility),
-  handoff files = yellow note shapes, final result = green note shape, orchestrator = purple,
+  handoff artifacts = yellow note shapes, final result = green note shape, orchestrator = purple,
   human checkpoints = orange hexagons, the user = a stick figure.
 - Edges: solid arrows for data flow, dashed purple arrows from the orchestrator labelled "step N" or "stage N",
   red edges with a 🔒 label where personal or internal data flows.
@@ -606,7 +612,7 @@ Create design/architecture.drawio: an editable draw.io diagram of this architect
 Then **review and refine it as a team** before you move on — the driver edits, everyone else directs:
 
 - ✏️ **Layout:** move shapes until the flow reads left to right without crossing lines.
-- 🧩 **Complete:** is every agent card from `architecture.md` in the sketch — and nothing more? Every handoff file, every checkpoint?
+- 🧩 **Complete:** is every agent card from `architecture.md` in the sketch — and nothing more? Every handoff artifact, every checkpoint?
 - 🔒 **Risks:** mark where personal or internal data flows and where it must stop. Mark where a wrong fact could enter.
 - 🗣 **Stakeholder view:** would Sabine or Jonas understand the sketch without you? Add a title and one sentence that says what the team delivers.
 
@@ -637,7 +643,7 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 > | `design/data-inventory.md` | Every data source, its quality issues, personal and confidential data, the traps | Input rules and edge cases in the agents |
 > | `design/interview-notes.md` | What the stakeholder told you | Source for 🗣 requirements |
 > | `design/requirements.md` | User stories, acceptance criteria, non-functional requirements, out of scope | `AGENTS.md`, the "done when" of every agent, the quality gate |
-> | `architecture.md` | Decision, Mermaid diagram, handoff contracts, agent cards, orchestrator flow with checkpoints, shared guardrails, traceability | **The spec** — Copilot builds `AGENTS.md`, the agents and the orchestrator from it |
+> | `architecture.md` | Platform-neutral: decision and pattern, Mermaid diagram, handoff contracts, agent cards, orchestration flow with checkpoints, shared guardrails, traceability | **The spec** — Copilot builds `AGENTS.md`, the agents and the orchestrator from it; the same spec works for hosted agents |
 > | `design/architecture.drawio` | The refined sketch, in sync with `architecture.md` | Explaining the design to your stakeholder and in the pitch |
 >
 > Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
@@ -648,7 +654,9 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 
 **Everyone on their own machine**
 
-Your architecture is the spec. Now it becomes **configuration**: shared rules go into `AGENTS.md`, role-specific
+Your architecture is the spec — now you choose the **implementation path**. In this lab it is **GitHub Copilot custom agents**;
+the same spec could become hosted agents in code. In every prompt below you tell Copilot how the platform-neutral design maps to Copilot.
+The design becomes **configuration**: shared rules go into `AGENTS.md`, role-specific
 instructions into one `.agent.md` file per agent. Each agent gets a **small, focused context** — so you can test, fix and re-run one without touching the others.
 An **orchestrator** agent then runs the team for you — and stops after every step so you stay in control.
 
@@ -659,9 +667,11 @@ An **orchestrator** agent then runs the team for you — and stops after every s
 **Agent**, new chat:
 
 ```text
-#file:architecture.md #file:design/requirements.md
-Create AGENTS.md in the workspace root. It contains ONLY the shared guardrails and conventions
-that apply to every agent — nothing role-specific. Include the non-functional requirements.
+#file:architecture.md #file:design/requirements.md #file:design/data-inventory.md
+We implement this architecture as GitHub Copilot custom agents. Create AGENTS.md in the workspace root.
+It contains ONLY the shared guardrails and conventions that apply to every agent — nothing role-specific.
+Include the non-functional requirements. Translate them for Copilot: the data sources are the files in data/
+(read-only), every handoff artifact and the final result is a Markdown file in out/, no internet.
 Max. 15 lines, concrete and checkable.
 ```
 
@@ -687,6 +697,11 @@ Same chat:
 ```text
 For every agent card in #file:architecture.md except the orchestrator, create .github/agents/<agent-name>.agent.md.
 
+Map the platform-neutral design to GitHub Copilot:
+- data sources -> the files in data/ (see #file:design/data-inventory.md)
+- handoff artifacts and the final result -> Markdown files in out/, e.g. out/<artifact-name>.md
+- capabilities -> tools: read data -> 'read', search -> 'search', write its own artifact -> 'edit'
+
 Frontmatter:
 - name
 - description: what the agent does and when to use it (one sentence)
@@ -696,7 +711,7 @@ Body:
 - the role in one sentence
 - inputs: exact file paths
 - steps
-- output: the exact file in out/ and its structure, matching the handoff contract
+- output: the exact file in out/ and its structure, matching the handoff contract in architecture.md
 - rules, including what it must NOT do because another agent does it
 - the acceptance criteria from design/requirements.md that its output must meet
 
@@ -716,7 +731,9 @@ Same chat:
 
 ```text
 #file:architecture.md
-Create .github/agents/orchestrator.agent.md — a coordinator that runs our agents as subagents.
+Implement the orchestration flow from architecture.md as a GitHub Copilot custom agent:
+create .github/agents/orchestrator.agent.md — a coordinator that runs our agents as subagents.
+Each human checkpoint becomes the end of a chat turn.
 
 Frontmatter:
 - name: orchestrator
@@ -724,7 +741,7 @@ Frontmatter:
 - tools: ['agent', 'read', 'search']   (it delegates and reads, but never writes files itself)
 
 Body:
-- the steps from architecture.md: which agent(s) to call, the instruction to pass ("Run your step."),
+- the steps from the orchestration flow: which agent(s) to call, the instruction to pass ("Run your step."),
   and the file(s) each must produce in out/. Agents that don't depend on each other run in parallel in one step.
 - MOST IMPORTANT RULE, at the top: run exactly ONE step per turn, then end the turn, even if I ask
   for the full result. At the end of each turn: check that the files exist and are not empty, name 2-3
@@ -1035,7 +1052,7 @@ Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 | Data inventory with Copilot | Prompting, context engineering |
 | Stakeholder interview, requirements with acceptance criteria | Requirements engineering, spec before code |
 | One agent or a team? Options and a team decision | Agent architecture |
-| Handoff contracts, agent cards, traceability | Detailed design |
+| Platform-neutral `architecture.md`: handoff contracts, agent cards, traceability | Detailed design — one spec for Copilot agents today and hosted agents later |
 | Architecture sketch generated as draw.io, refined by the team | Diagrams as code, communicating a design |
 | `AGENTS.md` + `.agent.md` | Custom instructions, custom agents, least privilege |
 | Orchestrator with a checkpoint after every step | Subagents, delegation, human in the loop |
@@ -1051,5 +1068,6 @@ Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 <div class="tip" data-title="Do this next week">
 
 > Take one recurring, multi-step task from your work and run steps 1a–1f of this lab on it — with your team, before you build anything. The clarity is the win.
+> The result is a platform-neutral spec: prototype it as Copilot custom agents, then build it as hosted agents when it has to scale.
 
 </div>
