@@ -1,0 +1,43 @@
+%%{init: {"flowchart": {"curve": "basis", "nodeSpacing": 40, "rankSpacing": 70}}}%%
+flowchart LR
+  U["👤 Stakeholder / team<br/>calls the orchestrator,<br/>answers ✋ checkpoints"]
+  subgraph GH["GitHub"]
+    direction TB
+    R["Repository<br/>app/ · tools/ · infra/ · azure.yaml"] --> GA["GitHub Actions · OIDC<br/>tests → azd provision → azd deploy"]
+  end
+  subgraph AZ["Azure resource group · infrastructure as code (Bicep)"]
+    subgraph F["Microsoft Foundry project"]
+      subgraph AS["Foundry Agent Service · hosted agents, each with its own Entra identity"]
+        direction TB
+        O["🎛 Orchestrator"]
+        S["Specialized agents<br/>one hosted agent per agent card"]
+        O -- "handoff artifacts<br/>as messages" --> S
+      end
+      M["🧠 Model deployment"]
+      T["🔧 MCP tool connection<br/>each agent: only its tools"]
+    end
+    subgraph CA["Azure Container Apps"]
+      MCP["MCP tool server<br/>list · read · search<br/>🔒 static data/ in the image, read-only<br/>Entra auth: only agent identities"]
+    end
+    ACR["📦 Container Registry<br/>agent & tool server images"]
+    AI["📈 Application Insights"]
+  end
+  U -- "Responses API" --> O
+  S -- "tool calls" --> T
+  T -- "MCP over HTTPS<br/>+ Entra token" --> MCP
+  O & S -.-> M
+  GA -- "push images" --> ACR
+  GA -- "provision & deploy" --> AZ
+  ACR -. "pull" .-> AS & CA
+  AS & CA -. "telemetry" .-> AI
+  classDef az fill:#e8f1fb,stroke:#0078d4,color:#000
+  classDef gh fill:#f3f3f3,stroke:#555,color:#000
+  classDef user fill:#fff4ce,stroke:#c19c00,color:#000
+  class O,S,M,T,MCP,ACR,AI az
+  class R,GA gh
+  class U user
+  style AZ fill:#ffffff,stroke:#0078d4
+  style F fill:#f5f9fe,stroke:#0078d4
+  style AS fill:#eef5fc,stroke:#0078d4,stroke-dasharray:4
+  style CA fill:#f5f9fe,stroke:#0078d4
+  style GH fill:#fafafa,stroke:#555

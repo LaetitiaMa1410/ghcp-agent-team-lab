@@ -9,7 +9,7 @@
 - [ ] Check that participants can install the **Draw.io Integration** extension (`hediet.vscode-drawio`) — or have the draw.io desktop app as a fallback.
 - [ ] Check that the stakeholder agents (`sabine`, `jonas`) show up in the agent picker and answer in character.
 - [ ] **Path 2 (pro-code):** decide whether you offer it. Teams need Python 3.11+, uv, the Azure CLI and access to a **Microsoft Foundry project with a deployed chat model** (endpoint + deployment name) — prepare one project per team or a shared one with enough quota, and give participants the *Azure AI User* role. Check that the Microsoft Learn MCP server (`https://learn.microsoft.com/api/mcp`) is allowed.
-- [ ] **Path 2 deployment extension (P6):** only if you provide a subscription or resource group where teams may create resources. Set a budget alert and make sure teams run `azd down` at the end.
+- [ ] **Path 2 deployment extension (P6):** only if you provide a subscription or resource group where teams may create resources. It creates a Foundry project with a model, a container registry, a Container Apps environment (the MCP tool server with the static data) and Application Insights. Set a budget alert and make sure teams run `azd down` at the end.
 - [ ] Optional: do one full run yourself with the reference agents (see below) so you know the expected result.
 
 ## Timing — 3 hours
