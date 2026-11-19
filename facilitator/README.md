@@ -23,8 +23,7 @@
 | 1:10–1:30 | 1f · Architecture sketch in draw.io | If the generated file doesn't open, let Copilot fix the XML. Push teams to **refine** the sketch (layout, risks, stakeholder view) and to sync design changes back into `architecture.md`. At 1:30: **checkpoint 2**. |
 | 1:30–1:40 | ☕ Break | Remind the driver to share `design/` and `architecture.md`. |
 | 1:40–2:10 | Task 2 · Build the agent team | Teams choose path 1 or 2 — path 2 only for teams who can read Python and have Foundry access. At 2:00: help teams without agents get to **checkpoint 3** (path 1) or a running `app.run_agent` (path 2). |
-| 2:10–2:40 | Task 3 · Run, check & improve | Make sure teams really **open the files** at each orchestrator checkpoint instead of typing `continue` blindly. Remind: fix the agent, not the output. Fast teams → bonus (path 1) or the deployment extension P6 (path 2). |
-| 2:40–3:00 | Task 4 · Pitch & debrief | 2 minutes per team. You (or volunteers) play Sabine and Jonas and vote. 5–8 min debrief. |
+| 2:10–3:00 | Task 3 · Run, check & improve | Make sure teams really **open the files** at each orchestrator checkpoint instead of typing `continue` blindly. Remind: fix the agent, not the output. Fast teams → bonus (path 1) or the deployment extension P6 (path 2). |
 
 ## Timing — 2-hour variant
 
@@ -33,10 +32,7 @@
 | 0:00–0:10 | Choose a use case, setup, roles |
 | 0:10–0:55 | Architecture session **1a–1f** (8 / 7 / 7 / 8 / 7 / 8 min) — keep the draw.io refinement short |
 | 0:55–1:20 | Task 2 · Build (path 1: shorten P4 to a quick check, skip the dry run) |
-| 1:20–1:45 | Task 3 · Run, check & improve |
-| 1:45–2:00 | Task 4 · Pitch (1 minute per team) & short debrief |
-
-With more than 6 teams, let only 3–4 teams pitch, and let the others post their top 3 / recommendation in the chat.
+| 1:20–2:00 | Task 3 · Run, check & improve |
 
 **Which use case for whom?** *Lead generation* is a clear pipeline with messy data — good for teams new to agents.
 *Partner cockpit* has more agents, parallel work and judgement calls — good for experienced teams.

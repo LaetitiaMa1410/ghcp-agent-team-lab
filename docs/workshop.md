@@ -38,7 +38,6 @@ You'll go through these steps:
    This is where most of your effort goes, on purpose.
 3. **Implementation** — Copilot builds the agent system from your design: as GitHub Copilot custom agents to test it fast, or as pro-code agents that you can deploy to Microsoft Foundry.
 4. **Run, check & improve** — run the agents on the data, check the result against your requirements and fix the agents, not the output.
-5. **Pitch** your design and result to the other teams.
 
 <div class="info" data-title="Everything stays local">
 
@@ -265,8 +264,7 @@ and who **synthesizes** — and checks that nothing internal or invented slips i
 
 <div class="tip" data-title="Easter eggs 🥚">
 
-> Both data sets are small but realistic: they hide **gaps, contradictions and traps**. Every trap your agent team handles correctly
-> earns a point in the pitch.
+> Both data sets are small but realistic: they hide **gaps, contradictions and traps**. Find out how many your agent team handles correctly.
 
 </div>
 
@@ -360,7 +358,7 @@ are the basis for **either** implementation path:
 | `design/interview-notes.md` | What the stakeholder told you |
 | `design/requirements.md` | User stories, acceptance criteria, non-functional requirements |
 | `architecture.md` | Pattern, flow, agents, handoff contracts, human checkpoints, guardrails — platform-neutral |
-| `design/architecture.drawio` | The sketch for people: your team, your stakeholder, the pitch |
+| `design/architecture.drawio` | The sketch for people: your team and your stakeholder |
 
 ### Two implementation paths
 
@@ -607,7 +605,7 @@ It must work as the spec for GitHub Copilot custom agents and for hosted agents 
 
 ### 1f · Architecture sketch in draw.io
 
-🎯 **Why:** `architecture.md` is for the agents. For **people** — your team, your stakeholder, the pitch — you need a sketch you can
+🎯 **Why:** `architecture.md` is for the agents. For **people** — your team and your stakeholder — you need a sketch you can
 **move, colour and annotate**. Drawing it together also reveals gaps: a missing handoff, an unguarded data flow.
 Let Copilot draw the first version, then make it yours.
 
@@ -666,9 +664,9 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 > | `design/interview-notes.md` | What the stakeholder told you | Source for 🗣 requirements |
 > | `design/requirements.md` | User stories, acceptance criteria, non-functional requirements, out of scope | `AGENTS.md`, the "done when" of every agent, the quality gate |
 > | `architecture.md` | Platform-neutral: decision and pattern, Mermaid diagram, handoff contracts, agent cards, orchestration flow with checkpoints, shared guardrails, traceability | **The spec** — Copilot builds `AGENTS.md`, the agents and the orchestrator from it; the same spec works for hosted agents |
-> | `design/architecture.drawio` | The refined sketch, in sync with `architecture.md` | Explaining the design to your stakeholder and in the pitch |
+> | `design/architecture.drawio` | The refined sketch, in sync with `architecture.md` | Explaining the design to your team and your stakeholder |
 >
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6#reference-solutions) — can you explain *why* yours is different?
+> Compare with the reference architecture — [A · lead generation](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/solutions/architecture.md) · [B · partner cockpit](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/solutions/architecture.md) — can you explain *why* yours is different?
 
 </div>
 
@@ -687,7 +685,7 @@ and in both Copilot writes the implementation while your team reviews it.
 | **Choose it if** | you want to test the design fast — or nobody on the team writes code | your team can read Python and wants a path to production |
 | **Continue with** | [👉 Path 1 · GitHub Copilot custom agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) | [👉 Path 2 · Pro-code agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) |
 
-Decide as a team, then **everyone** opens the page of your path. Both pages end with your result in `out/` — then you meet again for the [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
+Decide as a team, then **everyone** opens the page of your path. Both pages end with your result in `out/`.
 
 ---
 
@@ -917,14 +915,13 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 > **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left, take on a 🚀 bonus challenge below.
+> **Next:** if you have time left, take on a 🚀 bonus challenge below.
 
 </div>
 
 ## 🚀 P8 · Extension: bonus challenges
 
 **For teams that finished checkpoint 4 early.** Pick any challenge, in any order — each one extends the agent team you already have.
-When the pitch starts, stop and pitch what you have.
 
 | | Challenge | You learn |
 | --- | --- | --- |
@@ -1025,8 +1022,6 @@ Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. Th
 > # Windows PowerShell
 > New-Item -ItemType Directory -Force .github/skills, .github/hooks | Out-Null; Copy-Item -Recurse solutions/bonus/skills/quality-check .github/skills/; Copy-Item solutions/bonus/hooks/* .github/hooks/
 > ```
->
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
 
 </div>
 
@@ -1223,7 +1218,7 @@ Review the change, run `uv run pytest`, then run the flow again and answer `r` a
 
 > **You should have:** `app/` with config, guardrails, tools, one module per agent and the orchestrator workflow — all reviewed, all tests green —
 > a complete local run in the terminal with the final result in `out/`, and at least one improved agent.
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left and Azure access, the deployment extension below.
+> **Next:** if you have time left and Azure access, the deployment extension below.
 
 </div>
 
@@ -1376,92 +1371,3 @@ azd down
 | **GitHub Actions + Bicep + azd** | Tests, then provision and deploy — with OIDC, no secrets |
 
 Same `architecture.md`, three runtimes: VS Code (path 1), your terminal (path 2) and Azure. Only the **mapping** changes — the design stays.
-
----
-
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
-
-# Pitch & wrap-up
-
-## 4 · Pitch
-
-**All teams together**
-
-Each team presents briefly:
-
-1. 🗺️ **Your architecture** — show your **draw.io sketch**: which agents, and the **one design decision** you'd defend?
-2. 🎯 **A:** your top 3 meetings for Sabine — who, what product, why now.<br/>🤝 **B:** your recommendation for Stadtwerke Lindenau and the next commitment step for meeting 2.
-3. 🔧 **One fix** — what did your agent team get wrong, and which instruction fixed it?
-4. 🗣 **Your stakeholder** — what did Sabine or Jonas tell you that changed your design?
-
-Then **Sabine and Jonas vote**: whose result would they take into their meeting? 🥚 Easter egg points break a tie.
-
-**Discussion:** Why did teams with the **same data** get **different** results? Which **human** decision changed the result?
-How did the **pipeline** (A) and the **perspectives** pattern (B) differ? What would it take to run this **for real**?
-
-## Reference solutions
-
-**One** good solution per use case — not the only one. Compare the **reasoning**, not the names.
-
-### 🎯 A · Lead generation — a pipeline
-
-![Reference architecture lead generation](assets/lead-generation-architecture.png)
-
-| Agent | Responsibility | Writes |
-| --- | --- | --- |
-| `source-collector` | Merges the 3 conference sources, matches company spellings to profiles, de-duplicates people | `out/participants.md` |
-| `company-analyst` | Segment, current needs (with quotes) and existing-customer status per company | `out/company-insights.md` |
-| `lead-scorer` | High / Medium / Low fit per company and product category, with quoted reasons | `out/lead-scores.md` |
-| `briefing-writer` | Picks one decision maker per company and writes Sabine's briefing | `out/sales-briefing.md` |
-| `lead-orchestrator` | Runs the four agents as subagents, one step at a time with a checkpoint after each, then a quality gate | – |
-
-**Why:** matching comes first · existing customers are flagged before scoring · scoring is separate from writing.
-Files: [`lead-generation/solutions/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions)
-
-### 🤝 B · Partner cockpit — perspectives
-
-![Reference architecture partner cockpit](assets/partner-cockpit-architecture.png)
-
-| Agent | Responsibility | Writes |
-| --- | --- | --- |
-| `fact-analyst` | Partner, region, network per district, evidence ledger with labels, contradictions | `out/fact-sheet.md` |
-| `tech-advisor` | Readiness, product fit per district type, onboarding level, risks | `out/tech-assessment.md` |
-| `partner-voice` | Decision map, concerns, commitment ladder, tone | `out/partner-perspective.md` |
-| `scenario-bold` | Ambitious but plausible scenario with 5-year numbers | `out/scenario-bold.md` |
-| `scenario-safe` | Smallest viable entry with stop points | `out/scenario-safe.md` |
-| `cockpit-writer` | Recommendation, meeting 2 plan, materials, open points | `out/partner-cockpit.md` |
-| `concierge` | Runs the three stages as subagents with a checkpoint after each, then a quality gate | – |
-
-**Why:** three analysts in parallel, each with one perspective · two deliberately one-sided scenarios create productive tension · one writer resolves it.
-Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions)
-
-**In both:** files in `out/` are the handoffs — every intermediate result is visible · shared rules live in `AGENTS.md` ·
-**least privilege** — workers can `read`, `search`, `edit`; the orchestrator can only delegate and read.
-
-## Take it home
-
-| What you did | Building block |
-| --- | --- |
-| Data inventory with Copilot | Prompting, context engineering |
-| Stakeholder interview, requirements with acceptance criteria | Requirements engineering, spec before code |
-| One agent or a team? Options and a team decision | Agent architecture |
-| Platform-neutral `architecture.md`: handoff contracts, agent cards, traceability | Detailed design — one spec for Copilot agents today and hosted agents later |
-| Architecture sketch generated as draw.io, refined by the team | Diagrams as code, communicating a design |
-| `AGENTS.md` + `.agent.md` | Custom instructions, custom agents, least privilege |
-| Orchestrator with a checkpoint after every step | Subagents, delegation, human in the loop |
-| Path 2: agents as code, run locally, deployment pipeline | Microsoft Agent Framework, enforced guardrails, IaC, hosted agents |
-| Fix the agent, not the output | *Miss → diagnosis → fix* |
-| 🚀 Bonus: skill, hook | Reusable skills, deterministic guardrails |
-
-1. **Understand before you build.** An hour of architecture with Copilot saves days of re-prompting.
-2. **Talk to the user.** The most important requirements weren't in the brief.
-3. **Small agents, clear contracts.** One responsibility, one output file, explicit structure.
-4. **Make the handoffs visible.** If you can't review it, you can't trust it.
-5. **Fix causes, not symptoms.** Every agent mistake is a missing or unclear instruction.
-
-<div class="tip" data-title="Do this next week">
-
-> Take one recurring, multi-step task from your work and run steps 1a–1f of this lab on it — with your team, before you build anything. The clarity is the win.
-> The result is a platform-neutral spec: prototype it as Copilot custom agents, then build it as hosted agents when it has to scale.
-
-</div>

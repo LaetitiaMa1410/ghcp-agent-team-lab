@@ -29,8 +29,8 @@ flowchart LR
   subgraph S1["1 · Architecture session"]
     A["Use case<br/>& data"] --> I["🗣 Stakeholder<br/>interview"] --> R["Requirements"] --> O["Options<br/>& decision"] --> D["Design<br/>& draw.io sketch"]
   end
-  D --> C["2 · Path 1<br/>Copilot custom agents"] --> E["3 · Run, check<br/>& improve"] --> P["🎤 Pitch"]
-  D --> C2["2 · Path 2<br/>pro-code agents"] --> E2["Run locally<br/>& improve"] --> P
+  D --> C["2 · Path 1<br/>Copilot custom agents"] --> E["3 · Run, check<br/>& improve"]
+  D --> C2["2 · Path 2<br/>pro-code agents"] --> E2["Run locally<br/>& improve"]
   E2 -.-> X["🚀 Deploy as hosted agents<br/>to Microsoft Foundry"]
 ```
 
