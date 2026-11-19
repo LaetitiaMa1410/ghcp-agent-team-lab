@@ -345,7 +345,7 @@ ends up in every agent. Fix what's wrong directly in the file or tell Copilot ex
 | 1a | Understand the use case & the data | `design/data-inventory.md` |
 | 1b | Interview the stakeholder | `design/interview-notes.md` |
 | 1c | Requirements & acceptance criteria | `design/requirements.md` |
-| 1d | Break down the work, Copilot proposes architectures, the team evaluates & decides | decision in the chat |
+| 1d | Decompose, compare options & decide: one agent or a team? | decision in the chat |
 | 1e | Detailed design | `architecture.md` — the spec for your agents |
 | 1f | Architecture sketch | `design/architecture.drawio` — the picture for people |
 
@@ -465,13 +465,11 @@ Mark everything that came from the interview with 🗣. Don't add requirements t
 
 </div>
 
-### 1d · Compare architectures & decide
+### 1d · Decompose, compare options & decide
 
-🎯 **Why:** There is never just one way to build it — one agent, a pipeline, parallel experts. Here **Copilot proposes** different
-architectures and **your team evaluates and decides**. Copilot is good at generating options; only you can judge them against
-what your stakeholder needs — and you have to defend the design in the pitch.
+🎯 **Why:** There is never just one way to build it. Copilot sketches different architectures — **your team picks one**, because you have to defend and maintain the design.
 
-**① Break down the work.** **Ask**, new chat:
+**Ask**, new chat:
 
 ```text
 #file:design/requirements.md #file:design/data-inventory.md
@@ -493,35 +491,23 @@ need to review intermediate results, repeatability.
 | **intermediate results** need a human check | checking the end result is enough |
 | a **synthesis** of different views is needed | there are **few conflicts** in the data |
 
-**② Copilot proposes architectures.** Same chat:
+🔍 **Critic:** Which step **must** come first? Where could the AI **invent** something? Where does **personal or internal data** flow?
+
+- 🎯 **A:** Where are **company spellings** matched? Where are **existing customers** filtered out — before or after scoring?
+- 🤝 **B:** Which **perspectives** does Jonas need? Would **two opposing scenario agents** beat one "balanced" one? Who separates **facts from rumours**?
+
+Same chat:
 
 ```text
 Propose 3 clearly different architectures for this use case — for example one agent (with skills),
 a pipeline of specialized agents, or parallel perspectives with a synthesis.
 For each: the agents and their single responsibility, how they hand over work, pros, cons,
 and the main risks (invented facts, personal or internal data, contradicting sources).
-Don't recommend one yet and don't write any files.
+Recommend one, but don't write any files.
 ```
 
-**③ Evaluate the options as a team.** Let Copilot put them side by side:
-
-```text
-Compare the 3 options in one table. Rows: every user story and non-functional requirement from
-design/requirements.md, plus: risk of invented facts, protection of personal and internal data,
-where a human can check intermediate results, and how easy it is to find and fix the agent that caused an error.
-Columns: option 1 | option 2 | option 3. Rate each cell ✅ / ⚠️ / ❌ with a short reason.
-```
-
-Don't take the ratings for granted — challenge them. 🔍 **Critic:**
-
-- Which step **must** come first? Where could the AI **invent** something? Where does **personal or internal data** flow — and where must it stop?
-- Is every agent **really needed**? Every extra agent is one more handoff that can go wrong.
-- 🎯 **A:** Where are **company spellings** matched? Where are **existing customers** filtered out — before or after scoring?
-- 🤝 **B:** Which **perspectives** does Jonas need? Would **two opposing scenario agents** beat one "balanced" one? Who separates **facts from rumours**?
-
-**④ Decide.** Each person names their favourite and one reason, then the interviewer decides. You may combine options.
-Tell Copilot what you decided, e.g. *"Option 2, but merge agents 3 and 4"* or *"Option 3, but split the scenario agent into a bold and a safe one."*
-Your decision — and why you rejected the others — goes into `architecture.md` in the next step.
+**Decide as a team** — each person names their favourite and one reason, then the interviewer decides.
+Tell Copilot what you changed, e.g. *"Option 2, but merge agents 3 and 4"* or *"Split the scenario agent into a bold and a safe one."*
 
 ### 1e · Detailed design
 
