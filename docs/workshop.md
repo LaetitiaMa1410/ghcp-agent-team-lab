@@ -257,17 +257,6 @@ and who **synthesizes** — and checks that nothing internal or invented slips i
 
 </div>
 
-## How to decide
-
-- **Can't decide?** Take **A** if this is your first agent team, **B** if you want more design freedom.
-- **Several teams in the room?** Try to have both use cases covered — the pitch is more interesting when you can compare a pipeline with a perspectives team.
-- **Want the full story?** Each folder has a detailed business brief (`USE-CASE.md`) and a short deliverable spec (`MISSION.md`):
-  [A · USE-CASE](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/USE-CASE.md) ·
-  [A · MISSION](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/MISSION.md) ·
-  [B · USE-CASE](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/USE-CASE.md) ·
-  [B · MISSION](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/MISSION.md).
-  You will read them in detail in step 1a.
-
 <div class="tip" data-title="Easter eggs 🥚">
 
 > Both data sets are small but realistic: they hide **gaps, contradictions and traps**. Every trap your agent team handles correctly
