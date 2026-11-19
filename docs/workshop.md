@@ -589,8 +589,17 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 
 <div class="info" data-title="✅ Checkpoint 2 · Design ready">
 
-> **You should have:** `design/` with data inventory, interview notes, requirements and **`architecture.drawio`**, and an `architecture.md` with
-> the decision, Mermaid diagram, handoff contracts, agent cards, the orchestrator flow with checkpoints, shared guardrails and traceability.
+> **Your basis for the implementation** — every file reviewed by the team:
+>
+> | File | What it contains | Used in task 2 and 3 for |
+> | --- | --- | --- |
+> | `USE-CASE.md` · `MISSION.md` | The business case and the expected result (given) | Context for every agent |
+> | `design/data-inventory.md` | Every data source, its quality issues, personal and confidential data, the traps | Input rules and edge cases in the agents |
+> | `design/interview-notes.md` | What the stakeholder told you | Source for 🗣 requirements |
+> | `design/requirements.md` | User stories, acceptance criteria, non-functional requirements, out of scope | `AGENTS.md`, the "done when" of every agent, the quality gate |
+> | `architecture.md` | Decision, Mermaid diagram, handoff contracts, agent cards, orchestrator flow with checkpoints, shared guardrails, traceability | **The spec** — Copilot builds `AGENTS.md`, the agents and the orchestrator from it |
+> | `design/architecture.drawio` | The refined sketch, in sync with `architecture.md` | Explaining the design to your stakeholder and in the pitch |
+>
 > Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
 
 </div>
