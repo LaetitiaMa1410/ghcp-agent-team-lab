@@ -1240,7 +1240,7 @@ azd down
 
 ### The Azure architecture you deploy
 
-![Azure architecture: hosted agents in Foundry, MCP tool server on Container Apps](assets/path2-azure-architecture.png)
+![Azure architecture: hosted agents in Foundry, MCP tool server on Container Apps](assets/path2-azure-architecture-v2.png)
 
 | Component | Role |
 | --- | --- |
