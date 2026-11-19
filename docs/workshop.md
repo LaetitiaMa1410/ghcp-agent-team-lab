@@ -365,7 +365,7 @@ Read every file in data/. Ignore the solutions/ and .github/agents/ folders.
 3. Below the table: the 3-5 things in the data that would trick a naive solution, and what that means for the design.
 ```
 
-<div class="important" data-title="👀 Review `design/data-inventory.md` before you move on">
+<div class="important" data-title="👀 Review design/data-inventory.md before you move on">
 
 > The data inventory is the basis for your requirements and later for your agents. The 🔍 **Critic** leads:
 >
@@ -405,7 +405,7 @@ Create design/interview-notes.md with the following interview summary. Keep the 
 <paste the summary here>
 ```
 
-<div class="important" data-title="👀 Review `design/interview-notes.md` before you move on">
+<div class="important" data-title="👀 Review design/interview-notes.md before you move on">
 
 > The interview notes are your only source for what the user said. The 💼 **Interviewer** leads:
 >
@@ -438,7 +438,7 @@ Create design/requirements.md:
 Mark everything that came from the interview with 🗣. Don't add requirements that no source supports.
 ```
 
-<div class="important" data-title="👀 Review `design/requirements.md` before you move on">
+<div class="important" data-title="👀 Review design/requirements.md before you move on">
 
 > Your agents and the final quality gate check against these criteria. The 🔍 **Critic** leads:
 >
@@ -523,7 +523,7 @@ Create architecture.md in the workspace root for the option we decided on. About
    Flag any requirement that nothing covers.
 ```
 
-<div class="important" data-title="👀 Review `architecture.md` before you move on">
+<div class="important" data-title="👀 Review architecture.md before you move on">
 
 > This is the **spec for your agents** — in task 2 Copilot builds them from it, line by line. Read it as a team:
 >
@@ -623,7 +623,7 @@ that apply to every agent — nothing role-specific. Include the non-functional 
 Max. 15 lines, concrete and checkable.
 ```
 
-<div class="important" data-title="👀 Review `AGENTS.md` before you move on">
+<div class="important" data-title="👀 Review AGENTS.md before you move on">
 
 > Every agent loads this file — a gap here is a gap in all of them. Check that it covers:
 >
