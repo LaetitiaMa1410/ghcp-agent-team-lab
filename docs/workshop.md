@@ -21,19 +21,24 @@ navigation_numbering: false
 
 *Hands-on lab · teams of 3–4*
 
-You know the building blocks: prompting, context engineering, custom instructions, custom agents, skills.
-Now you combine them on a **real-world use case** — and start like good architects do: **understand the problem before you build**.
+**How do you turn a use case idea into a working automation?** That's what this lab is about.
 
-| # | Task | You end up with |
-| --- | --- | --- |
-| 0 | Choose a use case & setup | The use case folder open in VS Code, roles assigned |
-| 1 | Architecture session | `design/` (data inventory, interview notes, requirements, draw.io sketch) and `architecture.md` |
-| 2 | Build the agent team | Path 1: custom agents + an orchestrator in `.github/agents/` · Path 2: the same agents as Python code, run in your terminal |
-| 3 | Run, check & improve | The final result in `out/`, accepted by your stakeholder |
-| 4 | Pitch & debrief | Your design and result, presented to everyone |
+GitHub Copilot can write code, agents and infrastructure in minutes. But just prompting *"build me an agent that does X"* — **vibe coding** —
+doesn't get you a system you can trust: Copilot fills every gap with guesses, nobody knows what "done" means, and every fix creates the next problem.
+What works is a **structured approach**: first understand the use case and write down what the system must do — then let Copilot build it from that spec.
 
-Most of your effort goes into the **architecture session** — on purpose. You'll interview a stakeholder, write requirements,
-compare architecture options, decide and sketch your design in draw.io — before you write a single agent.
+In this lab you practise exactly that, on a **real-world use case** — and start like good architects do: **understand the problem before you build**.
+You'll see how GitHub Copilot supports you in **every** step, from analysing the data to the running system.
+
+**It's a guided setup.** Every step comes with a short *why*, copy-paste prompts and a review checkpoint — so you can focus on the thinking, not on the typing.
+You'll go through these steps:
+
+1. **Choose a use case** and set up your team.
+2. **Architecture session** — understand the data, interview the stakeholder, write requirements, compare architecture options, decide and design the system.
+   This is where most of your effort goes, on purpose.
+3. **Implementation** — Copilot builds the agent system from your design: as GitHub Copilot custom agents to test it fast, or as pro-code agents that you can deploy to Microsoft Foundry.
+4. **Run, check & improve** — run the agents on the data, check the result against your requirements and fix the agents, not the output.
+5. **Pitch** your design and result to the other teams.
 
 <div class="info" data-title="Everything stays local">
 
