@@ -1,7 +1,7 @@
 # 🤖 From Use Case to Agent Team
 
 A hands-on lab for GitHub Copilot: pick one of two real-world sales use cases, **interview the stakeholder**,
-run a full **architecture session** with Copilot — requirements, options, decision record, reviews — then design a team of **specialized agents**
+run a full **architecture session** with Copilot — requirements, options, decision, a draw.io architecture sketch — then design a team of **specialized agents**
 and build, run and improve it locally in VS Code.
 
 ## 👉 [Open the lab](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/)
@@ -10,7 +10,7 @@ and build, run and improve it locally in VS Code.
 | --- | --- |
 | **Format** | Teams of 3–4 |
 | **Level** | Step-by-step with copy-paste prompts and checkpoints — plus 🚀 bonus challenges (skill, hook) for fast teams |
-| **You need** | VS Code, GitHub Copilot, this repository |
+| **You need** | VS Code, GitHub Copilot, the Draw.io Integration extension, this repository |
 | **You don't need** | Deployments, API keys, internet research, GitHub issues or pull requests |
 
 ## 🎯 Two use cases — pick one
@@ -26,7 +26,7 @@ Both are set at the fictional carrier **Contoso Wholesale**.
 ```mermaid
 flowchart LR
   subgraph S1["1 · Architecture session"]
-    A["Use case<br/>& data"] --> I["🗣 Stakeholder<br/>interview"] --> R["Requirements"] --> O["Options<br/>& ADR"] --> D["Design<br/>& reviews"]
+    A["Use case<br/>& data"] --> I["🗣 Stakeholder<br/>interview"] --> R["Requirements"] --> O["Options<br/>& decision"] --> D["Design<br/>& draw.io sketch"]
   end
   D --> C["2 · Build<br/>custom agents"] --> E["3 · Run, check<br/>& improve"] --> P["🎤 Pitch"]
 ```

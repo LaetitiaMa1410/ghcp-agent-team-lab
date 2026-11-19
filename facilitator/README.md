@@ -6,6 +6,7 @@
 - [ ] Make sure participants can clone the repo **or** download it as ZIP.
 - [ ] Check that custom agents in `.github/agents/` show up in the agent picker in the participants' VS Code, and that an agent with the `agent` tool can run them as **subagents** (org policies may restrict features).
 - [ ] For bonus B2 (hook): check whether hooks are allowed by your organization's Copilot policy and whether participants have **Node.js**. If not, announce B2 as "read only".
+- [ ] Check that participants can install the **Draw.io Integration** extension (`hediet.vscode-drawio`) — or have the draw.io desktop app as a fallback.
 - [ ] Check that the stakeholder agents (`sabine`, `jonas`) show up in the agent picker and answer in character.
 - [ ] Optional: do one full run yourself with the reference agents (see below) so you know the expected result.
 
@@ -15,10 +16,9 @@
 | --- | --- | --- |
 | 0:00–0:15 | Choose a use case, setup, roles | Tell both stories in 1 minute each. Teams pick a use case and roles within 3 min. Check they open the **use case folder**, not the repo root, and that `sabine` / `jonas` show up in the agent picker. |
 | 0:15–0:45 | 1a–1c · Data, interview, requirements | Make sure teams **really interview** (one question at a time, follow-ups) instead of asking for "everything you know". At 0:45: **checkpoint 1** — every team has a signed-off `requirements.md`. |
-| 0:45–1:05 | 1d–1e · Decompose, options, ADR | Push teams to **decide** and write down *why*. Ask: *"Which option did you reject, and why?"* |
-| 1:05–1:15 | 1f · Detailed design | Check the traceability section: is any requirement uncovered? |
-| 1:15–1:20 | 1g · Pre-mortem | Fresh chat! Teams tend to reuse the design chat — that's a biased reviewer. |
-| 1:20–1:30 | 1h · Cross-team review | Pair teams (ideally **same** use case, so the reviewers know the data). Strict 5 + 5 min. At 1:30: **checkpoint 2**. |
+| 0:45–1:00 | 1d · Decompose, options, decide | Push teams to **decide** and say *why*. Ask: *"Which option did you reject, and why?"* |
+| 1:00–1:10 | 1e · Detailed design | Check the traceability section: is any requirement uncovered? |
+| 1:10–1:30 | 1f · Architecture sketch in draw.io | If the generated file doesn't open, let Copilot fix the XML. Push teams to **refine** the sketch (layout, risks, stakeholder view) and to sync design changes back into `architecture.md`. At 1:30: **checkpoint 2**. |
 | 1:30–1:40 | ☕ Break | Remind the driver to share `design/` and `architecture.md`. |
 | 1:40–2:10 | Task 2 · Build the agent team | At 2:00: teams without agents should use **checkpoint 3**. |
 | 2:10–2:40 | Task 3 · Run, check & improve | Make sure teams really **open the files** at each orchestrator checkpoint instead of typing `continue` blindly. Remind: fix the agent, not the output. Fast teams → bonus. |
@@ -29,7 +29,7 @@
 | Time | What happens |
 | --- | --- |
 | 0:00–0:10 | Choose a use case, setup, roles |
-| 0:10–0:55 | Architecture session **1a–1f** (8 / 7 / 7 / 5 / 8 / 10 min) — skip pre-mortem (1g) and cross-team review (1h) |
+| 0:10–0:55 | Architecture session **1a–1f** (8 / 7 / 7 / 8 / 7 / 8 min) — keep the draw.io refinement short |
 | 0:55–1:20 | Task 2 · Build (shorten 2d to a quick check, skip the dry run) |
 | 1:20–1:45 | Task 3 · Run, check & improve |
 | 1:45–2:00 | Task 4 · Pitch (1 minute per team) & short debrief |
@@ -155,5 +155,5 @@ Tested with Copilot CLI: the reference hook blocked an `apply_patch` into `data/
 
 - **2 hours:** see the 2-hour variant above.
 - **Longer (3.5 h):** make the [bonus challenges](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) (skill, hook) part of the plan for everyone — about 20–30 minutes.
-- **Architecture only (90 min):** run steps 1a–1h and stop at checkpoint 2 — a good format for architects and product owners.
+- **Architecture only (90 min):** run steps 1a–1f and stop at checkpoint 2 — a good format for architects and product owners.
 - **Your own use case:** copy a use case folder and replace `USE-CASE.md`, `MISSION.md`, `data/` and the stakeholder agent — the lab steps stay the same.

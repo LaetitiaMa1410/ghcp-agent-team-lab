@@ -27,13 +27,13 @@ Now you combine them on a **real-world use case** — and start like good archit
 | # | Task | You end up with |
 | --- | --- | --- |
 | 0 | Choose a use case & setup | The use case folder open in VS Code, roles assigned |
-| 1 | Architecture session | `design/` (data inventory, interview notes, requirements, decision record) and `architecture.md` |
+| 1 | Architecture session | `design/` (data inventory, interview notes, requirements, draw.io sketch) and `architecture.md` |
 | 2 | Build the agent team | `AGENTS.md`, specialized agents + an orchestrator in `.github/agents/` |
 | 3 | Run, check & improve | The final result in `out/`, accepted by your stakeholder |
 | 4 | Pitch & debrief | Your design and result, presented to everyone |
 
 Most of your effort goes into the **architecture session** — on purpose. You'll interview a stakeholder, write requirements,
-compare architecture options and have your design challenged, before you write a single agent.
+compare architecture options, decide and sketch your design in draw.io — before you write a single agent.
 
 <div class="info" data-title="Everything stays local">
 
@@ -283,12 +283,18 @@ code partner-cockpit     # use case B
 No Git? On the [repository page](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab) select **Code → Download ZIP**, unzip, and open the use case folder in VS Code (**File → Open Folder…**).
 Confirm **Workspace Trust**, open the Chat view and check that you can switch between **Ask**, **Plan** and **Agent** in the agent picker.
 
+For the architecture sketch (step 1f), install the **Draw.io Integration** extension — it edits `.drawio` files locally in VS Code:
+
+```bash
+code --install-extension hediet.vscode-drawio
+```
+
 ```text
 lead-generation/   or   partner-cockpit/
 |-- USE-CASE.md       the business brief — start here
 |-- MISSION.md        the deliverable spec: what the user wants and their rules
 |-- data/             all input data (read-only)
-|-- design/           you create it: data inventory, interview notes, requirements, decision record
+|-- design/           you create it: data inventory, interview notes, requirements, draw.io sketch
 |-- out/              your agents write their results here
 |-- .github/agents/   sabine / jonas: the stakeholder you will interview
 `-- solutions/        reference solution — no peeking before the checkpoints 🙈
@@ -328,7 +334,7 @@ From task 2 on, everyone works on their own machine and you compare results as a
 **Together on the driver's screen**
 
 Good agent teams aren't designed in a prompt — they're designed like any other software: **understand the problem, talk to the user,
-write down what "good" means, compare options, decide, and let others challenge it**. Copilot is your sparring partner in every step;
+write down what "good" means, compare options, decide — and sketch it**. Copilot is your sparring partner in every step;
 **your team decides**. Everything you produce goes into a `design/` folder — it becomes the spec for your agents.
 
 | Step | What you do | Result |
@@ -336,11 +342,9 @@ write down what "good" means, compare options, decide, and let others challenge 
 | 1a | Understand the use case & the data | `design/data-inventory.md` |
 | 1b | Interview the stakeholder | `design/interview-notes.md` |
 | 1c | Requirements & acceptance criteria | `design/requirements.md` |
-| 1d | Decompose: steps, dependencies, single agent or team? | decision in the chat |
-| 1e | Compare options & decide | `design/adr-001-agent-topology.md` |
-| 1f | Detailed design | `architecture.md` |
-| 1g | Pre-mortem | improved `architecture.md` |
-| 1h | Cross-team review | improved `architecture.md` |
+| 1d | Decompose, compare options & decide: one agent or a team? | decision in the chat |
+| 1e | Detailed design | `architecture.md` — the spec for your agents |
+| 1f | Architecture sketch | `design/architecture.drawio` — the picture for people |
 
 ### 1a · Understand the use case & the data
 
@@ -415,7 +419,7 @@ Mark everything that came from the interview with 🗣. Don't add requirements t
 
 </div>
 
-### 1d · Decompose: single agent or team?
+### 1d · Decompose, compare options & decide
 
 **Ask**, new chat:
 
@@ -444,87 +448,100 @@ need to review intermediate results, repeatability.
 - 🎯 **A:** Where are **company spellings** matched? Where are **existing customers** filtered out — before or after scoring?
 - 🤝 **B:** Which **perspectives** does Jonas need? Would **two opposing scenario agents** beat one "balanced" one? Who separates **facts from rumours**?
 
-### 1e · Compare options & decide
-
 Same chat:
 
 ```text
 Propose 3 clearly different architectures for this use case — for example one agent (with skills),
 a pipeline of specialized agents, or parallel perspectives with a synthesis.
 For each: the agents and their single responsibility, how they hand over work, pros, cons,
-the main risks (invented facts, personal or internal data, contradicting sources) and the effort.
+and the main risks (invented facts, personal or internal data, contradicting sources).
 Recommend one, but don't write any files.
 ```
 
 **Decide as a team** — each person names their favourite and one reason, then the interviewer decides.
 Tell Copilot what you changed, e.g. *"Option 2, but merge agents 3 and 4"* or *"Split the scenario agent into a bold and a safe one."*
 
-Switch to **Agent** in the same chat and send:
+### 1e · Detailed design
+
+Switch to **Agent** in the **same chat** (so Copilot remembers your decision) and send:
 
 ```text
-Write our decision as design/adr-001-agent-topology.md (architecture decision record):
-context, the one-agent-or-team assessment, the options table, the decision, consequences
-(including which agent serves which user story) and when we should revisit the decision.
-```
-
-### 1f · Detailed design
-
-**Agent**, new chat:
-
-```text
-#file:design/requirements.md #file:design/adr-001-agent-topology.md
+#file:design/requirements.md
 Create architecture.md in the workspace root for the option we decided on. About 1-2 pages:
 
 1. The use case in one sentence.
-2. A Mermaid flowchart (left to right) with all data sources, the agents, the handoff files in out/,
+2. Our decision: one agent or a team, which option we chose, which one we rejected and why (max. 5 bullets).
+3. A Mermaid flowchart (left to right) with all data sources, the agents, the handoff files in out/,
    and an orchestrator that runs the agents.
-3. A handoff contract table: file | producer | consumer(s) | content and structure (sections or columns).
-4. Agent cards as a table: agent | responsibility | reads | writes | tools | done when | user stories.
+4. A handoff contract table: file | producer | consumer(s) | content and structure (sections or columns).
+5. Agent cards as a table: agent | responsibility | reads | writes | tools | done when | user stories.
    Tools follow least privilege: only 'read', 'search', 'edit'.
-5. The orchestrator: in which order (or in parallel) it runs the agents as subagents, where it pauses
+6. The orchestrator: in which order (or in parallel) it runs the agents as subagents, where it pauses
    (human checkpoints) and what the human checks at each. It only delegates and reads — tools 'agent', 'read', 'search'.
-6. Shared guardrails that apply to every agent.
-7. Traceability: every user story and non-functional requirement -> the agent(s) or guardrail that covers it.
+7. Shared guardrails that apply to every agent.
+8. Traceability: every user story and non-functional requirement -> the agent(s) or guardrail that covers it.
    Flag any requirement that nothing covers.
 ```
 
-Read `architecture.md` as a team. (No Mermaid preview? No problem — agents read the text, not the picture.) Fix every requirement flagged as uncovered.
+Read `architecture.md` as a team and fix every requirement flagged as uncovered.
+`architecture.md` is the **spec for your agents** — in task 2 Copilot builds them from it.
 
-### 1g · Pre-mortem
+### 1f · Architecture sketch in draw.io
 
-Open a **new chat** (fresh context = unbiased reviewer), **Ask**:
+The Mermaid diagram is for the agents. For **people** — your team, your stakeholder, the pitch — you need a sketch you can
+**move, colour and annotate**. Let Copilot draw the first version, then make it yours.
+
+**Agent**, same chat:
 
 ```text
-#file:architecture.md #file:design/requirements.md #file:USE-CASE.md
-Pre-mortem: imagine it's the day after the conference (A) / meeting 2 (B). The result of this agent team
-was a disaster and the user stopped using it. Give the 5 most likely reasons — each tied to a specific agent,
-handoff or missing guardrail in architecture.md — and the smallest design change that would have prevented it.
-Most likely first. Max. 10 bullets.
+#file:architecture.md
+Create design/architecture.drawio: an editable draw.io diagram of this architecture.
+- Valid, uncompressed draw.io XML: <mxfile><diagram name="Architecture"><mxGraphModel><root>,
+  with the cells id="0" and id="1" parent="0"; every other cell has parent="1". No compressed content.
+- Layout left to right: data sources | agents with their handoff files | final result for the user.
+  The orchestrator spans the top. Show a human checkpoint after every step or stage.
+  Group agents that run in parallel in a dashed container.
+- Shapes and colours: data sources = cylinders (light blue; light red if personal or internal),
+  agents = blue rounded rectangles with white text (name + one-line responsibility),
+  handoff files = yellow note shapes, final result = green note shape, orchestrator = purple,
+  human checkpoints = orange hexagons, the user = a stick figure.
+- Edges: solid arrows for data flow, dashed purple arrows from the orchestrator labelled "step N" or "stage N",
+  red edges with a 🔒 label where personal or internal data flows.
+- A short legend at the bottom. No overlapping shapes, at least 40 px between shapes, grid size 10.
 ```
 
-Pick the 2–3 that matter most and let an **Agent** chat update `architecture.md`.
+**Open** `design/architecture.drawio` in VS Code — the **Draw.io Integration** extension opens it as an editable diagram.
+Then **refine it as a team** — the driver edits, everyone else directs:
 
-### 1h · Cross-team review
+- ✏️ **Layout:** move shapes until the flow reads left to right without crossing lines.
+- 🧩 **Complete:** is every agent card from `architecture.md` in the sketch — and nothing more? Every handoff file, every checkpoint?
+- 🔒 **Risks:** mark where personal or internal data flows and where it must stop. Mark where a wrong fact could enter.
+- 🗣 **Stakeholder view:** would Sabine or Jonas understand the sketch without you? Add a title and one sentence that says what the team delivers.
 
-Pair up with another team. Each team presents its `architecture.md`, then the other team challenges it with these questions:
+🔍 **Critic:** compare sketch and `architecture.md` side by side. Did you change the **design** while drawing (an agent merged, a step moved)?
+Then update the spec too:
 
-| ❓ | Question |
-| --- | --- |
-| 1 | Which **user story** does each agent serve? Is there an agent without one? |
-| 2 | Where can a **wrong fact** enter — and which step or human catches it? |
-| 3 | Where does **personal or internal data** flow, and where is it removed? |
-| 4 | What does the human check at each **checkpoint**? |
-| 5 | Which agent would you **merge or split** — and why? |
+```text
+#file:design/architecture.drawio #file:architecture.md
+We changed the design in the draw.io sketch. List the differences to architecture.md and update architecture.md to match.
+```
 
-Take your best finding home and update `architecture.md`. Then the driver shares the `design/` folder and `architecture.md` with the team (e.g. via team chat) and everyone saves them in their copy.
+<div class="tip" data-title="Diagram won't open?">
+
+> If VS Code shows *"not a valid diagram"*, ask Copilot: *"design/architecture.drawio does not open in draw.io. Fix the XML."*
+> No extension? Open the file in the [draw.io desktop app](https://www.drawio.com/) or on [app.diagrams.net](https://app.diagrams.net/) (*File → Open from → Device*) — the file stays on your machine.
+
+</div>
+
+Then the driver shares the `design/` folder and `architecture.md` with the team (e.g. via team chat) and everyone saves them in their copy.
 
 <div class="info" data-title="✅ Checkpoint 2 · Design ready">
 
-> **You should have:** `design/` with data inventory, interview notes, requirements and ADR, and an `architecture.md` with diagram,
-> handoff contracts, agent cards, the orchestrator flow with checkpoints, shared guardrails and traceability.
+> **You should have:** `design/` with data inventory, interview notes, requirements and **`architecture.drawio`**, and an `architecture.md` with
+> the decision, Mermaid diagram, handoff contracts, agent cards, the orchestrator flow with checkpoints, shared guardrails and traceability.
 > Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
 >
-> **Behind schedule?**
+> **Behind schedule?** Copy the reference spec and draw the sketch from it (step 1f):
 >
 > ```bash
 > # macOS / Linux
@@ -857,7 +874,7 @@ Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. Th
 
 Each team presents briefly:
 
-1. 🗺️ **Your architecture** — which agents, and the **one decision** from your ADR you'd defend?
+1. 🗺️ **Your architecture** — show your **draw.io sketch**: which agents, and the **one design decision** you'd defend?
 2. 🎯 **A:** your top 3 meetings for Sabine — who, what product, why now.<br/>🤝 **B:** your recommendation for Stadtwerke Lindenau and the next commitment step for meeting 2.
 3. 🔧 **One fix** — what did your agent team get wrong, and which instruction fixed it?
 4. 🗣 **Your stakeholder** — what did Sabine or Jonas tell you that changed your design?
@@ -912,9 +929,9 @@ Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 | --- | --- |
 | Data inventory with Copilot | Prompting, context engineering |
 | Stakeholder interview, requirements with acceptance criteria | Requirements engineering, spec before code |
-| One agent or a team? Options and an ADR | Agent architecture, documented decisions |
+| One agent or a team? Options and a team decision | Agent architecture |
 | Handoff contracts, agent cards, traceability | Detailed design |
-| Pre-mortem in a fresh chat, cross-team review | Context hygiene, AI-assisted and peer review |
+| Architecture sketch generated as draw.io, refined by the team | Diagrams as code, communicating a design |
 | `AGENTS.md` + `.agent.md` | Custom instructions, custom agents, least privilege |
 | Orchestrator with a checkpoint after every step | Subagents, delegation, human in the loop |
 | Fix the agent, not the output | *Miss → diagnosis → fix* |
@@ -928,6 +945,6 @@ Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 
 <div class="tip" data-title="Do this next week">
 
-> Take one recurring, multi-step task from your work and run steps 1a–1e of this lab on it — with your team, before you build anything. The clarity is the win.
+> Take one recurring, multi-step task from your work and run steps 1a–1f of this lab on it — with your team, before you build anything. The clarity is the win.
 
 </div>
