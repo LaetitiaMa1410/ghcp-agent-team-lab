@@ -345,11 +345,13 @@ ends up in every agent. Fix what's wrong directly in the file or tell Copilot ex
 | 1a | Understand the use case & the data | `design/data-inventory.md` |
 | 1b | Interview the stakeholder | `design/interview-notes.md` |
 | 1c | Requirements & acceptance criteria | `design/requirements.md` |
-| 1d | Decompose, compare options & decide: one agent or a team? | decision in the chat |
+| 1d | Break down the work, Copilot proposes architectures, the team evaluates & decides | decision in the chat |
 | 1e | Detailed design | `architecture.md` — the spec for your agents |
 | 1f | Architecture sketch | `design/architecture.drawio` — the picture for people |
 
 ### 1a · Understand the use case & the data
+
+🎯 **Why:** Agents are only as good as their understanding of the data. Before you design anything, find out what the data really contains — and the traps a naive solution would fall into: duplicates, gaps, contradictions, personal and internal data.
 
 Select the **Agent** agent and send:
 
@@ -376,6 +378,8 @@ Read every file in data/. Ignore the solutions/ and .github/agents/ folders.
 </div>
 
 ### 1b · Interview the stakeholder
+
+🎯 **Why:** Documents never tell you everything. Only the user knows how they will really use the result, what makes it useless and which rules are unwritten. Without these answers your agents optimize for the wrong thing.
 
 `USE-CASE.md` doesn't answer everything — just like in real life. **Sabine** (A) and **Jonas** (B) are waiting for your questions.
 
@@ -424,6 +428,8 @@ Create design/interview-notes.md with the following interview summary. Keep the 
 
 ### 1c · Requirements & acceptance criteria
 
+🎯 **Why:** Requirements turn what you learned into **checkable criteria**. They are the yardstick for everything that follows: the architecture must cover them, every agent gets the ones it serves, and in task 3 you check the result against them.
+
 **Agent**, new chat:
 
 ```text
@@ -459,9 +465,13 @@ Mark everything that came from the interview with 🗣. Don't add requirements t
 
 </div>
 
-### 1d · Decompose, compare options & decide
+### 1d · Compare architectures & decide
 
-**Ask**, new chat:
+🎯 **Why:** There is never just one way to build it — one agent, a pipeline, parallel experts. Here **Copilot proposes** different
+architectures and **your team evaluates and decides**. Copilot is good at generating options; only you can judge them against
+what your stakeholder needs — and you have to defend the design in the pitch.
+
+**① Break down the work.** **Ask**, new chat:
 
 ```text
 #file:design/requirements.md #file:design/data-inventory.md
@@ -483,25 +493,39 @@ need to review intermediate results, repeatability.
 | **intermediate results** need a human check | checking the end result is enough |
 | a **synthesis** of different views is needed | there are **few conflicts** in the data |
 
-🔍 **Critic:** Which step **must** come first? Where could the AI **invent** something? Where does **personal or internal data** flow?
-
-- 🎯 **A:** Where are **company spellings** matched? Where are **existing customers** filtered out — before or after scoring?
-- 🤝 **B:** Which **perspectives** does Jonas need? Would **two opposing scenario agents** beat one "balanced" one? Who separates **facts from rumours**?
-
-Same chat:
+**② Copilot proposes architectures.** Same chat:
 
 ```text
 Propose 3 clearly different architectures for this use case — for example one agent (with skills),
 a pipeline of specialized agents, or parallel perspectives with a synthesis.
 For each: the agents and their single responsibility, how they hand over work, pros, cons,
 and the main risks (invented facts, personal or internal data, contradicting sources).
-Recommend one, but don't write any files.
+Don't recommend one yet and don't write any files.
 ```
 
-**Decide as a team** — each person names their favourite and one reason, then the interviewer decides.
-Tell Copilot what you changed, e.g. *"Option 2, but merge agents 3 and 4"* or *"Split the scenario agent into a bold and a safe one."*
+**③ Evaluate the options as a team.** Let Copilot put them side by side:
+
+```text
+Compare the 3 options in one table. Rows: every user story and non-functional requirement from
+design/requirements.md, plus: risk of invented facts, protection of personal and internal data,
+where a human can check intermediate results, and how easy it is to find and fix the agent that caused an error.
+Columns: option 1 | option 2 | option 3. Rate each cell ✅ / ⚠️ / ❌ with a short reason.
+```
+
+Don't take the ratings for granted — challenge them. 🔍 **Critic:**
+
+- Which step **must** come first? Where could the AI **invent** something? Where does **personal or internal data** flow — and where must it stop?
+- Is every agent **really needed**? Every extra agent is one more handoff that can go wrong.
+- 🎯 **A:** Where are **company spellings** matched? Where are **existing customers** filtered out — before or after scoring?
+- 🤝 **B:** Which **perspectives** does Jonas need? Would **two opposing scenario agents** beat one "balanced" one? Who separates **facts from rumours**?
+
+**④ Decide.** Each person names their favourite and one reason, then the interviewer decides. You may combine options.
+Tell Copilot what you decided, e.g. *"Option 2, but merge agents 3 and 4"* or *"Option 3, but split the scenario agent into a bold and a safe one."*
+Your decision — and why you rejected the others — goes into `architecture.md` in the next step.
 
 ### 1e · Detailed design
+
+🎯 **Why:** Your decision becomes a **spec**. In task 2 Copilot builds your agents from `architecture.md` — every responsibility, handoff file or checkpoint that is missing here will be missing in your agents.
 
 Switch to **Agent** in the **same chat** (so Copilot remembers your decision) and send:
 
@@ -537,8 +561,9 @@ Create architecture.md in the workspace root for the option we decided on. About
 
 ### 1f · Architecture sketch in draw.io
 
-The Mermaid diagram is for the agents. For **people** — your team, your stakeholder, the pitch — you need a sketch you can
-**move, colour and annotate**. Let Copilot draw the first version, then make it yours.
+🎯 **Why:** `architecture.md` is for the agents. For **people** — your team, your stakeholder, the pitch — you need a sketch you can
+**move, colour and annotate**. Drawing it together also reveals gaps: a missing handoff, an unguarded data flow.
+Let Copilot draw the first version, then make it yours.
 
 **Agent**, same chat:
 
@@ -614,6 +639,8 @@ An **orchestrator** agent then runs the team for you — and stops after every s
 
 ### 2a · Shared guardrails in `AGENTS.md`
 
+🎯 **Why:** Some rules apply to **every** agent — data protection, sources, where to write. Every agent loads `AGENTS.md`, so you write these rules once, and a fix here fixes all agents.
+
 **Agent**, new chat:
 
 ```text
@@ -637,6 +664,8 @@ Max. 15 lines, concrete and checkable.
 </div>
 
 ### 2b · Generate the specialized agents
+
+🎯 **Why:** Each agent card from `architecture.md` becomes a real agent with **one responsibility** and a **small, focused context**. That makes its output predictable — and when something goes wrong, you can fix and re-run just that agent.
 
 Same chat:
 
@@ -665,7 +694,7 @@ Your agents should now appear in the agent picker. Not there? Check **Chat: Open
 
 ### 2c · Generate the orchestrator
 
-The orchestrator calls your agents as **subagents** — each runs with its own, fresh context — and **pauses after every step**.
+🎯 **Why:** Someone has to run the team in the right order. The orchestrator calls your agents as **subagents** — each runs with its own, fresh context — and **pauses after every step**.
 That pause is your **human checkpoint**: an error in step 1 would otherwise silently poison everything after it.
 
 Same chat:
@@ -697,6 +726,8 @@ with the right output files? The detailed review follows in **2d**.
 💬 **Think about it:** Why does the orchestrator have no `edit` tool?
 
 ### 2d · Own one agent
+
+🎯 **Why:** Copilot generated the agents — now every agent needs an owner. Reviewing one agent in depth catches the gaps **between** agents (who does what, which file is expected) before they show up in the result.
 
 **Each person owns one agent** (someone takes the orchestrator) and reviews it:
 
@@ -736,6 +767,8 @@ Does every file an agent reads exist by then?
 
 ### 3a · Run the team
 
+🎯 **Why:** Now you see whether your design works on the real data. Running step by step lets you catch an error **where it happens** — not three agents later.
+
 New chat, select your **orchestrator** in the agent picker and send *"Prepare the result for Sabine."* (A) or *"Prepare the partner cockpit for meeting 2."* (B).
 Watch the subagents appear in the chat.
 
@@ -745,6 +778,8 @@ All good? Reply `continue`. Something wrong? Describe it — then fix the agent 
 🤝 Split the work: one person drives the orchestrator, the others review the handoff files at each checkpoint.
 
 ### 3b · Check against your requirements 🥚
+
+🎯 **Why:** The result must meet the criteria your stakeholder signed off in 1c — not just look good. The checklist points you to the traps hidden in the data.
 
 First go through the **acceptance criteria** in `design/requirements.md` — met or not?
 Then check the final result and the handoff files with the checklist. Every "yes, handled correctly" is a point.
@@ -790,6 +825,8 @@ Compare with your teammates — **same agents, same data — same result?**
 *"Would you take this into your meeting? What would you change?"*
 
 ### 3c · Fix the agent, not the output
+
+🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **agent** makes the improvement repeatable.
 
 Found a problem? **Don't edit `out/`** — fix the cause:
 

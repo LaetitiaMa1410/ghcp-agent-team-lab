@@ -16,7 +16,7 @@
 | --- | --- | --- |
 | 0:00–0:15 | Choose a use case, setup, roles | Tell both stories in 1 minute each. Teams pick a use case and roles within 3 min. Check they open the **use case folder**, not the repo root, and that `sabine` / `jonas` show up in the agent picker. |
 | 0:15–0:45 | 1a–1c · Data, interview, requirements | Make sure teams **really interview** (one question at a time, follow-ups) instead of asking for "everything you know". At 0:45: **checkpoint 1** — every team has a signed-off `requirements.md`. |
-| 0:45–1:00 | 1d · Decompose, options, decide | Push teams to **decide** and say *why*. Ask: *"Which option did you reject, and why?"* |
+| 0:45–1:00 | 1d · Compare architectures & decide | Push teams to **decide** and say *why*. Ask: *"Which option did you reject, and why?"* |
 | 1:00–1:10 | 1e · Detailed design | Check the traceability section: is any requirement uncovered? |
 | 1:10–1:30 | 1f · Architecture sketch in draw.io | If the generated file doesn't open, let Copilot fix the XML. Push teams to **refine** the sketch (layout, risks, stakeholder view) and to sync design changes back into `architecture.md`. At 1:30: **checkpoint 2**. |
 | 1:30–1:40 | ☕ Break | Remind the driver to share `design/` and `architecture.md`. |
