@@ -661,7 +661,7 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 > | `architecture.md` | Platform-neutral: decision and pattern, Mermaid diagram, handoff contracts, agent cards, orchestration flow with checkpoints, shared guardrails, traceability | **The spec** — Copilot builds `AGENTS.md`, the agents and the orchestrator from it; the same spec works for hosted agents |
 > | `design/architecture.drawio` | The refined sketch, in sync with `architecture.md` | Explaining the design to your stakeholder and in the pitch |
 >
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6#reference-solutions) — can you explain *why* yours is different?
+> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7#reference-solutions) — can you explain *why* yours is different?
 
 </div>
 
@@ -678,13 +678,23 @@ and in both Copilot writes the implementation while your team reviews it.
 | **You run it** | In the VS Code chat | In your terminal — and as an extension, as hosted agents in Microsoft Foundry |
 | **You need** | VS Code with GitHub Copilot | Additionally Python, uv, Azure CLI and a Foundry project with a model |
 | **Choose it if** | you want to test the design fast — or nobody on the team writes code | your team can read Python and wants a path to production |
-| **Continue with** | 2a below, then task 3 | [Path 2 · Pro-code agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) |
+| **Continue with** | [👉 Path 1 · GitHub Copilot custom agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) | [👉 Path 2 · Pro-code agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) |
 
-### Path 1 · GitHub Copilot custom agents
+Decide as a team, then **everyone** opens the page of your path. Both pages end with your result in `out/` — then you meet again for the [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7).
+
+---
+
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
+
+# Path 1 · GitHub Copilot custom agents
+
+**Everyone on their own machine**
 
 In every prompt below you tell Copilot how the platform-neutral design maps to Copilot. The design becomes **configuration**: shared rules go into `AGENTS.md`, role-specific
 instructions into one `.agent.md` file per agent. Each agent gets a **small, focused context** — so you can test, fix and re-run one without touching the others.
 An **orchestrator** agent then runs the team for you — and stops after every step so you stay in control.
+
+## 2 · Build the agent team
 
 ### 2a · Shared guardrails in `AGENTS.md`
 
@@ -811,7 +821,7 @@ Does every file an agent reads exist by then?
 
 ## 3 · Run, check & improve
 
-**Everyone on their own machine** · Path 1 — path 2 runs and checks on [its own page](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4)
+**Everyone on their own machine**
 
 ### 3a · Run the team
 
@@ -893,7 +903,7 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 > **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left, take on a [🚀 bonus challenge](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5).
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7) — or, if you have time left, take on a [🚀 bonus challenge](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
 
 </div>
 
@@ -1073,7 +1083,7 @@ Something wrong? `s` — and fix the agent first (P5).
 
 🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **code or instructions** makes the improvement repeatable.
 
-Check the final result with the checklist for your use case from [3b · Check against your requirements](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=3) —
+Check the final result with the checklist for your use case from [3b · Check against your requirements](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) —
 it's the same data, so it's the same traps. Found a problem? **Agent**, new chat:
 
 ```text
@@ -1090,7 +1100,7 @@ Review the change, run `uv run pytest`, then run the flow again and answer `r` a
 
 > **You should have:** `app/` with config, guardrails, tools, one module per agent and the orchestrator workflow — all reviewed, all tests green —
 > a complete local run in the terminal with the final result in `out/`, and at least one improved agent.
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left and Azure access, the deployment extension below.
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7) — or, if you have time left and Azure access, the deployment extension below.
 
 </div>
 
@@ -1289,7 +1299,7 @@ Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. Th
 > New-Item -ItemType Directory -Force .github/skills, .github/hooks | Out-Null; Copy-Item -Recurse solutions/bonus/skills/quality-check .github/skills/; Copy-Item solutions/bonus/hooks/* .github/hooks/
 > ```
 >
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7).
 
 </div>
 
