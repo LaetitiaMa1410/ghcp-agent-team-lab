@@ -337,6 +337,9 @@ Good agent teams aren't designed in a prompt — they're designed like any other
 write down what "good" means, compare options, decide — and sketch it**. Copilot is your sparring partner in every step;
 **your team decides**. Everything you produce goes into a `design/` folder — it becomes the spec for your agents.
 
+**Every artifact is reviewed by the team before you move on.** Your agents are built from these files: a mistake you don't catch here
+ends up in every agent. Fix what's wrong directly in the file or tell Copilot exactly what to change — don't just regenerate and hope.
+
 | Step | What you do | Result |
 | --- | --- | --- |
 | 1a | Understand the use case & the data | `design/data-inventory.md` |
@@ -362,7 +365,15 @@ Read every file in data/. Ignore the solutions/ and .github/agents/ folders.
 3. Below the table: the 3-5 things in the data that would trick a naive solution, and what that means for the design.
 ```
 
-🔍 **Critic:** open **two** of the data files yourself. Are the issues Copilot found really there? Did it miss one? Did it *invent* one?
+<div class="important" data-title="👀 Review `design/data-inventory.md` before you move on">
+
+> The data inventory is the basis for your requirements and later for your agents. The 🔍 **Critic** leads:
+>
+> - Open **two** data files yourself. Are the issues Copilot found really there? Did it miss one? Did it *invent* one?
+> - Is **every** file in `data/` in the table — with personal and confidential data marked correctly?
+> - Do the 3–5 "tricky things" match what you saw in the files?
+
+</div>
 
 ### 1b · Interview the stakeholder
 
@@ -394,6 +405,16 @@ Create design/interview-notes.md with the following interview summary. Keep the 
 <paste the summary here>
 ```
 
+<div class="important" data-title="👀 Review `design/interview-notes.md` before you move on">
+
+> The interview notes are your only source for what the user said. The 💼 **Interviewer** leads:
+>
+> - Compare with the stakeholder chat: is **everything** in the notes — nothing added, nothing lost?
+> - Mark what **adds to** or **contradicts** `USE-CASE.md` and `MISSION.md`.
+> - Still unclear? Add it as an **open question** instead of guessing.
+
+</div>
+
 <div class="warning" data-title="Don't peek">
 
 > Don't open `.github/agents/sabine.agent.md` or `jonas.agent.md` — a real stakeholder doesn't come with a file either.
@@ -417,10 +438,18 @@ Create design/requirements.md:
 Mark everything that came from the interview with 🗣. Don't add requirements that no source supports.
 ```
 
+<div class="important" data-title="👀 Review `design/requirements.md` before you move on">
+
+> Your agents and the final quality gate check against these criteria. The 🔍 **Critic** leads:
+>
+> - Is every acceptance criterion **checkable** with yes or no? *"Good briefing"* is not. *"Exactly 6 meetings, only new customers"* is.
+> - Does every requirement have a **source**? Is every 🗣 item really from the interview — nothing invented?
+> - Is anything from `design/interview-notes.md` or `design/data-inventory.md` **missing**?
+
+</div>
+
 **Sign-off:** go back to the stakeholder chat and paste the user stories and acceptance criteria:
 *"If our result meets all of these, would you use it? What's missing or wrong?"* — then update `requirements.md`.
-
-🔍 **Critic:** is every acceptance criterion **checkable**? *"Good briefing"* is not. *"Exactly 6 meetings, only new customers"* is.
 
 <div class="info" data-title="✅ Checkpoint 1 · Problem understood">
 
@@ -494,8 +523,17 @@ Create architecture.md in the workspace root for the option we decided on. About
    Flag any requirement that nothing covers.
 ```
 
-Read `architecture.md` as a team and fix every requirement flagged as uncovered.
-`architecture.md` is the **spec for your agents** — in task 2 Copilot builds them from it.
+<div class="important" data-title="👀 Review `architecture.md` before you move on">
+
+> This is the **spec for your agents** — in task 2 Copilot builds them from it, line by line. Read it as a team:
+>
+> - Does it describe the option **you** decided on in 1d — not Copilot's favourite?
+> - **Agent cards:** one responsibility each, exact paths for reads and writes, least-privilege tools?
+> - **Handoff contracts:** does every file contain what the next agent needs?
+> - **Orchestrator:** is it clear what the human checks at each checkpoint?
+> - **Traceability:** fix every requirement flagged as uncovered.
+
+</div>
 
 ### 1f · Architecture sketch in draw.io
 
@@ -522,7 +560,7 @@ Create design/architecture.drawio: an editable draw.io diagram of this architect
 ```
 
 **Open** `design/architecture.drawio` in VS Code — the **Draw.io Integration** extension opens it as an editable diagram.
-Then **refine it as a team** — the driver edits, everyone else directs:
+Then **review and refine it as a team** before you move on — the driver edits, everyone else directs:
 
 - ✏️ **Layout:** move shapes until the flow reads left to right without crossing lines.
 - 🧩 **Complete:** is every agent card from `architecture.md` in the sketch — and nothing more? Every handoff file, every checkpoint?
@@ -585,9 +623,18 @@ that apply to every agent — nothing role-specific. Include the non-functional 
 Max. 15 lines, concrete and checkable.
 ```
 
-Make sure it covers: **no internet**, **`data/` is read-only**, **write only to `out/`**, **no e-mail addresses or phone numbers in outputs**,
-**every claim backed by a source file**, **say "unknown" instead of guessing**. 🤝 **B** also needs: **statement labels**, **no invented numbers**,
-**internal stays internal**, **politically neutral**. Add what's missing yourself.
+<div class="important" data-title="👀 Review `AGENTS.md` before you move on">
+
+> Every agent loads this file — a gap here is a gap in all of them. Check that it covers:
+>
+> - **no internet** · **`data/` is read-only** · **write only to `out/`** · **no e-mail addresses or phone numbers in outputs**
+> - **every claim backed by a source file** · **say "unknown" instead of guessing**
+> - 🤝 **B** also: **statement labels** · **no invented numbers** · **internal stays internal** · **politically neutral**
+> - every **non-functional requirement** from `design/requirements.md` — and **nothing role-specific**
+>
+> Add what's missing yourself.
+
+</div>
 
 ### 2b · Generate the specialized agents
 
@@ -613,6 +660,8 @@ Don't repeat the guardrails from AGENTS.md.
 ```
 
 Your agents should now appear in the agent picker. Not there? Check **Chat: Open Customizations → Agents** for frontmatter errors.
+
+👀 **Quick review:** one file per agent card in `architecture.md`, with the same names and output files? The detailed review of every agent follows in **2d**.
 
 ### 2c · Generate the orchestrator
 
@@ -641,6 +690,9 @@ Body:
 - after the last step: a quality gate against the acceptance criteria in design/requirements.md and AGENTS.md —
   PASS or FAIL per criterion, with findings and which agent to fix.
 ```
+
+👀 **Quick review:** open `orchestrator.agent.md` — is the *one step per turn* rule at the top? Are the steps in the order of `architecture.md`,
+with the right output files? The detailed review follows in **2d**.
 
 💬 **Think about it:** Why does the orchestrator have no `edit` tool?
 
