@@ -666,7 +666,7 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 > | `architecture.md` | Platform-neutral: decision and pattern, Mermaid diagram, handoff contracts, agent cards, orchestration flow with checkpoints, shared guardrails, traceability | **The spec** — Copilot builds `AGENTS.md`, the agents and the orchestrator from it; the same spec works for hosted agents |
 > | `design/architecture.drawio` | The refined sketch, in sync with `architecture.md` | Explaining the design to your stakeholder and in the pitch |
 >
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7#reference-solutions) — can you explain *why* yours is different?
+> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6#reference-solutions) — can you explain *why* yours is different?
 
 </div>
 
@@ -685,7 +685,7 @@ and in both Copilot writes the implementation while your team reviews it.
 | **Choose it if** | you want to test the design fast — or nobody on the team writes code | your team can read Python and wants a path to production |
 | **Continue with** | [👉 Path 1 · GitHub Copilot custom agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) | [👉 Path 2 · Pro-code agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) |
 
-Decide as a team, then **everyone** opens the page of your path. Both pages end with your result in `out/` — then you meet again for the [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7).
+Decide as a team, then **everyone** opens the page of your path. Both pages end with your result in `out/` — then you meet again for the [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
 
 ---
 
@@ -710,6 +710,7 @@ An **orchestrator** agent then runs the team for you — and stops after every s
 | P5 | Run the agent flow in the VS Code chat | the result in `out/` |
 | P6 | Check against your requirements | your findings |
 | P7 | Fix the agent, not the output | improved agents |
+| 🚀 P8 | Extension: bonus challenges — skill & hook | `.github/skills/`, `.github/hooks/` |
 
 ## P1 · Shared guardrails in `AGENTS.md`
 
@@ -914,7 +915,116 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 > **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7) — or, if you have time left, take on a [🚀 bonus challenge](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left, take on a 🚀 bonus challenge below.
+
+</div>
+
+## 🚀 P8 · Extension: bonus challenges
+
+**For teams that finished checkpoint 4 early.** Pick any challenge, in any order — each one extends the agent team you already have.
+When the pitch starts, stop and pitch what you have.
+
+| | Challenge | You learn |
+| --- | --- | --- |
+| 🧰 | **B1 · Skill** — turn the quality checklist into a reusable skill | When to use a skill instead of instructions or an agent |
+| 🪝 | **B2 · Hook** — make `data/` *really* read-only | Instructions ask, hooks enforce |
+
+### B1 · Skill
+
+Your quality checklist from P6 is useful again and again — for every run, and for every reviewer.
+That's what **skills** are for: a folder with instructions (and optionally scripts or templates) that Copilot loads **only when needed**.
+
+| Put it in… | when it is… |
+| --- | --- |
+| `AGENTS.md` | a rule that **always** applies to every agent |
+| `.github/agents/*.agent.md` | a **role** with its own tools and responsibility |
+| `.github/skills/*/SKILL.md` | a **reusable capability** that any agent (or you) can use **on demand** |
+
+**Agent**, new chat — paste your checklist from P6 at the end:
+
+```text
+Create a project skill in .github/skills/quality-check/SKILL.md.
+
+Frontmatter:
+- name: quality-check
+- description: what it checks and when to use it (one sentence)
+
+Body:
+- read design/requirements.md, MISSION.md, AGENTS.md and all files in out/; verify claims against data/; never change any file
+- one check per checklist item below, each with a clear "pass when" condition
+- output: a table  # | check | PASS/FAIL | evidence , then an overall PASS or FAIL,
+  and for every FAIL the agent in .github/agents/ that caused it and the missing instruction
+
+Checklist:
+<paste the checklist for your use case>
+```
+
+**Test it:** new chat, **Agent**, type `/quality-check` and send. Not there? Check **Chat: Open Customizations → Skills**.
+Then add one line to your orchestrator's quality gate: *"Use the quality-check skill."*
+
+### B2 · Hook
+
+`AGENTS.md` says *"`data/` is read-only"*. But that's a **request** to the model — it usually follows it, but nothing *enforces* it.
+A **hook** is a command that runs at a fixed point in the agent's workflow — for example **before every tool call** — and can **deny** it.
+Deterministic, outside the model.
+
+<div class="warning" data-title="Stretch challenge — check the prerequisites first">
+
+> - **Node.js** installed (`node --version`) — the hook script is JavaScript.
+> - Hooks are a **preview** feature and may be **disabled by your organization**. Use the **Copilot** session target (not *Local*) if your VS Code offers the choice.
+> - Copilot loads hooks from `.github/hooks/` at the **root of the Git repository**. You opened a subfolder, so run `git init` once in your use case folder.
+> - The folder must be **trusted** (Workspace Trust).
+
+</div>
+
+**Agent**, new chat:
+
+```text
+Create a Copilot hook that makes data/ read-only:
+
+1. .github/hooks/protect-data.json
+   { "version": 1, "hooks": { "preToolUse": [ { "type": "command",
+     "command": "node .github/hooks/protect-data.cjs", "timeoutSec": 10 } ] } }
+
+2. .github/hooks/protect-data.cjs
+   - read the event JSON from stdin; fields: cwd, toolName, toolArgs (object or JSON string)
+   - if the tool changes files (edit, create, apply_patch, ...) and a target path is inside data/,
+     print {"permissionDecision":"deny","permissionDecisionReason":"data/ is read-only. Write to out/ instead."}
+   - otherwise print {}
+```
+
+**Test it** — send a fake "edit a file in `data/`" event to your hook script, exactly as Copilot would:
+
+```bash
+echo '{"cwd":".","toolName":"edit","toolArgs":{"path":"data/test.md"}}' | node .github/hooks/protect-data.cjs
+```
+
+```powershell
+'{"cwd":".","toolName":"edit","toolArgs":{"path":"data/test.md"}}' | node .github/hooks/protect-data.cjs
+```
+
+Expected: `{"permissionDecision":"deny",...}`. Change the path to `out/test.md` → expected: `{}`.
+
+Now try it live: **new chat** (hooks load when a session starts), **Agent**: *"Try to create data/hook-test.md with the line TEST and tell me exactly what happened."*
+Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. The hook is the **safety net** for the day they don't.
+
+💬 **Think about it:** Which of your other rules should be **enforced** by a hook instead of just being **asked for** in `AGENTS.md`?
+
+<div class="info" data-title="✅ Reference solutions">
+
+> Skill and hook: `solutions/bonus/`. To install them:
+>
+> ```bash
+> # macOS / Linux
+> mkdir -p .github/skills .github/hooks && cp -R solutions/bonus/skills/quality-check .github/skills/ && cp solutions/bonus/hooks/* .github/hooks/
+> ```
+>
+> ```powershell
+> # Windows PowerShell
+> New-Item -ItemType Directory -Force .github/skills, .github/hooks | Out-Null; Copy-Item -Recurse solutions/bonus/skills/quality-check .github/skills/; Copy-Item solutions/bonus/hooks/* .github/hooks/
+> ```
+>
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
 
 </div>
 
@@ -1111,7 +1221,7 @@ Review the change, run `uv run pytest`, then run the flow again and answer `r` a
 
 > **You should have:** `app/` with config, guardrails, tools, one module per agent and the orchestrator workflow — all reviewed, all tests green —
 > a complete local run in the terminal with the final result in `out/`, and at least one improved agent.
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7) — or, if you have time left and Azure access, the deployment extension below.
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left and Azure access, the deployment extension below.
 
 </div>
 
@@ -1264,119 +1374,6 @@ azd down
 | **GitHub Actions + Bicep + azd** | Tests, then provision and deploy — with OIDC, no secrets |
 
 Same `architecture.md`, three runtimes: VS Code (path 1), your terminal (path 2) and Azure. Only the **mapping** changes — the design stays.
-
----
-
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
-
-# 🚀 Bonus challenges
-
-**For path 1 teams that finished checkpoint 4 early** (path 2 has its own deployment extension). Pick any challenge, in any order — each one extends the agent team you already have.
-When the pitch starts, stop and pitch what you have.
-
-| | Challenge | You learn |
-| --- | --- | --- |
-| 🧰 | **B1 · Skill** — turn the quality checklist into a reusable skill | When to use a skill instead of instructions or an agent |
-| 🪝 | **B2 · Hook** — make `data/` *really* read-only | Instructions ask, hooks enforce |
-
-## B1 · Skill
-
-Your quality checklist from P6 is useful again and again — for every run, and for every reviewer.
-That's what **skills** are for: a folder with instructions (and optionally scripts or templates) that Copilot loads **only when needed**.
-
-| Put it in… | when it is… |
-| --- | --- |
-| `AGENTS.md` | a rule that **always** applies to every agent |
-| `.github/agents/*.agent.md` | a **role** with its own tools and responsibility |
-| `.github/skills/*/SKILL.md` | a **reusable capability** that any agent (or you) can use **on demand** |
-
-**Agent**, new chat — paste your checklist from P6 at the end:
-
-```text
-Create a project skill in .github/skills/quality-check/SKILL.md.
-
-Frontmatter:
-- name: quality-check
-- description: what it checks and when to use it (one sentence)
-
-Body:
-- read design/requirements.md, MISSION.md, AGENTS.md and all files in out/; verify claims against data/; never change any file
-- one check per checklist item below, each with a clear "pass when" condition
-- output: a table  # | check | PASS/FAIL | evidence , then an overall PASS or FAIL,
-  and for every FAIL the agent in .github/agents/ that caused it and the missing instruction
-
-Checklist:
-<paste the checklist for your use case>
-```
-
-**Test it:** new chat, **Agent**, type `/quality-check` and send. Not there? Check **Chat: Open Customizations → Skills**.
-Then add one line to your orchestrator's quality gate: *"Use the quality-check skill."*
-
-## B2 · Hook
-
-`AGENTS.md` says *"`data/` is read-only"*. But that's a **request** to the model — it usually follows it, but nothing *enforces* it.
-A **hook** is a command that runs at a fixed point in the agent's workflow — for example **before every tool call** — and can **deny** it.
-Deterministic, outside the model.
-
-<div class="warning" data-title="Stretch challenge — check the prerequisites first">
-
-> - **Node.js** installed (`node --version`) — the hook script is JavaScript.
-> - Hooks are a **preview** feature and may be **disabled by your organization**. Use the **Copilot** session target (not *Local*) if your VS Code offers the choice.
-> - Copilot loads hooks from `.github/hooks/` at the **root of the Git repository**. You opened a subfolder, so run `git init` once in your use case folder.
-> - The folder must be **trusted** (Workspace Trust).
-
-</div>
-
-**Agent**, new chat:
-
-```text
-Create a Copilot hook that makes data/ read-only:
-
-1. .github/hooks/protect-data.json
-   { "version": 1, "hooks": { "preToolUse": [ { "type": "command",
-     "command": "node .github/hooks/protect-data.cjs", "timeoutSec": 10 } ] } }
-
-2. .github/hooks/protect-data.cjs
-   - read the event JSON from stdin; fields: cwd, toolName, toolArgs (object or JSON string)
-   - if the tool changes files (edit, create, apply_patch, ...) and a target path is inside data/,
-     print {"permissionDecision":"deny","permissionDecisionReason":"data/ is read-only. Write to out/ instead."}
-   - otherwise print {}
-```
-
-**Test it** — send a fake "edit a file in `data/`" event to your hook script, exactly as Copilot would:
-
-```bash
-echo '{"cwd":".","toolName":"edit","toolArgs":{"path":"data/test.md"}}' | node .github/hooks/protect-data.cjs
-```
-
-```powershell
-'{"cwd":".","toolName":"edit","toolArgs":{"path":"data/test.md"}}' | node .github/hooks/protect-data.cjs
-```
-
-Expected: `{"permissionDecision":"deny",...}`. Change the path to `out/test.md` → expected: `{}`.
-
-Now try it live: **new chat** (hooks load when a session starts), **Agent**: *"Try to create data/hook-test.md with the line TEST and tell me exactly what happened."*
-Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. The hook is the **safety net** for the day they don't.
-
-💬 **Think about it:** Which of your other rules should be **enforced** by a hook instead of just being **asked for** in `AGENTS.md`?
-
-<div class="info" data-title="✅ Reference solutions">
-
-> Skill and hook: `solutions/bonus/`. To install them:
->
-> ```bash
-> # macOS / Linux
-> mkdir -p .github/skills .github/hooks && cp -R solutions/bonus/skills/quality-check .github/skills/ && cp solutions/bonus/hooks/* .github/hooks/
-> ```
->
-> ```powershell
-> # Windows PowerShell
-> New-Item -ItemType Directory -Force .github/skills, .github/hooks | Out-Null; Copy-Item -Recurse solutions/bonus/skills/quality-check .github/skills/; Copy-Item solutions/bonus/hooks/* .github/hooks/
-> ```
->
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=7).
-
-</div>
 
 ---
 

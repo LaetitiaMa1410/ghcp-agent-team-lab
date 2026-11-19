@@ -156,6 +156,6 @@ Tested with Copilot CLI: the reference hook blocked an `apply_patch` into `data/
 ## Adapting the lab
 
 - **2 hours:** see the 2-hour variant above.
-- **Longer (3.5 h):** make the [bonus challenges](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) (skill, hook) part of the plan for everyone — about 20–30 minutes.
+- **Longer (3.5 h):** make the [bonus challenges](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4#-p8--extension-bonus-challenges) (skill, hook) part of the plan for everyone — about 20–30 minutes.
 - **Architecture only (90 min):** run steps 1a–1f and stop at checkpoint 2 — a good format for architects and product owners.
 - **Your own use case:** copy a use case folder and replace `USE-CASE.md`, `MISSION.md`, `data/` and the stakeholder agent — the lab steps stay the same.
