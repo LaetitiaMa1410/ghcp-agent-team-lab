@@ -319,12 +319,6 @@ lead-generation/   or   partner-cockpit/
 Task 1 runs on the driver's screen; at the end the driver shares `design/` and `architecture.md` (e.g. via team chat) and everyone saves them in their copy.
 From task 2 on, everyone works on their own machine and you compare results as a team.
 
-<div class="warning" data-title="Keep an eye on the clock">
-
-> Every task ends with a **checkpoint**. Behind schedule? Use it and move on — a finished pipeline beats a perfect architecture without a result.
-
-</div>
-
 ---
 
 # Hands-on
@@ -460,8 +454,6 @@ Mark everything that came from the interview with 🗣. Don't add requirements t
 <div class="info" data-title="✅ Checkpoint 1 · Problem understood">
 
 > **You should have:** `design/data-inventory.md`, `design/interview-notes.md` and a `design/requirements.md` your stakeholder signed off.
-> **Behind schedule?** Copy the reference: `mkdir -p design && cp solutions/design/data-inventory.md solutions/design/requirements.md design/`
-> (PowerShell: `New-Item -ItemType Directory -Force design | Out-Null; Copy-Item solutions/design/data-inventory.md, solutions/design/requirements.md design/`)
 
 </div>
 
@@ -600,18 +592,6 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 > **You should have:** `design/` with data inventory, interview notes, requirements and **`architecture.drawio`**, and an `architecture.md` with
 > the decision, Mermaid diagram, handoff contracts, agent cards, the orchestrator flow with checkpoints, shared guardrails and traceability.
 > Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
->
-> **Behind schedule?** Copy the reference spec and draw the sketch from it (step 1f):
->
-> ```bash
-> # macOS / Linux
-> mkdir -p design && cp solutions/design/*.md design/ && cp solutions/architecture.md architecture.md
-> ```
->
-> ```powershell
-> # Windows PowerShell
-> New-Item -ItemType Directory -Force design | Out-Null; Copy-Item solutions/design/*.md design/; Copy-Item solutions/architecture.md architecture.md
-> ```
 
 </div>
 
@@ -733,17 +713,7 @@ Does every file an agent reads exist by then?
 
 <div class="info" data-title="✅ Checkpoint 3">
 
-> **You should have:** `AGENTS.md`, one `.agent.md` per agent plus the orchestrator, all visible in the agent picker. **Behind schedule?** Copy the reference agents (orchestrator: `lead-orchestrator` (A) / `concierge` (B)):
->
-> ```bash
-> # macOS / Linux
-> mkdir -p .github/agents && cp solutions/agents/*.agent.md .github/agents/ && cp solutions/AGENTS.reference.md AGENTS.md
-> ```
->
-> ```powershell
-> # Windows PowerShell
-> New-Item -ItemType Directory -Force .github/agents | Out-Null; Copy-Item solutions/agents/*.agent.md .github/agents/; Copy-Item solutions/AGENTS.reference.md AGENTS.md
-> ```
+> **You should have:** `AGENTS.md`, one `.agent.md` per agent plus the orchestrator, all visible in the agent picker.
 
 </div>
 

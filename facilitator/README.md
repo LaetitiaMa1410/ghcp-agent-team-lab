@@ -20,7 +20,7 @@
 | 1:00–1:10 | 1e · Detailed design | Check the traceability section: is any requirement uncovered? |
 | 1:10–1:30 | 1f · Architecture sketch in draw.io | If the generated file doesn't open, let Copilot fix the XML. Push teams to **refine** the sketch (layout, risks, stakeholder view) and to sync design changes back into `architecture.md`. At 1:30: **checkpoint 2**. |
 | 1:30–1:40 | ☕ Break | Remind the driver to share `design/` and `architecture.md`. |
-| 1:40–2:10 | Task 2 · Build the agent team | At 2:00: teams without agents should use **checkpoint 3**. |
+| 1:40–2:10 | Task 2 · Build the agent team | At 2:00: help teams without agents get to **checkpoint 3**. |
 | 2:10–2:40 | Task 3 · Run, check & improve | Make sure teams really **open the files** at each orchestrator checkpoint instead of typing `continue` blindly. Remind: fix the agent, not the output. Fast teams → bonus. |
 | 2:40–3:00 | Task 4 · Pitch & debrief | 2 minutes per team. You (or volunteers) play Sabine and Jonas and vote. 5–8 min debrief. |
 
