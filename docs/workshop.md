@@ -3,7 +3,7 @@ published: true
 type: workshop
 title: "From Use Case to Agent Team"
 short_title: "From Use Case to Agent Team"
-A 3-hour hands-on lab (2-hour variant). Pick one of two real-world sales use cases, interview the stakeholder, run a full architecture session with GitHub Copilot, design a team of specialized agents and build it — locally in VS Code.
+description: A 3-hour hands-on lab (2-hour variant). Pick one of two real-world sales use cases, interview the stakeholder, run a full architecture session with GitHub Copilot, design a team of specialized agents and build it — locally in VS Code.
 level: intermediate
 authors:
   - Laetitia Maar
