@@ -1,6 +1,8 @@
 # 🎯 Mission brief — WholesaleCon Europe 2026
 
 > All companies, people and data in this repository are **fictional**.
+>
+> This is the short **deliverable spec**. For the full business context — people, today's process, scope, success criteria, data and glossary — read [`USE-CASE.md`](USE-CASE.md) first.
 
 ## The situation
 

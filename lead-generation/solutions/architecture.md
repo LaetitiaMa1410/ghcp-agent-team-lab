@@ -11,6 +11,11 @@ Turn messy conference data into a traceable sales briefing that tells Sabine who
 
 ```mermaid
 flowchart LR
+  U(["👤 You<br/>check at every checkpoint"]) <-.-> ORC["🎛️ lead-orchestrator<br/>runs 1 → 4 as subagents<br/>pauses after each step"]
+  ORC -.->|step 1| A1
+  ORC -.->|step 2| A2
+  ORC -.->|step 3| A3
+  ORC -.->|step 4| A4
   conf["📂 conferences/<br/>3 files · 3 formats"] --> A1
   prof["📂 company-profiles/*.md"] --> A1
   A1["🤖 1 · source-collector"] --> O1[/"📄 out/participants.md"/]
@@ -29,14 +34,15 @@ flowchart LR
   classDef agent fill:#1f6feb,color:#fff,stroke:#1f6feb
   classDef file fill:#fff8c5,stroke:#9a6700,color:#000
   classDef src fill:#ddf4ff,stroke:#0969da,color:#000
+  classDef orch fill:#8250df,color:#fff,stroke:#8250df
   class A1,A2,A3,A4 agent
+  class ORC orch
   class O1,O2,O3,O4 file
   class conf,prof,crm,cat,M src
 ```
 
-*Optional (bonus): a `lead-orchestrator` agent runs the four agents as subagents and checks the result.*
-
-**Execution order:** `source-collector` → `company-analyst` → `lead-scorer` → `briefing-writer`.
+**Execution order:** the `lead-orchestrator` runs `source-collector` → `company-analyst` → `lead-scorer` → `briefing-writer` as subagents,
+**one step per turn**. After each step it stops at a **human checkpoint**: Sabine (or you) checks the new file and replies `continue` — or names a problem.
 Each agent reads only the files it needs and writes exactly **one** file in `out/`.
 
 ## 3. Why these four agents?
@@ -47,6 +53,7 @@ Each agent reads only the files it needs and writes exactly **one** file in `out
 | Files in `out/` as handoffs | Every intermediate result is visible and reviewable by a human. No hidden state between agents. |
 | Matching companies happens **first** | Every later step depends on knowing that "Nordwave" and "Nordwave Networks GmbH" are the same company. |
 | CRM check in `company-analyst` | Existing customers must be flagged **before** scoring, so they don't take Sabine's 6 slots. |
+| An orchestrator with checkpoints | One prompt starts the team, but a human checks every handoff before the next step builds on it. The orchestrator only delegates and reads — it can't "fix" outputs itself. |
 | Scoring separate from writing | Scores and reasons can be checked before the briefing turns them into persuasive text. |
 | Only `briefing-writer` picks contacts | Picking people needs both the participant list and the scores. It's also the only place where personal data reaches the final output, so it's the one place to enforce data minimization. |
 
@@ -73,7 +80,7 @@ Each agent reads only the files it needs and writes exactly **one** file in `out
 | `company-analyst` | Describe each matched company and its current needs; flag existing customers | `out/participants.md`, `data/company-profiles/`, `data/crm-existing-customers.csv` | `out/company-insights.md` | read, search, edit | Every matched company has segment, needs and a quote |
 | `lead-scorer` | Rate product fit per company and category, with reasons | `out/company-insights.md`, `data/product-categories.json` | `out/lead-scores.md` | read, search, edit | Every rating ≥ Medium has a quoted reason; no keyword-only matches |
 | `briefing-writer` | Pick the best contact per company and write Sabine's briefing | `out/participants.md`, `out/lead-scores.md`, `MISSION.md` | `out/sales-briefing.md` | read, search, edit | 6 meetings, all rules from `MISSION.md` respected |
-| `lead-orchestrator` *(optional)* | Run the four agents in order as subagents and check the result | `out/*` | – | agent, read | All four files exist and pass the quality checklist |
+| `lead-orchestrator` | Run the four agents in order as subagents, pause for a human checkpoint after each step, run the quality gate | `out/*` | – | agent, read, search | All four files exist, every checkpoint confirmed, quality gate PASS |
 
 ## 6. Shared guardrails (→ `AGENTS.md`)
 

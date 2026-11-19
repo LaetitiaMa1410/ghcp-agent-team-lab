@@ -3,13 +3,13 @@ published: true
 type: workshop
 title: "From Use Case to Agent Team"
 short_title: "From Use Case to Agent Team"
-description: A 60-minute hands-on lab. Pick one of two real-world sales use cases, run an architecture session with GitHub Copilot, design a team of specialized agents and build it — locally in VS Code.
+A 3-hour hands-on lab (2-hour variant). Pick one of two real-world sales use cases, interview the stakeholder, run a full architecture session with GitHub Copilot, design a team of specialized agents and build it — locally in VS Code.
 level: intermediate
 authors:
   - Laetitia Maar
 contacts:
   - "@LaetitiaMa1410"
-duration_minutes: 60
+duration_minutes: 180
 tags: GitHub, Copilot, Custom Agents, Agent Architecture, Context Engineering, Hands-on Lab
 navigation_levels: 2
 navigation_numbering: false
@@ -19,18 +19,22 @@ navigation_numbering: false
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-*Hands-on lab · 60 minutes · teams of 3–4*
+*Hands-on lab · 3 hours (2-hour variant) · teams of 3–4*
 
 You know the building blocks: prompting, context engineering, custom instructions, custom agents, skills.
 Now you combine them on a **real-world use case** — and start like good architects do: **understand the problem before you build**.
 
-| # | Task | Time | You end up with |
-| --- | --- | --- | --- |
-| 0 | Choose a use case & setup | 5 min | The use case folder open in VS Code, roles assigned |
-| 1 | Architecture session | 20 min | `architecture.md` — diagram, handoffs, agent cards |
-| 2 | Build the agent team | 15 min | `AGENTS.md` + `.github/agents/*.agent.md` |
-| 3 | Run, check & improve | 12 min | The final result in `out/` |
-| 4 | Pitch | 8 min | Your result, presented in 60 seconds |
+| # | Task | 3 h | 2 h | You end up with |
+| --- | --- | --- | --- | --- |
+| 0 | Choose a use case & setup | 15 min | 10 min | The use case folder open in VS Code, roles assigned |
+| 1 | Architecture session | 75 min | 45 min | `design/` (data inventory, interview notes, requirements, decision record) and `architecture.md` |
+| ☕ | Break | 10 min | – | |
+| 2 | Build the agent team | 30 min | 25 min | `AGENTS.md`, specialized agents + an orchestrator in `.github/agents/` |
+| 3 | Run, check & improve | 30 min | 25 min | The final result in `out/`, accepted by your stakeholder |
+| 4 | Pitch & debrief | 20 min | 15 min | Your design and result, presented in 2 minutes |
+
+Most of the time goes into the **architecture session** — on purpose. You'll interview a stakeholder, write requirements,
+compare architecture options and have your design challenged, before you write a single agent.
 
 <div class="info" data-title="Everything stays local">
 
@@ -85,7 +89,7 @@ In two weeks **Sabine** attends **WholesaleCon Europe 2026**. She has **6 meetin
 **Sabine wants a one-page sales briefing** with 6 recommended meetings (person, role, company, product, *why now* with evidence,
 one opening question), booth visits, and companies she can skip.
 **Her rules:** new customers first · every recommendation **traceable** to the data · only **name, job title and company** of people · **decision makers** preferred.
-Full brief: [`lead-generation/MISSION.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/MISSION.md).
+Business brief: [`lead-generation/USE-CASE.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/USE-CASE.md) · deliverable spec: [`MISSION.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/MISSION.md).
 
 ## 🤝 B · Partner cockpit
 
@@ -107,7 +111,7 @@ business scenarios and the right materials** — from many sources.
 the meeting 2 plan (goal, next commitment step, questions, materials) and open points.
 **His rules:** label every statement as *fact*, *customer statement*, *assessment*, *hypothesis* or *open question* · no invented numbers ·
 internal stays internal · politically neutral · name and role only.
-Full brief: [`partner-cockpit/MISSION.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/MISSION.md).
+Business brief: [`partner-cockpit/USE-CASE.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/USE-CASE.md) · deliverable spec: [`MISSION.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/MISSION.md).
 
 <div class="tip" data-title="Easter eggs 🥚">
 
@@ -137,15 +141,18 @@ Confirm **Workspace Trust**, open the Chat view and check that you can switch be
 
 ```text
 lead-generation/   or   partner-cockpit/
-|-- MISSION.md        the use case — start here
+|-- USE-CASE.md       the business brief — start here
+|-- MISSION.md        the deliverable spec: what the user wants and their rules
 |-- data/             all input data (read-only)
+|-- design/           you create it: data inventory, interview notes, requirements, decision record
 |-- out/              your agents write their results here
+|-- .github/agents/   sabine / jonas: the stakeholder you will interview
 `-- solutions/        reference solution — no peeking before the checkpoints 🙈
 ```
 
 <div class="warning" data-title="Open the use case folder, not the repository root">
 
-> All prompts and paths in this lab (`MISSION.md`, `data/`, `.github/agents/`) are relative to the use case folder.
+> All prompts and paths in this lab (`USE-CASE.md`, `data/`, `design/`, `.github/agents/`) are relative to the use case folder.
 > VS Code only finds your custom agents in the `.github/agents/` folder of the opened workspace.
 
 </div>
@@ -155,10 +162,11 @@ lead-generation/   or   partner-cockpit/
 | Role | Job |
 | --- | --- |
 | 🧑‍✈️ **Driver** | Shares the screen in task 1 and types the prompts. |
-| 💼 **Product owner** | Plays Sabine or Jonas. Answers Copilot's questions about the business — *you* decide, not the AI. |
-| 🔍 **Critic** | Challenges every answer: *"Is that really in the data?"* |
+| 💼 **Interviewer** | Leads the stakeholder interview, owns the requirements and makes the business decisions — *you* decide, not the AI. |
+| 🔍 **Critic** | Challenges every answer: *"Is that really in the data? Can we check that?"* |
+| ⏱ **Scribe** *(4th person)* | Keeps time and notes decisions and open questions. |
 
-Task 1 runs on the driver's screen; at the end the driver shares `architecture.md` (e.g. via team chat) and everyone saves it in their copy.
+Task 1 runs on the driver's screen; at the end the driver shares `design/` and `architecture.md` (e.g. via team chat) and everyone saves them in their copy.
 From task 2 on, everyone works on their own machine and you compare results as a team.
 
 <div class="warning" data-title="Keep an eye on the clock">
@@ -173,122 +181,252 @@ From task 2 on, everyone works on their own machine and you compare results as a
 
 ## 1 · Architecture session
 
-**⏱ 20 minutes · together on the driver's screen**
+**⏱ 75 minutes (2-hour variant: 45 minutes) · together on the driver's screen**
 
-Before you write a single agent, you need to know **what problem you solve**, **what data you have** and
-**which pieces of work exist**. Copilot is your architecture sparring partner — it reads, explains and proposes; **your team decides**.
+Good agent teams aren't designed in a prompt — they're designed like any other software: **understand the problem, talk to the user,
+write down what "good" means, compare options, decide, and let others challenge it**. Copilot is your sparring partner in every step;
+**your team decides**. Everything you produce goes into a `design/` folder — it becomes the spec for your agents.
 
-### 1a · Understand the use case (5 min)
+| Step | What you do | Time | 2 h | Result |
+| --- | --- | --- | --- | --- |
+| 1a | Understand the use case & the data | 10 min | 8 | `design/data-inventory.md` |
+| 1b | Interview the stakeholder | 10 min | 7 | `design/interview-notes.md` |
+| 1c | Requirements & acceptance criteria | 10 min | 7 | `design/requirements.md` |
+| 1d | Decompose: steps, dependencies, single agent or team? | 10 min | 5 | decision in the chat |
+| 1e | Compare options & decide | 10 min | 8 | `design/adr-001-agent-topology.md` |
+| 1f | Detailed design | 10 min | 10 | `architecture.md` |
+| 1g | Pre-mortem | 5 min | ⏩ skip | improved `architecture.md` |
+| 1h | Cross-team review | 10 min | ⏩ skip | improved `architecture.md` |
 
-Select the **Ask** agent and send:
+### 1a · Understand the use case & the data (10 min)
+
+Select the **Agent** agent and send:
 
 ```text
-#file:MISSION.md
+#file:USE-CASE.md #file:MISSION.md
 You are a solution architect. Help our team understand this use case before we design anything.
-Read the files in data/ (ignore the solutions/ folder).
+Read every file in data/. Ignore the solutions/ and .github/agents/ folders.
 
-Answer in max. 12 bullets:
-- the business goal and the user
-- each data source: format, content, and data quality issues you notice
-- the expected output
-- what makes this use case hard
-
-Then ask us the 3 most important clarifying questions, one at a time, and wait for our answer.
+1. Summarize in max. 6 bullets: business goal, user, today's pain, what is in scope and out of scope.
+2. Create design/data-inventory.md with a table:
+   source | format | owner | content and key fields | personal data? | confidential? | quality issues
+   Be specific about quality issues: quote the row or sentence.
+3. Below the table: the 3-5 things in the data that would trick a naive solution, and what that means for the design.
 ```
 
-💼 The **product owner** answers the questions using `MISSION.md` — and where it says nothing, *decides*.
-This is **context engineering**: you build a shared understanding for the team *and* for Copilot before asking for a design.
+🔍 **Critic:** open **two** of the data files yourself. Are the issues Copilot found really there? Did it miss one? Did it *invent* one?
 
-### 1b · Break it down into components (5 min)
+### 1b · Interview the stakeholder (10 min)
 
-In the same chat:
+`USE-CASE.md` doesn't answer everything — just like in real life. **Sabine** (A) and **Jonas** (B) are waiting for your questions.
+
+**Prepare (2 min).** In your 1a chat, send:
 
 ```text
-Describe the work from the raw data to the final result as a sequence of steps.
-Mark which steps depend on each other and which could run in parallel.
-For each step: input, output, and whether it needs judgement (LLM) or could be a fixed rule.
-
-Then propose a team of 3 to 5 specialized agents. Each agent has exactly ONE responsibility.
-Explain why you split it this way, and what would go wrong with one big agent.
-Don't write any files yet.
+We will interview the user now. Which 8 questions should we ask that USE-CASE.md and MISSION.md
+don't answer yet? Cover: how they will use the result (when, where, on which device), what makes a result
+good or useless, rules and no-gos, how to handle unknown or conflicting data, and what is out of scope.
 ```
 
-🔍 **Critic**, challenge the proposal: Does an agent only pass data along (→ merge)? Does one do two different things (→ split)?
-Which step **must** come first, and what can run **in parallel**? Where does **personal data** flow? Where could the AI **invent** something?
+Pick the 5–6 best questions as a team.
 
-- 🎯 **A:** Where are **company spellings** matched? Where are **existing customers** filtered out?
-- 🤝 **B:** Which **perspectives** does Jonas need (facts, technology, the partner's people …)? Would **two opposing scenario agents** beat one "balanced" one? Who separates **facts from rumours**?
+**Interview (8 min).** Open a **new chat**, select the **`sabine`** (A) or **`jonas`** (B) agent and interview them.
+💼 The **interviewer** asks — one question at a time. Follow up with *"Why?"* and *"Can you give me an example?"*
 
-Tell Copilot what you decided, e.g. *"Merge agents 3 and 4. Split the scenario agent into a bold and a safe one."*
+Finish with: *"Thanks! Please summarize what you told us as a bullet list."* Create **`design/interview-notes.md`** and paste the summary.
 
-### 1c · Write the architecture overview (5 min)
+<div class="warning" data-title="Don't peek">
 
-Switch to the **Agent** agent and send:
-
-```text
-Create architecture.md in the workspace root. Use the agents we agreed on. Keep it to about one page:
-
-1. The use case in one sentence.
-2. A Mermaid flowchart (left to right) with all data sources, the agents, and the handoff files in out/.
-3. A handoff contract table: file | producer | consumer(s) | content and structure.
-4. Agent cards as a table: agent | responsibility | reads | writes | tools | done when.
-   Tools follow least privilege: only 'read', 'search', 'edit'.
-5. Shared guardrails that apply to every agent.
-```
-
-Read `architecture.md` as a team. (No Mermaid preview? No problem — agents read the text, not the picture.)
-
-### 1d · Let a critic review the design (5 min)
-
-Open a **new chat** (fresh context = unbiased reviewer), select **Ask** and send:
-
-```text
-#file:architecture.md #file:MISSION.md
-Act as a critical senior architect reviewing this design. Find:
-- the 3 biggest risks (think: invented facts or numbers, personal data in the output, contradicting sources)
-- missing or unclear handoffs between agents
-- agents that are too big or unnecessary
-Max. 8 bullets, most important first.
-```
-
-Pick the 2–3 findings that matter most and let your **Agent** chat update `architecture.md`. Then the driver shares it with the team.
-
-<div class="info" data-title="✅ Checkpoint 1">
-
-> **You should have:** `architecture.md` with diagram, handoff contracts, agent cards and shared guardrails.
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
->
-> **Behind schedule?** `cp solutions/architecture.md architecture.md` (PowerShell: `Copy-Item solutions/architecture.md architecture.md`)
+> Don't open `.github/agents/sabine.agent.md` or `jonas.agent.md` — a real stakeholder doesn't come with a file either.
+> The stakeholder only knows the business: ask about **needs**, not about agents.
 
 </div>
 
-## 2 · Build the agent team
-
-**⏱ 15 minutes · everyone on their own machine**
-
-Your architecture is the spec. Now it becomes **configuration**: shared rules go into `AGENTS.md`, role-specific
-instructions into one `.agent.md` file per agent. Each agent gets a **small, focused context** — so you can test, fix and re-run one without touching the others.
-
-### 2a · Shared guardrails in `AGENTS.md` (3 min)
+### 1c · Requirements & acceptance criteria (10 min)
 
 **Agent**, new chat:
 
 ```text
-#file:architecture.md
+#file:USE-CASE.md #file:MISSION.md #file:design/data-inventory.md #file:design/interview-notes.md
+Create design/requirements.md:
+1. 4-6 user stories ("As <user>, I want ..., so that ..."), each with 2-4 acceptance criteria
+   that a reviewer can check against the final result with a clear yes or no.
+2. Non-functional requirements as a table with IDs (data protection, traceability, readability,
+   confidentiality, repeatability, ...).
+3. Out of scope.
+4. Open questions that neither the brief nor the interview answered.
+Mark everything that came from the interview with 🗣. Don't add requirements that no source supports.
+```
+
+**Sign-off:** go back to the stakeholder chat and paste the user stories and acceptance criteria:
+*"If our result meets all of these, would you use it? What's missing or wrong?"* — then update `requirements.md`.
+
+🔍 **Critic:** is every acceptance criterion **checkable**? *"Good briefing"* is not. *"Exactly 6 meetings, only new customers"* is.
+
+<div class="info" data-title="✅ Checkpoint 1 · Problem understood">
+
+> **You should have:** `design/data-inventory.md`, `design/interview-notes.md` and a `design/requirements.md` your stakeholder signed off.
+> **Behind schedule?** Copy the reference: `mkdir -p design && cp solutions/design/data-inventory.md solutions/design/requirements.md design/`
+> (PowerShell: `New-Item -ItemType Directory -Force design | Out-Null; Copy-Item solutions/design/data-inventory.md, solutions/design/requirements.md design/`)
+
+</div>
+
+### 1d · Decompose: single agent or team? (10 min)
+
+**Ask**, new chat:
+
+```text
+#file:design/requirements.md #file:design/data-inventory.md
+Describe the work from the raw data to the final result as a sequence of steps.
+For each step: input, output, which step it depends on, whether it needs judgement (LLM) or could be a fixed rule,
+and which user story it serves. Show which steps could run in parallel.
+
+Then assess: one agent or a team of agents? Fill this table for our case:
+criterion | one agent fits when ... | a team fits when ... | our case
+Criteria: kind of task, input complexity, rules, perspectives that must be kept apart,
+need to review intermediate results, repeatability.
+```
+
+| A team is worth it when… | One agent is enough when… |
+| --- | --- |
+| the work splits into **separable roles** | the task is recurring with **one clear output** |
+| the input is **complex**, from many sources | the context is **small and retrievable** |
+| **several perspectives** must be kept apart, not averaged | **one view** is enough |
+| **intermediate results** need a human check | checking the end result is enough |
+| a **synthesis** of different views is needed | there are **few conflicts** in the data |
+
+🔍 **Critic:** Which step **must** come first? Where could the AI **invent** something? Where does **personal or internal data** flow?
+
+- 🎯 **A:** Where are **company spellings** matched? Where are **existing customers** filtered out — before or after scoring?
+- 🤝 **B:** Which **perspectives** does Jonas need? Would **two opposing scenario agents** beat one "balanced" one? Who separates **facts from rumours**?
+
+### 1e · Compare options & decide (10 min)
+
+Same chat:
+
+```text
+Propose 3 clearly different architectures for this use case — for example one agent (with skills),
+a pipeline of specialized agents, or parallel perspectives with a synthesis.
+For each: the agents and their single responsibility, how they hand over work, pros, cons,
+the main risks (invented facts, personal or internal data, contradicting sources) and the effort.
+Recommend one, but don't write any files.
+```
+
+**Decide as a team** — each person names their favourite and one reason, then the interviewer decides.
+Tell Copilot what you changed, e.g. *"Option 2, but merge agents 3 and 4"* or *"Split the scenario agent into a bold and a safe one."*
+
+Switch to **Agent** in the same chat and send:
+
+```text
+Write our decision as design/adr-001-agent-topology.md (architecture decision record):
+context, the one-agent-or-team assessment, the options table, the decision, consequences
+(including which agent serves which user story) and when we should revisit the decision.
+```
+
+### 1f · Detailed design (10 min)
+
+**Agent**, new chat:
+
+```text
+#file:design/requirements.md #file:design/adr-001-agent-topology.md
+Create architecture.md in the workspace root for the option we decided on. About 1-2 pages:
+
+1. The use case in one sentence.
+2. A Mermaid flowchart (left to right) with all data sources, the agents, the handoff files in out/,
+   and an orchestrator that runs the agents.
+3. A handoff contract table: file | producer | consumer(s) | content and structure (sections or columns).
+4. Agent cards as a table: agent | responsibility | reads | writes | tools | done when | user stories.
+   Tools follow least privilege: only 'read', 'search', 'edit'.
+5. The orchestrator: in which order (or in parallel) it runs the agents as subagents, where it pauses
+   (human checkpoints) and what the human checks at each. It only delegates and reads — tools 'agent', 'read', 'search'.
+6. Shared guardrails that apply to every agent.
+7. Traceability: every user story and non-functional requirement -> the agent(s) or guardrail that covers it.
+   Flag any requirement that nothing covers.
+```
+
+Read `architecture.md` as a team. (No Mermaid preview? No problem — agents read the text, not the picture.) Fix every requirement flagged as uncovered.
+
+### 1g · Pre-mortem (5 min) ⏩
+
+Open a **new chat** (fresh context = unbiased reviewer), **Ask**:
+
+```text
+#file:architecture.md #file:design/requirements.md #file:USE-CASE.md
+Pre-mortem: imagine it's the day after the conference (A) / meeting 2 (B). The result of this agent team
+was a disaster and the user stopped using it. Give the 5 most likely reasons — each tied to a specific agent,
+handoff or missing guardrail in architecture.md — and the smallest design change that would have prevented it.
+Most likely first. Max. 10 bullets.
+```
+
+Pick the 2–3 that matter most and let an **Agent** chat update `architecture.md`.
+
+### 1h · Cross-team review (10 min) ⏩
+
+Pair up with another team. Each team gets **5 minutes**: 2 minutes to present `architecture.md`, 3 minutes of questions from the other team:
+
+| ❓ | Question |
+| --- | --- |
+| 1 | Which **user story** does each agent serve? Is there an agent without one? |
+| 2 | Where can a **wrong fact** enter — and which step or human catches it? |
+| 3 | Where does **personal or internal data** flow, and where is it removed? |
+| 4 | What does the human check at each **checkpoint**? |
+| 5 | Which agent would you **merge or split** — and why? |
+
+Take your best finding home and update `architecture.md`. Then the driver shares the `design/` folder and `architecture.md` with the team (e.g. via team chat) and everyone saves them in their copy.
+
+<div class="info" data-title="✅ Checkpoint 2 · Design ready">
+
+> **You should have:** `design/` with data inventory, interview notes, requirements and ADR, and an `architecture.md` with diagram,
+> handoff contracts, agent cards, the orchestrator flow with checkpoints, shared guardrails and traceability.
+> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
+>
+> **Behind schedule?**
+>
+> ```bash
+> # macOS / Linux
+> mkdir -p design && cp solutions/design/*.md design/ && cp solutions/architecture.md architecture.md
+> ```
+>
+> ```powershell
+> # Windows PowerShell
+> New-Item -ItemType Directory -Force design | Out-Null; Copy-Item solutions/design/*.md design/; Copy-Item solutions/architecture.md architecture.md
+> ```
+
+</div>
+
+## ☕ Break
+
+**⏱ 10 minutes** (3-hour version only). Make sure everyone has the `design/` folder and `architecture.md` before you leave.
+
+## 2 · Build the agent team
+
+**⏱ 30 minutes (2 h: 25) · everyone on their own machine**
+
+Your architecture is the spec. Now it becomes **configuration**: shared rules go into `AGENTS.md`, role-specific
+instructions into one `.agent.md` file per agent. Each agent gets a **small, focused context** — so you can test, fix and re-run one without touching the others.
+An **orchestrator** agent then runs the team for you — and stops after every step so you stay in control.
+
+### 2a · Shared guardrails in `AGENTS.md` (5 min)
+
+**Agent**, new chat:
+
+```text
+#file:architecture.md #file:design/requirements.md
 Create AGENTS.md in the workspace root. It contains ONLY the shared guardrails and conventions
-that apply to every agent — nothing role-specific. Max. 15 lines, concrete and checkable.
+that apply to every agent — nothing role-specific. Include the non-functional requirements.
+Max. 15 lines, concrete and checkable.
 ```
 
 Make sure it covers: **no internet**, **`data/` is read-only**, **write only to `out/`**, **no e-mail addresses or phone numbers in outputs**,
 **every claim backed by a source file**, **say "unknown" instead of guessing**. 🤝 **B** also needs: **statement labels**, **no invented numbers**,
 **internal stays internal**, **politically neutral**. Add what's missing yourself.
 
-### 2b · Generate the agents (4 min)
+### 2b · Generate the specialized agents (8 min)
 
 Same chat:
 
 ```text
-For every agent card in #file:architecture.md create .github/agents/<agent-name>.agent.md.
+For every agent card in #file:architecture.md except the orchestrator, create .github/agents/<agent-name>.agent.md.
 
 Frontmatter:
 - name
@@ -301,15 +439,46 @@ Body:
 - steps
 - output: the exact file in out/ and its structure, matching the handoff contract
 - rules, including what it must NOT do because another agent does it
+- the acceptance criteria from design/requirements.md that its output must meet
 
 Don't repeat the guardrails from AGENTS.md.
 ```
 
 Your agents should now appear in the agent picker. Not there? Check **Chat: Open Customizations → Agents** for frontmatter errors.
 
-### 2c · Own one agent (8 min)
+### 2c · Generate the orchestrator (5 min)
 
-**Each person owns one agent** and reviews it:
+The orchestrator calls your agents as **subagents** — each runs with its own, fresh context — and **pauses after every step**.
+That pause is your **human checkpoint**: an error in step 1 would otherwise silently poison everything after it.
+
+Same chat:
+
+```text
+#file:architecture.md
+Create .github/agents/orchestrator.agent.md — a coordinator that runs our agents as subagents.
+
+Frontmatter:
+- name: orchestrator
+- description: one sentence
+- tools: ['agent', 'read', 'search']   (it delegates and reads, but never writes files itself)
+
+Body:
+- the steps from architecture.md: which agent(s) to call, the instruction to pass ("Run your step."),
+  and the file(s) each must produce in out/. Agents that don't depend on each other run in parallel in one step.
+- MOST IMPORTANT RULE, at the top: run exactly ONE step per turn, then end the turn, even if I ask
+  for the full result. At the end of each turn: check that the files exist and are not empty, name 2-3
+  things I should check in them, and end with "Reply continue for the next step, or describe a problem."
+- on a problem: never fix files in out/ — name the agent that caused it and the missing instruction.
+  When I reply "re-run", run that agent again and continue step by step from there.
+- after the last step: a quality gate against the acceptance criteria in design/requirements.md and AGENTS.md —
+  PASS or FAIL per criterion, with findings and which agent to fix.
+```
+
+💬 **Think about it:** Why does the orchestrator have no `edit` tool?
+
+### 2d · Own one agent (12 min)
+
+**Each person owns one agent** (someone takes the orchestrator) and reviews it:
 
 | ✔ | Check |
 | --- | --- |
@@ -317,14 +486,17 @@ Your agents should now appear in the agent picker. Not there? Check **Chat: Open
 | ☐ | Inputs and outputs are **exact paths**; the output is exactly what the **next agent** expects |
 | ☐ | It says what to do when data is **missing or ambiguous** |
 | ☐ | **Least privilege** tools — does it really need `edit`? |
-| ☐ | It knows when it is **done** |
+| ☐ | It knows when it is **done** — and the **acceptance criteria** it serves |
 
 Improve it by hand or with Copilot (*"Make the output section of #file:.github/agents/&lt;your-agent&gt;.agent.md
 match the handoff contract in #file:architecture.md"*) and share your changes so everyone has the same agents.
 
-<div class="info" data-title="✅ Checkpoint 2">
+Then do a **dry run on paper**: one person reads the orchestrator aloud, the others say what *their* agent reads and writes at each step.
+Does every file an agent reads exist by then?
 
-> **You should have:** `AGENTS.md` and one `.agent.md` per agent, all visible in the agent picker. **Behind schedule?** Copy the reference agents:
+<div class="info" data-title="✅ Checkpoint 3">
+
+> **You should have:** `AGENTS.md`, one `.agent.md` per agent plus the orchestrator, all visible in the agent picker. **Behind schedule?** Copy the reference agents (orchestrator: `lead-orchestrator` (A) / `concierge` (B)):
 >
 > ```bash
 > # macOS / Linux
@@ -340,19 +512,22 @@ match the handoff contract in #file:architecture.md"*) and share your changes so
 
 ## 3 · Run, check & improve
 
-**⏱ 12 minutes · everyone on their own machine**
+**⏱ 30 minutes (2 h: 25) · everyone on their own machine**
 
-### 3a · Run the pipeline (5 min)
+### 3a · Run the team (10 min)
 
-Run your agents **in the order of your architecture**. For each agent: open a **new chat**, select the agent, send
-`Run your step.` and **look at its output file in `out/`** before you start the next one.
-That's your **human checkpoint** — an error in step 1 silently poisons everything after it.
+New chat, select your **orchestrator** in the agent picker and send *"Prepare the result for Sabine."* (A) or *"Prepare the partner cockpit for meeting 2."* (B).
+Watch the subagents appear in the chat.
 
-🤝 **B:** Agents that don't depend on each other (e.g. the three analysts) can run **at the same time on different team members' machines** — share the files in `out/` afterwards.
+At every **checkpoint** the orchestrator stops: **open the file(s) in `out/`** and look at what it points you to.
+All good? Reply `continue`. Something wrong? Describe it — then fix the agent (3c).
 
-### 3b · Quality checklist 🥚 (4 min)
+🤝 Split the work: one person drives the orchestrator, the others review the handoff files at each checkpoint.
 
-Check the final result and the handoff files. Every "yes, handled correctly" is a point.
+### 3b · Check against your requirements 🥚 (10 min)
+
+First go through the **acceptance criteria** in `design/requirements.md` — met or not?
+Then check the final result and the handoff files with the checklist. Every "yes, handled correctly" is a point.
 
 <details>
 <summary>🎯 A · Lead generation — check <code>out/sales-briefing.md</code></summary>
@@ -391,7 +566,10 @@ Check the final result and the handoff files. Every "yes, handled correctly" is 
 
 Compare with your teammates — **same agents, same data — same result?**
 
-### 3c · Fix the agent, not the output (3 min)
+**Stakeholder acceptance:** open your `sabine` / `jonas` chat from step 1b, paste the final result and ask:
+*"Would you take this into your meeting? What would you change?"*
+
+### 3c · Fix the agent, not the output (10 min)
 
 Found a problem? **Don't edit `out/`** — fix the cause:
 
@@ -403,11 +581,11 @@ Which agent caused it, and which instruction is missing or unclear?
 Propose a minimal change to that agent file. Don't change any file in out/.
 ```
 
-Apply the change and re-run **that agent and every agent after it**. Did the problem disappear?
+Apply the change, then reply `re-run` in your orchestrator chat — it runs **that agent and every step after it** again, with checkpoints. Did the problem disappear?
 
-<div class="info" data-title="✅ Checkpoint 3">
+<div class="info" data-title="✅ Checkpoint 4">
 
-> **You should have:** the final result in `out/` and at least one improved agent.
+> **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
 > **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) — or, if you have time left, take on a [🚀 bonus challenge](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4).
@@ -420,45 +598,15 @@ Apply the change and re-run **that agent and every agent after it**. Did the pro
 
 # 🚀 Bonus challenges
 
-**For teams that finished checkpoint 3 early.** Pick any challenge, in any order — each one extends the agent team you already have.
+**For teams that finished checkpoint 4 early.** Pick any challenge, in any order — each one extends the agent team you already have.
 When the pitch starts, stop and pitch what you have.
 
 | | Challenge | Time | You learn |
 | --- | --- | --- | --- |
-| 🎛️ | **B1 · Orchestrator** — one agent runs the whole team | ~10 min | Subagents, delegation, least privilege |
-| 🧰 | **B2 · Skill** — turn the quality checklist into a reusable skill | ~8 min | When to use a skill instead of instructions or an agent |
-| 🪝 | **B3 · Hook** — make `data/` *really* read-only | ~8 min | Instructions ask, hooks enforce |
+| 🧰 | **B1 · Skill** — turn the quality checklist into a reusable skill | ~8 min | When to use a skill instead of instructions or an agent |
+| 🪝 | **B2 · Hook** — make `data/` *really* read-only | ~8 min | Instructions ask, hooks enforce |
 
-## B1 · Orchestrator
-
-Right now **you** are the orchestrator: you start every agent and check every file. An **orchestrator agent** does that for you —
-it calls your agents as **subagents** (each with its own, fresh context) and checks the result. Sabine or Jonas then need just **one prompt**.
-
-**Agent**, new chat:
-
-```text
-#file:architecture.md
-Create .github/agents/orchestrator.agent.md — a coordinator that runs our agents as subagents.
-
-Frontmatter:
-- name: orchestrator
-- description: one sentence
-- tools: ['agent', 'read', 'search']   (it delegates and reads, but never writes files itself)
-
-Body:
-- for each step from architecture.md: which agent to call, the instruction to pass ("Run your step."),
-  and the file it must produce in out/
-- after each step, check that the file exists and is not empty; otherwise stop and report which agent failed
-- run agents that don't depend on each other in parallel, if architecture.md allows it
-- finish with a quality gate: PASS or FAIL, with findings and which agent to fix
-```
-
-Select **orchestrator** in the agent picker and send *"Prepare the result for Sabine."* (A) or *"Prepare the partner cockpit for meeting 2."* (B).
-Watch the subagents appear in the chat. A full run takes **4–6 minutes**.
-
-💬 **Think about it:** Why does the orchestrator have no `edit` tool? What happens to its context compared to running everything in one chat?
-
-## B2 · Skill
+## B1 · Skill
 
 Your quality checklist from task 3b is useful again and again — for every run, and for every reviewer.
 That's what **skills** are for: a folder with instructions (and optionally scripts or templates) that Copilot loads **only when needed**.
@@ -479,7 +627,7 @@ Frontmatter:
 - description: what it checks and when to use it (one sentence)
 
 Body:
-- read MISSION.md, AGENTS.md and all files in out/; verify claims against data/; never change any file
+- read design/requirements.md, MISSION.md, AGENTS.md and all files in out/; verify claims against data/; never change any file
 - one check per checklist item below, each with a clear "pass when" condition
 - output: a table  # | check | PASS/FAIL | evidence , then an overall PASS or FAIL,
   and for every FAIL the agent in .github/agents/ that caused it and the missing instruction
@@ -489,9 +637,9 @@ Checklist:
 ```
 
 **Test it:** new chat, **Agent**, type `/quality-check` and send. Not there? Check **Chat: Open Customizations → Skills**.
-Did B1? Add one line to your orchestrator's quality gate: *"Use the quality-check skill."*
+Then add one line to your orchestrator's quality gate: *"Use the quality-check skill."*
 
-## B3 · Hook
+## B2 · Hook
 
 `AGENTS.md` says *"`data/` is read-only"*. But that's a **request** to the model — it usually follows it, but nothing *enforces* it.
 A **hook** is a command that runs at a fixed point in the agent's workflow — for example **before every tool call** — and can **deny** it.
@@ -541,8 +689,7 @@ Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. Th
 
 <div class="info" data-title="✅ Reference solutions">
 
-> Orchestrator: `solutions/agents/lead-orchestrator.agent.md` (A) / `concierge.agent.md` (B) · skill and hook: `solutions/bonus/`.
-> To install the reference skill and hook:
+> Skill and hook: `solutions/bonus/`. To install them:
 >
 > ```bash
 > # macOS / Linux
@@ -566,13 +713,14 @@ Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. Th
 
 ## 4 · Pitch
 
-**⏱ 8 minutes · all teams together**
+**⏱ 20 minutes (2 h: 15) · all teams together**
 
-Each team gets **60 seconds**:
+Each team gets **2 minutes**:
 
-1. 🗺️ **Your architecture** — which agents, and why?
+1. 🗺️ **Your architecture** — which agents, and the **one decision** from your ADR you'd defend?
 2. 🎯 **A:** your top 3 meetings for Sabine — who, what product, why now.<br/>🤝 **B:** your recommendation for Stadtwerke Lindenau and the next commitment step for meeting 2.
 3. 🔧 **One fix** — what did your agent team get wrong, and which instruction fixed it?
+4. 🗣 **Your stakeholder** — what did Sabine or Jonas tell you that changed your design?
 
 Then **Sabine and Jonas vote**: whose result would they take into their meeting? 🥚 Easter egg points break a tie.
 
@@ -593,7 +741,7 @@ How did the **pipeline** (A) and the **perspectives** pattern (B) differ? What w
 | `company-analyst` | Segment, current needs (with quotes) and existing-customer status per company | `out/company-insights.md` |
 | `lead-scorer` | High / Medium / Low fit per company and product category, with quoted reasons | `out/lead-scores.md` |
 | `briefing-writer` | Picks one decision maker per company and writes Sabine's briefing | `out/sales-briefing.md` |
-| `lead-orchestrator` *(bonus)* | Runs the four agents as subagents and checks the result | – |
+| `lead-orchestrator` | Runs the four agents as subagents, one step at a time with a checkpoint after each, then a quality gate | – |
 
 **Why:** matching comes first · existing customers are flagged before scoring · scoring is separate from writing.
 Files: [`lead-generation/solutions/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions)
@@ -610,7 +758,7 @@ Files: [`lead-generation/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 | `scenario-bold` | Ambitious but plausible scenario with 5-year numbers | `out/scenario-bold.md` |
 | `scenario-safe` | Smallest viable entry with stop points | `out/scenario-safe.md` |
 | `cockpit-writer` | Recommendation, meeting 2 plan, materials, open points | `out/partner-cockpit.md` |
-| `concierge` *(bonus)* | Runs all agents as subagents and checks the result | – |
+| `concierge` | Runs the three stages as subagents with a checkpoint after each, then a quality gate | – |
 
 **Why:** three analysts in parallel, each with one perspective · two deliberately one-sided scenarios create productive tension · one writer resolves it.
 Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions)
@@ -622,20 +770,24 @@ Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 
 | What you did | Building block |
 | --- | --- |
-| Understand the use case with Copilot | Prompting, context engineering |
-| Decompose into agents, handoff contracts, agent cards | Agent architecture, spec before code |
-| Design review in a fresh chat | Context hygiene, AI-assisted review |
+| Data inventory with Copilot | Prompting, context engineering |
+| Stakeholder interview, requirements with acceptance criteria | Requirements engineering, spec before code |
+| One agent or a team? Options and an ADR | Agent architecture, documented decisions |
+| Handoff contracts, agent cards, traceability | Detailed design |
+| Pre-mortem in a fresh chat, cross-team review | Context hygiene, AI-assisted and peer review |
 | `AGENTS.md` + `.agent.md` | Custom instructions, custom agents, least privilege |
-| Check every handoff, fix the agent not the output | Human in the loop, *miss → diagnosis → fix* |
-| 🚀 Bonus: orchestrator, skill, hook | Subagents, reusable skills, deterministic guardrails |
+| Orchestrator with a checkpoint after every step | Subagents, delegation, human in the loop |
+| Fix the agent, not the output | *Miss → diagnosis → fix* |
+| 🚀 Bonus: skill, hook | Reusable skills, deterministic guardrails |
 
-1. **Understand before you build.** 15 minutes of architecture with Copilot saves hours of re-prompting.
-2. **Small agents, clear contracts.** One responsibility, one output file, explicit structure.
-3. **Make the handoffs visible.** If you can't review it, you can't trust it.
-4. **Fix causes, not symptoms.** Every agent mistake is a missing or unclear instruction.
+1. **Understand before you build.** An hour of architecture with Copilot saves days of re-prompting.
+2. **Talk to the user.** The most important requirements weren't in the brief.
+3. **Small agents, clear contracts.** One responsibility, one output file, explicit structure.
+4. **Make the handoffs visible.** If you can't review it, you can't trust it.
+5. **Fix causes, not symptoms.** Every agent mistake is a missing or unclear instruction.
 
 <div class="tip" data-title="Do this next week">
 
-> Take one recurring, multi-step task from your work and run step 1 of this lab on it — 20 minutes, time-boxed. The clarity is the win.
+> Take one recurring, multi-step task from your work and run steps 1a–1e of this lab on it — one hour, time-boxed. The clarity is the win.
 
 </div>
