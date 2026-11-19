@@ -694,9 +694,19 @@ In every prompt below you tell Copilot how the platform-neutral design maps to C
 instructions into one `.agent.md` file per agent. Each agent gets a **small, focused context** — so you can test, fix and re-run one without touching the others.
 An **orchestrator** agent then runs the team for you — and stops after every step so you stay in control.
 
-## 2 · Build the agent team
+**Copilot writes the agents — your team reviews them.** Each person owns one agent (someone takes the orchestrator).
 
-### 2a · Shared guardrails in `AGENTS.md`
+| Step | What you do | Result |
+| --- | --- | --- |
+| P1 | Shared guardrails | `AGENTS.md` |
+| P2 | Generate the specialized agents | `.github/agents/<agent>.agent.md` — one per agent card |
+| P3 | Generate the orchestrator | `.github/agents/orchestrator.agent.md` |
+| P4 | Own one agent & dry run on paper | reviewed agents |
+| P5 | Run the agent flow in the VS Code chat | the result in `out/` |
+| P6 | Check against your requirements | your findings |
+| P7 | Fix the agent, not the output | improved agents |
+
+## P1 · Shared guardrails in `AGENTS.md`
 
 🎯 **Why:** Some rules apply to **every** agent — data protection, sources, where to write. Every agent loads `AGENTS.md`, so you write these rules once, and a fix here fixes all agents.
 
@@ -724,7 +734,7 @@ Max. 15 lines, concrete and checkable.
 
 </div>
 
-### 2b · Generate the specialized agents
+## P2 · Generate the specialized agents
 
 🎯 **Why:** Each agent card from `architecture.md` becomes a real agent with **one responsibility** and a **small, focused context**. That makes its output predictable — and when something goes wrong, you can fix and re-run just that agent.
 
@@ -756,9 +766,9 @@ Don't repeat the guardrails from AGENTS.md.
 
 Your agents should now appear in the agent picker. Not there? Check **Chat: Open Customizations → Agents** for frontmatter errors.
 
-👀 **Quick review:** one file per agent card in `architecture.md`, with the same names and output files? The detailed review of every agent follows in **2d**.
+👀 **Quick review:** one file per agent card in `architecture.md`, with the same names and output files? The detailed review of every agent follows in **P4**.
 
-### 2c · Generate the orchestrator
+## P3 · Generate the orchestrator
 
 🎯 **Why:** Someone has to run the team in the right order. The orchestrator calls your agents as **subagents** — each runs with its own, fresh context — and **pauses after every step**.
 That pause is your **human checkpoint**: an error in step 1 would otherwise silently poison everything after it.
@@ -789,11 +799,11 @@ Body:
 ```
 
 👀 **Quick review:** open `orchestrator.agent.md` — is the *one step per turn* rule at the top? Are the steps in the order of `architecture.md`,
-with the right output files? The detailed review follows in **2d**.
+with the right output files? The detailed review follows in **P4**.
 
 💬 **Think about it:** Why does the orchestrator have no `edit` tool?
 
-### 2d · Own one agent
+## P4 · Own one agent & dry run on paper
 
 🎯 **Why:** Copilot generated the agents — now every agent needs an owner. Reviewing one agent in depth catches the gaps **between** agents (who does what, which file is expected) before they show up in the result.
 
@@ -819,11 +829,7 @@ Does every file an agent reads exist by then?
 
 </div>
 
-## 3 · Run, check & improve
-
-**Everyone on their own machine**
-
-### 3a · Run the team
+## P5 · Run the agent flow
 
 🎯 **Why:** Now you see whether your design works on the real data. Running step by step lets you catch an error **where it happens** — not three agents later.
 
@@ -831,11 +837,11 @@ New chat, select your **orchestrator** in the agent picker and send *"Prepare th
 Watch the subagents appear in the chat.
 
 At every **checkpoint** the orchestrator stops: **open the file(s) in `out/`** and look at what it points you to.
-All good? Reply `continue`. Something wrong? Describe it — then fix the agent (3c).
+All good? Reply `continue`. Something wrong? Describe it — then fix the agent (P7).
 
 🤝 Split the work: one person drives the orchestrator, the others review the handoff files at each checkpoint.
 
-### 3b · Check against your requirements 🥚
+## P6 · Check against your requirements 🥚
 
 🎯 **Why:** The result must meet the criteria your stakeholder signed off in 1c — not just look good. The checklist points you to the traps hidden in the data.
 
@@ -882,7 +888,7 @@ Compare with your teammates — **same agents, same data — same result?**
 **Stakeholder acceptance:** open your `sabine` / `jonas` chat from step 1b, paste the final result and ask:
 *"Would you take this into your meeting? What would you change?"*
 
-### 3c · Fix the agent, not the output
+## P7 · Fix the agent, not the output
 
 🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **agent** makes the improvement repeatable.
 
@@ -1083,7 +1089,7 @@ Something wrong? `s` — and fix the agent first (P5).
 
 🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **code or instructions** makes the improvement repeatable.
 
-Check the final result with the checklist for your use case from [3b · Check against your requirements](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) —
+Check the final result with the checklist for your use case from [path 1 · P6 · Check against your requirements](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) —
 it's the same data, so it's the same traps. Found a problem? **Agent**, new chat:
 
 ```text
@@ -1270,7 +1276,7 @@ When the pitch starts, stop and pitch what you have.
 
 ## B1 · Skill
 
-Your quality checklist from task 3b is useful again and again — for every run, and for every reviewer.
+Your quality checklist from P6 is useful again and again — for every run, and for every reviewer.
 That's what **skills** are for: a folder with instructions (and optionally scripts or templates) that Copilot loads **only when needed**.
 
 | Put it in… | when it is… |
@@ -1279,7 +1285,7 @@ That's what **skills** are for: a folder with instructions (and optionally scrip
 | `.github/agents/*.agent.md` | a **role** with its own tools and responsibility |
 | `.github/skills/*/SKILL.md` | a **reusable capability** that any agent (or you) can use **on demand** |
 
-**Agent**, new chat — paste your checklist from task 3b at the end:
+**Agent**, new chat — paste your checklist from P6 at the end:
 
 ```text
 Create a project skill in .github/skills/quality-check/SKILL.md.

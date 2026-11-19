@@ -32,7 +32,7 @@
 | --- | --- |
 | 0:00–0:10 | Choose a use case, setup, roles |
 | 0:10–0:55 | Architecture session **1a–1f** (8 / 7 / 7 / 8 / 7 / 8 min) — keep the draw.io refinement short |
-| 0:55–1:20 | Task 2 · Build (shorten 2d to a quick check, skip the dry run) |
+| 0:55–1:20 | Task 2 · Build (path 1: shorten P4 to a quick check, skip the dry run) |
 | 1:20–1:45 | Task 3 · Run, check & improve |
 | 1:45–2:00 | Task 4 · Pitch (1 minute per team) & short debrief |
 
