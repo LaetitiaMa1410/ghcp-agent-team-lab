@@ -3,7 +3,7 @@ published: true
 type: workshop
 title: "From Use Case to Agent Team"
 short_title: "From Use Case to Agent Team"
-description: A hands-on lab. Pick one of two real-world sales use cases, interview the stakeholder, run a full architecture session with GitHub Copilot, design a team of specialized agents and build it — locally in VS Code.
+description: A hands-on lab. Pick one of two real-world sales use cases, interview the stakeholder, run a full architecture session with GitHub Copilot, design a team of specialized agents and build it — as GitHub Copilot custom agents or as pro-code agents you can deploy to Microsoft Foundry.
 level: intermediate
 authors:
   - Laetitia Maar
@@ -28,7 +28,7 @@ Now you combine them on a **real-world use case** — and start like good archit
 | --- | --- | --- |
 | 0 | Choose a use case & setup | The use case folder open in VS Code, roles assigned |
 | 1 | Architecture session | `design/` (data inventory, interview notes, requirements, draw.io sketch) and `architecture.md` |
-| 2 | Build the agent team | `AGENTS.md`, specialized agents + an orchestrator in `.github/agents/` |
+| 2 | Build the agent team | Path 1: custom agents + an orchestrator in `.github/agents/` · Path 2: the same agents as Python code, run in your terminal |
 | 3 | Run, check & improve | The final result in `out/`, accepted by your stakeholder |
 | 4 | Pitch & debrief | Your design and result, presented to everyone |
 
@@ -37,8 +37,9 @@ compare architecture options, decide and sketch your design in draw.io — befor
 
 <div class="info" data-title="Everything stays local">
 
-> You only need **VS Code**, **GitHub Copilot** and the lab repository. No deployments, API keys, internet research,
-> issues or pull requests. All companies, people and data are **fictional** and live in the repo.
+> For the architecture session and path 1 you only need **VS Code**, **GitHub Copilot** and the lab repository — no deployments, API keys,
+> internet research, issues or pull requests. Path 2 additionally needs Python and access to a Microsoft Foundry project; deploying is an optional extension.
+> All companies, people and data are **fictional** and live in the repo.
 
 </div>
 
@@ -289,6 +290,10 @@ For the architecture sketch (step 1f), install the **Draw.io Integration** exten
 code --install-extension hediet.vscode-drawio
 ```
 
+**Path 2 only** (pro-code, chosen in task 2): **Python 3.11+**, [uv](https://docs.astral.sh/uv/), the **Azure CLI** (`az login`)
+and access to a **Microsoft Foundry project** with a deployed chat model — your facilitator tells you which one.
+For the deployment extension also the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd).
+
 ```text
 lead-generation/   or   partner-cockpit/
 |-- USE-CASE.md       the business brief — start here
@@ -296,6 +301,7 @@ lead-generation/   or   partner-cockpit/
 |-- data/             all input data (read-only)
 |-- design/           you create it: data inventory, interview notes, requirements, draw.io sketch
 |-- out/              your agents write their results here
+|-- app/              path 2 only: you create it — the agents as Python code
 |-- .github/agents/   sabine / jonas: the stakeholder you will interview
 `-- solutions/        reference solution — no peeking before the checkpoints 🙈
 ```
@@ -333,8 +339,8 @@ your stakeholder needs — with a human checking every step.
 | | Step | What happens | Result |
 | --- | --- | --- | --- |
 | 1 | 📐 **Architecture session** — together | Understand the data, interview the stakeholder, write requirements, compare architectures and decide, design and sketch the system | Design artifacts, reviewed by the team |
-| 2 | 🛠 **Implementation** — everyone | Turn the design into working agents | Agents and an orchestrator |
-| 3 | ▶️ **Run, check & improve** — everyone | Run the agents on the data, check the result against your acceptance criteria, fix the agent — not the output | The final result and better agents |
+| 2 | 🛠 **Implementation** — everyone | Choose a path and let Copilot turn the design into working agents — reviewed by you | Agents and an orchestrator |
+| 3 | ▶️ **Run, check & improve** — everyone | Run the agent flow on the data, check the result against your acceptance criteria, fix the agent — not the output | The final result and better agents |
 
 ### The design artifacts — your basis for the implementation
 
@@ -363,11 +369,12 @@ Same spec, two purposes — and GitHub Copilot can automate both: it builds what
 | **Governance** | Instructions and your review | An identity per agent, policies, audit logs, content safety, evaluations |
 | **Changing it** | Minutes — edit a sentence, run again | A development cycle with tests and deployment |
 
-<div class="info" data-title="In this lab: path 1">
+<div class="info" data-title="Your team chooses the path in task 2">
 
-> You take **path 1**: fast, nothing to set up, and you see every intermediate result. It's the right way to find out whether your
-> design works before anyone invests in code. When it holds up, path 2 starts from the **same artifacts**: agent cards become hosted agents,
-> handoff contracts become typed interfaces, guardrails become policies, and acceptance criteria become automated evaluations.
+> **Path 1** is fast, needs nothing but VS Code and shows you every intermediate result — the right way to find out whether your design works.
+> **Path 2** builds the same system as code that you run locally in your terminal; as an extension, Copilot generates the pipeline that deploys it
+> as hosted agents. Either way, the artifacts carry over: agent cards become agents, handoff contracts become interfaces,
+> guardrails become policies, and acceptance criteria become automated checks.
 
 </div>
 
@@ -654,7 +661,7 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 > | `architecture.md` | Platform-neutral: decision and pattern, Mermaid diagram, handoff contracts, agent cards, orchestration flow with checkpoints, shared guardrails, traceability | **The spec** — Copilot builds `AGENTS.md`, the agents and the orchestrator from it; the same spec works for hosted agents |
 > | `design/architecture.drawio` | The refined sketch, in sync with `architecture.md` | Explaining the design to your stakeholder and in the pitch |
 >
-> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5#reference-solutions) — can you explain *why* yours is different?
+> Compare with the [reference architecture](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6#reference-solutions) — can you explain *why* yours is different?
 
 </div>
 
@@ -662,9 +669,20 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 
 **Everyone on their own machine**
 
-Your architecture is the spec — now you choose the **implementation path**. In this lab it is **GitHub Copilot custom agents**;
-the same spec could become hosted agents in code. In every prompt below you tell Copilot how the platform-neutral design maps to Copilot.
-The design becomes **configuration**: shared rules go into `AGENTS.md`, role-specific
+Your architecture is the spec — now your team chooses the **implementation path**. Both start from the same artifacts,
+and in both Copilot writes the implementation while your team reviews it.
+
+| | 🧪 Path 1 · GitHub Copilot custom agents | 🏭 Path 2 · Pro-code agents |
+| --- | --- | --- |
+| **You build** | Markdown: `AGENTS.md`, `.agent.md` files, an orchestrator agent | Python with the Microsoft Agent Framework: agents, an orchestrator workflow, tests |
+| **You run it** | In the VS Code chat | In your terminal — and as an extension, as hosted agents in Microsoft Foundry |
+| **You need** | VS Code with GitHub Copilot | Additionally Python, uv, Azure CLI and a Foundry project with a model |
+| **Choose it if** | you want to test the design fast — or nobody on the team writes code | your team can read Python and wants a path to production |
+| **Continue with** | 2a below, then task 3 | [Path 2 · Pro-code agents](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) |
+
+### Path 1 · GitHub Copilot custom agents
+
+In every prompt below you tell Copilot how the platform-neutral design maps to Copilot. The design becomes **configuration**: shared rules go into `AGENTS.md`, role-specific
 instructions into one `.agent.md` file per agent. Each agent gets a **small, focused context** — so you can test, fix and re-run one without touching the others.
 An **orchestrator** agent then runs the team for you — and stops after every step so you stay in control.
 
@@ -793,7 +811,7 @@ Does every file an agent reads exist by then?
 
 ## 3 · Run, check & improve
 
-**Everyone on their own machine**
+**Everyone on their own machine** · Path 1 — path 2 runs and checks on [its own page](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4)
 
 ### 3a · Run the team
 
@@ -875,7 +893,7 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 > **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) — or, if you have time left, take on a [🚀 bonus challenge](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4).
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left, take on a [🚀 bonus challenge](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5).
 
 </div>
 
@@ -883,9 +901,292 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
+# Path 2 · Pro-code agents
+
+**Everyone on their own machine**
+
+You build the **same agent system** from your `architecture.md` — but as **Python code** with the **Microsoft Agent Framework**.
+You run the whole agent flow **locally in your terminal**, with a human checkpoint after every step. As an extension, Copilot generates the
+**deployment pipeline** that pushes the orchestrator and every specialized agent as **hosted agents** into **Microsoft Foundry Agent Service**.
+
+**Copilot writes the code — your team reviews it.** Every step ends with a review of the AI-generated code before anything runs.
+Ownership works like in path 1: each person owns one agent (someone takes the orchestrator).
+
+| Step | What you do | Result |
+| --- | --- | --- |
+| P1 | Project skeleton, shared guardrails & tools | `app/` with config, guardrails, tools and tests |
+| P2 | Generate the specialized agents | `app/agents/<agent>.py` — one per agent card |
+| P3 | Generate the orchestrator | `app/workflow.py`, `app/main.py` |
+| P4 | Run the agent flow locally in the terminal | the result in `out/` |
+| P5 | Check & fix the agent, not the output | improved agents |
+| 🚀 P6 | Extension: deployment pipeline to Foundry Agent Service | `infra/`, `azure.yaml`, CI/CD workflow, `DEPLOY.md` |
+
+<div class="warning" data-title="Before you start">
+
+> - **Python 3.11+** and **[uv](https://docs.astral.sh/uv/)** (`uv --version`).
+> - **Azure CLI**, signed in with `az login` — the code uses your Azure login, no keys.
+> - A **Microsoft Foundry project** with a deployed **chat model**: you need the project endpoint and the model deployment name (ask your facilitator).
+> - The **Microsoft Learn MCP server** in VS Code, so Copilot checks the current Agent Framework and Foundry docs instead of guessing APIs.
+>   Create `.vscode/mcp.json` in your use case folder and start the server from that file:
+>
+> ```json
+> { "servers": { "microsoft-learn": { "type": "http", "url": "https://learn.microsoft.com/api/mcp" } } }
+> ```
+
+</div>
+
+## P1 · Project skeleton, shared guardrails & tools
+
+🎯 **Why:** Before any agent exists, decide the things every agent shares: configuration, guardrails and tools. In path 1 a guardrail like
+*"`data/` is read-only"* is a request in `AGENTS.md`. In code you can **enforce** it — the write tool simply can't write anywhere else.
+
+**Agent**, new chat:
+
+```text
+#file:architecture.md #file:design/requirements.md #file:design/data-inventory.md
+We implement this architecture as Python code with the Microsoft Agent Framework (packages agent-framework and
+agent-framework-foundry). Use the Microsoft Learn MCP server to check the current APIs before you write code.
+Don't create any agent yet. Create the project skeleton:
+- pyproject.toml (Python 3.11+, managed with uv, pytest as dev dependency), .env.example with FOUNDRY_PROJECT_ENDPOINT
+  and FOUNDRY_MODEL, and a .gitignore that excludes .env
+- app/config.py: loads .env and returns a FoundryChatClient that authenticates with AzureCliCredential. No keys in code.
+- app/guardrails.md: the shared guardrails from architecture.md and the non-functional requirements, translated for code:
+  the data sources are the files in data/ (read-only), every handoff artifact and the final result is a Markdown file in out/, no internet.
+- app/tools.py: function tools for the capabilities in the agent cards: list, read and search files in data/ and out/ (read-only),
+  and a factory make_write_tool(allowed_file) that returns a tool which can ONLY write that one file in out/.
+  Reject every other path, including ../ tricks.
+- tests/test_tools.py: pytest tests that prove writing to data/, to another file in out/ or outside the folder is rejected.
+- README.md: how to install, configure and run the tests.
+```
+
+Then install and run the tests:
+
+```bash
+uv sync
+uv run pytest
+```
+
+<div class="important" data-title="👀 Review the skeleton before you move on">
+
+> Every agent will use these files — a hole here is a hole in all of them. The 🔍 **Critic** leads:
+>
+> - **Secrets:** no key, endpoint or password in the code — only in `.env`, and `.env` is ignored by Git?
+> - **Tools:** read `make_write_tool` line by line. Could an agent write to `data/`, to another agent's file, or outside the folder? Do the tests prove it?
+> - **Guardrails:** does `app/guardrails.md` contain every shared guardrail and non-functional requirement — and nothing role-specific?
+> - **Do you understand every line?** Ask Copilot to explain what you don't — you'll own this code.
+
+</div>
+
+## P2 · Generate the specialized agents
+
+🎯 **Why:** Each agent card becomes code: one agent, one responsibility, only the tools it needs. You can run every agent **on its own** —
+so you can test and fix one without running the whole flow.
+
+**Agent**, same chat:
+
+```text
+#file:architecture.md #file:app/guardrails.md #file:app/tools.py #file:app/config.py
+For every agent card in architecture.md except the orchestrator, create app/agents/<agent_name>.py with a function
+create_agent(client) that returns a Microsoft Agent Framework agent:
+- name and description from the agent card
+- instructions: the role in one sentence, the inputs (exact paths in data/ and out/), the steps, the output file in out/
+  and its structure matching the handoff contract, rules including what it must NOT do because another agent does it,
+  and the acceptance criteria from design/requirements.md it must meet — followed by the content of app/guardrails.md
+- tools: only the capabilities from its agent card. Its write tool comes from make_write_tool and may only write its own output file.
+Then create app/run_agent.py so that `uv run python -m app.run_agent <agent_name>` runs one agent with "Run your step."
+and prints which file it wrote. Add a test that every agent can be created and only has the tools from its agent card.
+```
+
+Run the tests, then **test the first agent on its own**:
+
+```bash
+uv run pytest
+uv run python -m app.run_agent <first-agent>
+```
+
+<div class="important" data-title="👀 Review your agent before you move on">
+
+> **Each person reviews the agent they own** and opens its output in `out/`:
+>
+> | ✔ | Check |
+> | --- | --- |
+> | ☐ | The instructions match the **agent card**: one responsibility, nothing that belongs to another agent |
+> | ☐ | Inputs and the output file are **exact paths**; the output structure matches the **handoff contract** |
+> | ☐ | It says what to do when data is **missing or ambiguous** |
+> | ☐ | **Least privilege:** only the tools from its card; the write tool is bound to its **own** file |
+> | ☐ | The **guardrails** are really part of its instructions |
+>
+> Fix it by hand or tell Copilot exactly what to change — then share your changes so everyone has the same code.
+
+</div>
+
+## P3 · Generate the orchestrator
+
+🎯 **Why:** The orchestrator runs your agents in the order of your orchestration flow — and **stops after every step**, so a human checks
+the result before the next agent builds on it. In code, that pause is a real prompt in your terminal.
+
+**Agent**, same chat:
+
+```text
+#file:architecture.md #file:app/run_agent.py
+Implement the orchestration flow from architecture.md as a Microsoft Agent Framework workflow in app/workflow.py,
+using the agents in app/agents/, and a terminal entry point app/main.py: `uv run python -m app.main`.
+- the steps or stages from the orchestration flow, in order; agents in the same stage run concurrently
+- a human checkpoint after every step, using the framework's human-in-the-loop support: print the files the step wrote,
+  the 2-3 things to check from architecture.md, then ask: [c]ontinue, [r]e-run this step with a note, or [s]top
+- on [r]: run that step again with the note, then every step after it, again with checkpoints
+- the orchestrator never writes artifacts itself
+- after the last step: a quality-gate agent with read-only tools checks out/ against the acceptance criteria in
+  design/requirements.md and app/guardrails.md, and prints PASS or FAIL per criterion with the agent to fix
+- print a short log per step: agent, duration, files written
+```
+
+<div class="important" data-title="👀 Review the orchestrator before you move on">
+
+> The person who owns the orchestrator leads:
+>
+> - Are the steps in the order of `architecture.md` — with the right agents running **concurrently**?
+> - Is there a checkpoint after **every** step? Can the flow continue without your answer? (It must not.)
+> - Does **re-run** repeat that step and everything after it?
+> - Is the quality gate **read-only**? Does it check the real acceptance criteria — not invented ones?
+>
+> **Dry run on paper:** one person reads `app/workflow.py` aloud, the others say what *their* agent reads and writes at each step.
+
+</div>
+
+## P4 · Run the agent flow locally
+
+🎯 **Why:** Now you see whether your design works on the real data — step by step, in your terminal, with you in control.
+
+```bash
+cp .env.example .env        # Windows: copy .env.example .env — then fill in endpoint and model
+az login
+uv run python -m app.main
+```
+
+At every checkpoint **open the files in `out/`** and look at what the orchestrator points you to. All good? `c`.
+Something wrong? `s` — and fix the agent first (P5).
+
+🤝 Split the work: one person drives the terminal, the others review the handoff files at each checkpoint.
+
+## P5 · Check & fix the agent, not the output
+
+🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **code or instructions** makes the improvement repeatable.
+
+Check the final result with the checklist for your use case from [3b · Check against your requirements](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=3) —
+it's the same data, so it's the same traps. Found a problem? **Agent**, new chat:
+
+```text
+#file:out/<final-result>.md
+The result has this problem: <describe it>.
+Look at the agents in app/agents/, app/guardrails.md and app/tools.py.
+Which agent caused it, and which instruction or tool is missing or wrong?
+Propose a minimal change to the code. Don't change any file in out/.
+```
+
+Review the change, run `uv run pytest`, then run the flow again and answer `r` at the step of that agent. Did the problem disappear?
+
+<div class="info" data-title="✅ Checkpoint P · Agent flow runs locally">
+
+> **You should have:** `app/` with config, guardrails, tools, one module per agent and the orchestrator workflow — all reviewed, all tests green —
+> a complete local run in the terminal with the final result in `out/`, and at least one improved agent.
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6) — or, if you have time left and Azure access, the deployment extension below.
+
+</div>
+
+## 🚀 P6 · Extension: deploy as hosted agents
+
+🎯 **Why:** Running locally proves the design. To make the agents **reusable, governable and scalable**, they run as **hosted agents** in
+Microsoft Foundry Agent Service — each with its **own identity**, managed scaling, monitoring and an endpoint other apps can call.
+The deployment is code too: **infrastructure as code** and a **pipeline**, generated by Copilot and reviewed by you.
+
+<div class="warning" data-title="Only with your facilitator's OK">
+
+> Deploying creates **Azure resources that cost money**. You need an Azure subscription where you may create resources, the
+> [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) with the agent extension
+> (`azd ext install azure.ai.agents`) and the prerequisites from [Foundry hosted agents](https://learn.microsoft.com/agent-framework/hosting/foundry-hosted-agent).
+> Steps ① and ② create **only files** — nothing is deployed until step ③.
+
+</div>
+
+**① Design the deployment.** **Ask**, new chat:
+
+```text
+#file:architecture.md #file:app/workflow.py
+We want to deploy our agent system to Microsoft Foundry Agent Service: the orchestrator and every specialized agent
+as its own hosted agent, each with its own identity. Use the Microsoft Learn MCP server to check the current docs for
+Foundry hosted agents, the Agent Framework hosting integration and the azd ai agent extension.
+Propose the deployment design — don't write any files:
+1. per hosted agent: what it contains, how it is exposed, and how the orchestrator calls the specialized agents
+2. how the human checkpoints work when the orchestrator is hosted
+3. where the data comes from and where the handoff artifacts go (for this lab: data packaged read-only with the agents)
+4. the Azure resources as infrastructure as code (Bicep), identities and least-privilege role assignments, monitoring
+5. the CI/CD pipeline: GitHub Actions with OIDC (no secrets), tests before every deployment
+6. what changes in our code, what stays the same, and how `uv run python -m app.main` keeps working locally
+7. open questions, risks and expected costs
+```
+
+<div class="important" data-title="👀 Review the deployment design before you move on">
+
+> Decide as a team before any file is written:
+>
+> - Does every agent keep **least privilege** — its own identity, only the roles it needs?
+> - Are there **no keys or secrets** anywhere — not in code, config or the pipeline?
+> - Is the handling of **personal and internal data** acceptable for your stakeholder?
+> - Do the **human checkpoints** still exist when it runs in the cloud?
+>
+> Tell Copilot what you changed, e.g. *"Use one shared container image with a build argument per agent."*
+
+</div>
+
+**② Generate the deployment pipeline.** Switch to **Agent** in the same chat:
+
+```text
+Implement the deployment design we agreed on. Use the Microsoft Learn MCP server for current syntax.
+- hosting entry points for the orchestrator and every specialized agent with the Agent Framework hosting integration,
+  without breaking the local run `uv run python -m app.main`
+- container definitions for the hosted agents and azure.yaml for the azd ai agent extension, with one service per agent
+- infrastructure as code in infra/ (Bicep): Foundry project and model deployment, container registry, an identity per agent
+  with least-privilege role assignments, Application Insights
+- .github/workflows/deploy.yml: GitHub Actions with OIDC that runs the tests, then azd provision and azd deploy
+- no secrets in code or config — configuration through azd environment variables
+- DEPLOY.md: prerequisites, azd provision --preview, azd up, how to invoke the orchestrator and walk through its checkpoints,
+  how to stream logs, azd pipeline config for the GitHub Actions setup, and azd down
+```
+
+<div class="important" data-title="👀 Review the generated deployment code before you deploy">
+
+> AI-generated infrastructure deserves the strictest review. Split it up:
+>
+> - **IaC (`infra/`):** which resources, which SKUs, which role assignments? Anything broader than *Contributor on everything* is a red flag — and so is *Contributor on everything*.
+> - **Identities:** one per agent, as designed? Does a specialized agent have access to things only the orchestrator needs?
+> - **Pipeline:** OIDC instead of secrets? Do the tests run **before** the deployment?
+> - **Code changes:** does `uv run pytest` still pass and does the local run still work?
+> - **Dry run:** `azd provision --preview` shows what *would* be created — without creating anything. Does it match the design?
+
+</div>
+
+**③ Deploy and test** — only with your facilitator's OK, following your `DEPLOY.md`:
+
+```bash
+azd auth login
+azd provision --preview     # what will be created?
+azd up                      # provision and deploy
+```
+
+Invoke the hosted orchestrator, walk through its checkpoints and compare the result with your local run. **When you're done, clean up:**
+
+```bash
+azd down
+```
+
+---
+
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
+
 # 🚀 Bonus challenges
 
-**For teams that finished checkpoint 4 early.** Pick any challenge, in any order — each one extends the agent team you already have.
+**For path 1 teams that finished checkpoint 4 early** (path 2 has its own deployment extension). Pick any challenge, in any order — each one extends the agent team you already have.
 When the pitch starts, stop and pitch what you have.
 
 | | Challenge | You learn |
@@ -988,7 +1289,7 @@ Copilot refuses because of `AGENTS.md`? Great — your **instructions** work. Th
 > New-Item -ItemType Directory -Force .github/skills, .github/hooks | Out-Null; Copy-Item -Recurse solutions/bonus/skills/quality-check .github/skills/; Copy-Item solutions/bonus/hooks/* .github/hooks/
 > ```
 >
-> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5).
+> **Next:** [pitch](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=6).
 
 </div>
 
@@ -1064,6 +1365,7 @@ Files: [`partner-cockpit/solutions/`](https://github.com/LaetitiaMa1410/ghcp-age
 | Architecture sketch generated as draw.io, refined by the team | Diagrams as code, communicating a design |
 | `AGENTS.md` + `.agent.md` | Custom instructions, custom agents, least privilege |
 | Orchestrator with a checkpoint after every step | Subagents, delegation, human in the loop |
+| Path 2: agents as code, run locally, deployment pipeline | Microsoft Agent Framework, enforced guardrails, IaC, hosted agents |
 | Fix the agent, not the output | *Miss → diagnosis → fix* |
 | 🚀 Bonus: skill, hook | Reusable skills, deterministic guardrails |
 

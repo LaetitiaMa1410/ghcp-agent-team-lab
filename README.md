@@ -2,7 +2,7 @@
 
 A hands-on lab for GitHub Copilot: pick one of two real-world sales use cases, **interview the stakeholder**,
 run a full **architecture session** with Copilot — requirements, options, decision, a draw.io architecture sketch — then design a team of **specialized agents**
-and build, run and improve it locally in VS Code.
+and build, run and improve it — as GitHub Copilot custom agents (path 1) or as Python code with the Microsoft Agent Framework, with an optional deployment to Microsoft Foundry (path 2).
 
 ## 👉 [Open the lab](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/)
 
@@ -11,7 +11,8 @@ and build, run and improve it locally in VS Code.
 | **Format** | Teams of 3–4 |
 | **Level** | Step-by-step with copy-paste prompts and checkpoints — plus 🚀 bonus challenges (skill, hook) for fast teams |
 | **You need** | VS Code, GitHub Copilot, the Draw.io Integration extension, this repository |
-| **You don't need** | Deployments, API keys, internet research, GitHub issues or pull requests |
+| **Path 2 also needs** | Python 3.11+, uv, Azure CLI, a Microsoft Foundry project with a chat model — for the deployment extension also the Azure Developer CLI |
+| **You don't need** | API keys, internet research, GitHub issues or pull requests |
 
 ## 🎯 Two use cases — pick one
 
@@ -28,7 +29,9 @@ flowchart LR
   subgraph S1["1 · Architecture session"]
     A["Use case<br/>& data"] --> I["🗣 Stakeholder<br/>interview"] --> R["Requirements"] --> O["Options<br/>& decision"] --> D["Design<br/>& draw.io sketch"]
   end
-  D --> C["2 · Build<br/>custom agents"] --> E["3 · Run, check<br/>& improve"] --> P["🎤 Pitch"]
+  D --> C["2 · Path 1<br/>Copilot custom agents"] --> E["3 · Run, check<br/>& improve"] --> P["🎤 Pitch"]
+  D --> C2["2 · Path 2<br/>pro-code agents"] --> E2["Run locally<br/>& improve"] --> P
+  E2 -.-> X["🚀 Deploy as hosted agents<br/>to Microsoft Foundry"]
 ```
 
 ## 🚦 Start here

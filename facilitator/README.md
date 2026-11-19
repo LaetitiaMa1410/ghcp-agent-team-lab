@@ -8,6 +8,8 @@
 - [ ] For bonus B2 (hook): check whether hooks are allowed by your organization's Copilot policy and whether participants have **Node.js**. If not, announce B2 as "read only".
 - [ ] Check that participants can install the **Draw.io Integration** extension (`hediet.vscode-drawio`) — or have the draw.io desktop app as a fallback.
 - [ ] Check that the stakeholder agents (`sabine`, `jonas`) show up in the agent picker and answer in character.
+- [ ] **Path 2 (pro-code):** decide whether you offer it. Teams need Python 3.11+, uv, the Azure CLI and access to a **Microsoft Foundry project with a deployed chat model** (endpoint + deployment name) — prepare one project per team or a shared one with enough quota, and give participants the *Azure AI User* role. Check that the Microsoft Learn MCP server (`https://learn.microsoft.com/api/mcp`) is allowed.
+- [ ] **Path 2 deployment extension (P6):** only if you provide a subscription or resource group where teams may create resources. Set a budget alert and make sure teams run `azd down` at the end.
 - [ ] Optional: do one full run yourself with the reference agents (see below) so you know the expected result.
 
 ## Timing — 3 hours
@@ -20,8 +22,8 @@
 | 1:00–1:10 | 1e · Detailed design | Check the traceability section: is any requirement uncovered? |
 | 1:10–1:30 | 1f · Architecture sketch in draw.io | If the generated file doesn't open, let Copilot fix the XML. Push teams to **refine** the sketch (layout, risks, stakeholder view) and to sync design changes back into `architecture.md`. At 1:30: **checkpoint 2**. |
 | 1:30–1:40 | ☕ Break | Remind the driver to share `design/` and `architecture.md`. |
-| 1:40–2:10 | Task 2 · Build the agent team | At 2:00: help teams without agents get to **checkpoint 3**. |
-| 2:10–2:40 | Task 3 · Run, check & improve | Make sure teams really **open the files** at each orchestrator checkpoint instead of typing `continue` blindly. Remind: fix the agent, not the output. Fast teams → bonus. |
+| 1:40–2:10 | Task 2 · Build the agent team | Teams choose path 1 or 2 — path 2 only for teams who can read Python and have Foundry access. At 2:00: help teams without agents get to **checkpoint 3** (path 1) or a running `app.run_agent` (path 2). |
+| 2:10–2:40 | Task 3 · Run, check & improve | Make sure teams really **open the files** at each orchestrator checkpoint instead of typing `continue` blindly. Remind: fix the agent, not the output. Fast teams → bonus (path 1) or the deployment extension P6 (path 2). |
 | 2:40–3:00 | Task 4 · Pitch & debrief | 2 minutes per team. You (or volunteers) play Sabine and Jonas and vote. 5–8 min debrief. |
 
 ## Timing — 2-hour variant
@@ -154,6 +156,6 @@ Tested with Copilot CLI: the reference hook blocked an `apply_patch` into `data/
 ## Adapting the lab
 
 - **2 hours:** see the 2-hour variant above.
-- **Longer (3.5 h):** make the [bonus challenges](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) (skill, hook) part of the plan for everyone — about 20–30 minutes.
+- **Longer (3.5 h):** make the [bonus challenges](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=5) (skill, hook) part of the plan for everyone — about 20–30 minutes.
 - **Architecture only (90 min):** run steps 1a–1f and stop at checkpoint 2 — a good format for architects and product owners.
 - **Your own use case:** copy a use case folder and replace `USE-CASE.md`, `MISSION.md`, `data/` and the stakeholder agent — the lab steps stay the same.
