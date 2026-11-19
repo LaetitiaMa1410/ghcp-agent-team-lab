@@ -58,26 +58,67 @@ Your team picks **one** of two use cases. Both use the same lab steps — only t
 
 # Choose your use case
 
-Read both, decide as a team, then go to [setup](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2).
+Both use cases come from the same company and are built the same way: a sales person with too much information and too little time,
+a set of messy files in `data/`, and a stakeholder you can interview. They differ in **what kind of problem** your agents have to solve —
+and therefore in **what kind of agent team** you will design.
+
+Read both descriptions as a team, pick one, then go to [setup](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=2).
 
 | | 🎯 **A · Lead generation** | 🤝 **B · Partner cockpit** |
 | --- | --- | --- |
-| **User** | Sabine, Key Account Manager | Jonas, Partner Sales Manager |
-| **Question** | *Whom should I meet at the conference — and why?* | *How do I win the next commitment from this partner?* |
-| **Input** | Participant lists in 3 formats, company profiles, CRM extract | Lead file, meeting notes, town & council data, network coverage, products |
-| **Output** | One-page sales briefing with 6 meetings | Two-page partner cockpit for meeting 2 |
-| **Agent pattern** | **Pipeline** — one step after the other | **Perspectives** — parallel analysts, two opposing scenarios, one synthesis |
-| **Main challenge** | Messy data: duplicates, spellings, gaps | Contradictions, politics, facts vs. opinions |
+| **Your user** | Sabine, Key Account Manager | Jonas, Partner Sales Manager |
+| **Her / his question** | *Whom should I meet at the conference — and why?* | *How do I win the next commitment from this partner?* |
+| **Sales situation** | Many potential customers, one short event | One partner, a long sales cycle with many meetings |
+| **Input** | 3 participant lists in 3 formats, 12 company profiles, product categories, CRM extract | Lead record, meeting notes, voice memo, town & council data, press, network coverage, products, business case assumptions |
+| **Output** | One-page sales briefing: 6 meetings, booth visits, skip list | Two-page partner cockpit for meeting 2 |
+| **Main challenge** | **Messy data** — duplicates, spellings, gaps, the wrong people | **Messy truth** — contradictions, politics, facts vs. opinions, internal vs. external |
+| **Typical agent pattern** | **Pipeline** — clean → analyze → score → write | **Perspectives** — parallel analysts, two opposing scenarios, one synthesis |
+| **Feels like** | Data engineering with judgement | Consulting with judgement |
 | **Folder** | `lead-generation/` | `partner-cockpit/` |
 
-## 🎯 A · Lead generation
+## 🎯 A · Lead generation — *"Whom should I meet at the conference, and why?"*
 
-Contoso sells **IP transit, international voice, mobile & IoT wholesale and backbone capacity** to other telecom companies.
-Sales is shifting from **farming** (growing existing customers) to **hunting** (winning new ones). Conferences are the
-best hunting grounds — but preparing for them is painful: participant lists come from **different sources in different formats**,
-company names are **spelled differently**, finding out what a company needs takes **manual research**, and nobody knows **whom** to talk to, or **why now**.
+### The business
 
-In two weeks **Sabine** attends **WholesaleCon Europe 2026**. She has **6 meeting slots**.
+**Contoso Wholesale** is the wholesale unit of a European telecom group. It does **not** sell to consumers — it sells network services
+to **other telecom and digital companies**, which use them to serve their own customers:
+
+| Product category | What the customer buys | Typical buyers |
+| --- | --- | --- |
+| **IP Transit & Peering** | Global internet connectivity | ISPs, content and cloud providers, carriers |
+| **International Voice** | Voice termination and interconnect into European networks | Carriers, voice hubs |
+| **Mobile & IoT Wholesale** | Roaming, MVNO access, IoT connectivity | MVNOs, IoT companies, carriers |
+| **Backbone Capacity & DCI** | Wavelengths, Ethernet, dark fiber between hubs and data centers | Carriers, cloud / data center operators, subsea, ISPs |
+
+For years the sales team grew mainly with existing customers (**farming**). That market is saturated, so management has set a new goal:
+win **new customers** (**hunting**). Account managers now have **new-logo targets** — but their tools and habits are still built for farming.
+**Industry conferences are the best hunting ground:** hundreds of potential customers in one place for two days. The preparation decides whether the trip pays off.
+
+### Who you build it for
+
+| Person | Role | What they need | Their worry |
+| --- | --- | --- | --- |
+| **Sabine** — your user | Key Account Manager with a new-customer target | A short list of the **right people** and a **reason to talk** | *"I waste my few meeting slots on the wrong people."* |
+| **Martin Keller** | Head of Wholesale Sales, sponsor | More new-customer pipeline per conference, less preparation time | *"Every account manager prepares differently — results depend on luck."* |
+| **Account teams** | Own the existing customers | To know when *their* customers are at a conference | *"Hunters must not talk to my customers behind my back."* |
+| **Data protection officer** | Approves use of personal data | Only the data needed for the purpose, no private copies | *"Participant lists are personal data."* |
+
+### The problem today
+
+About two weeks before a conference, the account manager collects the **registration export** (CSV), the **exhibitor list** (JSON from the event app)
+and the **badge scans** from Contoso's own booth (a text export with German headers), copies everything into a spreadsheet, researches each company
+on its website, **guesses** the product fit from keywords, checks the CRM — sometimes — and picks people to contact.
+
+- ⏳ It takes **1.5–2 days** per conference.
+- 🎲 There are **no shared criteria** for a good lead; keyword matching produces false positives.
+- 🧩 The data is **poor**: the same company in different spellings, the same person in several lists, *"Last, First"* names, missing profiles, juniors instead of decision makers.
+- ❓ **Nobody can say why** a company was picked.
+- 🔓 Personal data ends up in **private spreadsheets**.
+
+### Your case
+
+**Sabine** attends **WholesaleCon Europe 2026**. She has **6 meeting slots** plus some time for booth visits.
+Your agent team turns the raw conference files into the briefing she takes with her.
 
 <div class="important" data-title="Mission A">
 
@@ -85,20 +126,89 @@ In two weeks **Sabine** attends **WholesaleCon Europe 2026**. She has **6 meetin
 
 </div>
 
-**Sabine wants a one-page sales briefing** with 6 recommended meetings (person, role, company, product, *why now* with evidence,
-one opening question), booth visits, and companies she can skip.
-**Her rules:** new customers first · every recommendation **traceable** to the data · only **name, job title and company** of people · **decision makers** preferred.
-Business brief: [`lead-generation/USE-CASE.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/USE-CASE.md) · deliverable spec: [`MISSION.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/MISSION.md).
+### What Sabine wants to receive — a one-page sales briefing
 
-## 🤝 B · Partner cockpit
+1. **6 recommended meetings** — person, job title, company, **product to pitch**, **why now** with evidence from the data, and **one opening question**.
+2. **Booth visits** — exhibitors worth a visit without a booked meeting.
+3. **Not a priority** — companies she can skip, and why.
 
-Contoso sells **fiber wholesale access** to partners — internet providers and municipal utilities — who sell internet service
-under **their own brand**. Winning a partner takes several meetings with very different people: a technical lead, a managing director,
-a supervisory board chaired by the mayor. Before each meeting, the sales manager has to combine **facts, regional politics, technical feasibility,
-business scenarios and the right materials** — from many sources.
+### Sabine's rules
 
-**Stadtwerke Lindenau**, the utility of a mid-sized town, wants to offer fiber internet. Meeting 1 is done.
-**Meeting 2 is on 3 December** — one week before the supervisory board meets.
+- 🎯 **Hunting first.** New customers only; existing customers go to their account team.
+- 🔍 **Traceable.** Every recommendation points to a file in `data/`. No invented facts.
+- 🔒 **Data protection.** Only **name, job title and company** of people — no e-mail, no phone.
+- 👔 **Decision makers** (Head of, Director, VP, C-level) over other roles.
+- 🙋 **Recommend, don't act.** Sabine decides whom she meets.
+
+### What you'll work with
+
+| File | What it is | Watch out for |
+| --- | --- | --- |
+| `participants.csv` | Registration export from the organizer | Contains e-mail addresses |
+| `exhibitors.json` | Exhibitors with booths and contacts | Not every exhibitor lists contacts |
+| `badge_scans.txt` | Scanner export from Contoso's booth | Short company names, German headers, *"Last, First"* |
+| `company-profiles/*.md` | One page per company — stands in for its website | Not every company has one |
+| `product-categories.json` | Contoso's products, target segments, signal words | Signal words are hints, not rules |
+| `crm-existing-customers.csv` | Extract from Contoso's CRM | Tells you who is *not* a new customer |
+
+### What makes it interesting for agents
+
+The work is a **chain of steps** where each step depends on the one before: merge the lists → understand each company →
+match it to products → pick people → write the briefing. One mistake early (a missed duplicate, an existing customer not filtered)
+travels all the way into Sabine's briefing. You'll decide **where to cut the chain into agents**, what each agent hands over,
+and where a **human checkpoint** catches errors before they spread.
+
+<div class="tip" data-title="Pick A if…">
+
+> …your team likes **structured data**, clear rules and a step-by-step flow — and you want to see how a **pipeline** of agents
+> turns messy input into a clean, traceable result.
+
+</div>
+
+## 🤝 B · Partner cockpit — *"How do I win the next commitment from this partner?"*
+
+### The business
+
+The same **Contoso Wholesale** also sells **fiber wholesale access**. Contoso lets **partners** — regional internet providers and
+municipal utilities (*Stadtwerke*) — use its fiber network. The partners sell internet service to households and businesses **under their own brand**;
+Contoso stays invisible to end customers. Partners can also build **their own fiber** and let Contoso **operate** it, or use Contoso's
+copper (VDSL) network **until** fiber is built. How tightly the partner's IT connects to Contoso is defined by three **onboarding levels** —
+from a manual portal to full API integration.
+
+**Winning a partner is not a single deal.** It's a **series of meetings over months** with people who think very differently —
+a technical lead, a managing director, a supervisory board chaired by the mayor, a town council with a majority and an opposition.
+Every meeting has to move the partner **one commitment step** further: a workshop, a letter of intent, a board decision, a contract.
+
+### Who you build it for
+
+| Person | Role | What they need |
+| --- | --- | --- |
+| **Jonas Weber** — your user | Partner Sales Manager, Contoso | A cockpit that tells him **where he stands** and **how to win the next step** |
+| **Contoso experts** | Product management, network planning, partner consulting, marketing | Clear questions from Jonas — they are often too busy |
+| **Pricing** | Approves prices and discounts | Nothing internal leaves the house without approval |
+
+On the partner side: **Thomas Reuter** (Head of Telecommunications & Digital Infrastructure), **Dr. Katrin Albers** (Managing Director),
+**Melanie Kraus** (Head of Customer Service) and the **supervisory board**, chaired by the mayor.
+
+### The problem today
+
+Contoso's partner sales process has ten phases — from the first lead to the handover into onboarding.
+**The preparation before each meeting is the bottleneck.** Jonas reads his own raw notes and voice memos, researches the region
+(town statistics, council decisions, local press, competitors), asks network planning what is possible per district, asks partner consulting
+for business scenarios, checks with product management which products fit, thinks about who decides and what each person fears —
+and asks marketing which materials he may show.
+
+- ⏳ It takes **about a day per meeting**, mostly searching and asking colleagues.
+- 🫥 **Perspectives get lost.** One "balanced" summary blends the technical, financial and political view — and the conflicts disappear.
+- 🔀 **Facts and opinions get mixed.** A guess from the notes ends up as a number in front of the customer.
+- 🔓 **Internal information leaks** — prices, lessons learned from other partners — because nobody checks the materials.
+- ⚖️ **Scenarios are one-sided** — either too optimistic or too careful; the customer never sees a real choice.
+
+### Your case
+
+**Stadtwerke Lindenau**, the utility of a town with about **58,000 inhabitants**, wants to become a fiber internet provider under its own brand.
+**Meeting 1** was on **28 October 2026**. **Meeting 2** is on **3 December 2026** — one week before the **supervisory board** meets on **10 December**.
+Your agent team prepares Jonas for meeting 2.
 
 <div class="important" data-title="Mission B">
 
@@ -106,11 +216,57 @@ business scenarios and the right materials** — from many sources.
 
 </div>
 
-**Jonas wants a two-page partner cockpit** with the situation, who decides, technical fit, a **bold** and a **safe** scenario with a recommendation,
-the meeting 2 plan (goal, next commitment step, questions, materials) and open points.
-**His rules:** label every statement as *fact*, *customer statement*, *assessment*, *hypothesis* or *open question* · no invented numbers ·
-internal stays internal · politically neutral · name and role only.
-Business brief: [`partner-cockpit/USE-CASE.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/USE-CASE.md) · deliverable spec: [`MISSION.md`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/MISSION.md).
+### What Jonas wants to receive — a partner cockpit of max. 2 pages
+
+1. **Situation in 5 bullets** — the partner, the region, the network, where we stand.
+2. **Who decides** — people, roles, what each of them needs, and their concerns.
+3. **Technical fit** — recommended products and onboarding level, with prerequisites and risks.
+4. **Two scenarios** — a **bold** and a **safe** one, with **5-year customer numbers**, and a **recommendation**.
+5. **Meeting 2 plan** — goal, the **next commitment step**, 5 questions, and which materials to bring.
+6. **Open points** — what is still unclear and must be checked.
+
+### Jonas's rules
+
+- 🏷️ **Separate what you know from what you think.** Every statement is labelled *fact*, *customer statement*, *sales assessment*, *hypothesis* or *open question*.
+- 🔢 **No invented numbers.** Every number comes from the data or is marked as an assumption.
+- 🔒 **Internal stays internal.** Prices and internal material are marked `INTERNAL` — nothing goes to the customer without approval.
+- 🏛️ **Politically neutral.** Describe positions in the council; never judge parties or politicians.
+- 👤 **People:** name and role only.
+- 🎯 **Focus beats completeness.** The cockpit must help win the *next* commitment, not describe everything.
+
+### What you'll work with
+
+| Area | Files | Watch out for |
+| --- | --- | --- |
+| **Lead file** | CRM lead record, Jonas's raw notes from meeting 1, voice memo transcript | Notes and memo don't always agree; facts mixed with gossip |
+| **Region** | Town profile, council minutes, press clippings | Public — but politics and press need careful, neutral handling |
+| **Network** | Coverage per district: households, Contoso coverage, the utility's build plans | Internal planning data |
+| **Contoso** | Product catalog, onboarding guide, reference partners, business case assumptions, materials catalog | Several files are **INTERNAL**; materials have a release status |
+
+### What makes it interesting for agents
+
+The work is **not a chain** — it's **several expert views on the same partner**: technical, people, region, business.
+Each view needs its own sources and its own expertise, and they **contradict each other**. A single agent tends to average everything into
+a bland summary. You'll decide **which perspectives deserve their own agent**, how to keep **two opposing scenarios** genuinely different,
+and who **synthesizes** — and checks that nothing internal or invented slips into the cockpit.
+
+<div class="tip" data-title="Pick B if…">
+
+> …your team likes **ambiguity**, people and politics — and you want to see how **parallel perspectives** and a synthesis step
+> beat a single "do-it-all" agent.
+
+</div>
+
+## How to decide
+
+- **Can't decide?** Take **A** if this is your first agent team, **B** if you want more design freedom.
+- **Several teams in the room?** Try to have both use cases covered — the pitch is more interesting when you can compare a pipeline with a perspectives team.
+- **Want the full story?** Each folder has a detailed business brief (`USE-CASE.md`) and a short deliverable spec (`MISSION.md`):
+  [A · USE-CASE](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/USE-CASE.md) ·
+  [A · MISSION](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/lead-generation/MISSION.md) ·
+  [B · USE-CASE](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/USE-CASE.md) ·
+  [B · MISSION](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/blob/main/partner-cockpit/MISSION.md).
+  You will read them in detail in step 1a.
 
 <div class="tip" data-title="Easter eggs 🥚">
 
