@@ -323,6 +323,46 @@ From task 2 on, everyone works on their own machine and you compare results as a
 
 # Hands-on
 
+## 🎯 Target picture
+
+By the end of this hands-on your team has built an **agentic system in GitHub Copilot** for your use case —
+a team of **custom agents**, run by an **orchestrator**, with you in the loop. No code, only Markdown files in your repo:
+
+| Layer | What it is | Files |
+| --- | --- | --- |
+| 📐 **Design** | What the user needs and how the system works — reviewed by the team | `design/*.md`, `architecture.md`, `design/architecture.drawio` |
+| 🛡 **Shared guardrails** | Rules every agent follows: data protection, sources, where to write | `AGENTS.md` |
+| 🤖 **Custom agents** | One responsibility each, small context, least-privilege tools | `.github/agents/<agent>.agent.md` |
+| 🎛 **Orchestrator** | Runs the agents as subagents, step by step, and pauses at every human checkpoint | `.github/agents/orchestrator.agent.md` |
+| 📄 **Result** | Handoff files and the final result, checked against your acceptance criteria | `out/` |
+
+### Why build it in GitHub Copilot first?
+
+- ⚡ **Fast iteration:** an agent is a Markdown file. Change one sentence, re-run, see the effect — in minutes, not sprints.
+- 🧪 **Test the design before you invest:** does the split into agents work? Are the handoffs right? Where do agents invent facts or leak data?
+- 👀 **Human in the loop:** every intermediate file is visible, and the orchestrator stops after every step.
+- 🧰 **Nothing to set up:** it runs where developers already work — VS Code, local files, no infrastructure.
+- ♻️ **The design carries over:** requirements, architecture, handoff contracts and agent instructions are the spec for the next stage.
+
+<div class="important" data-title="This is a prototype — not the production system">
+
+> GitHub Copilot custom agents run **in one person's VS Code, started by hand**. That's ideal for exploring, prototyping and testing a design —
+> but not for a system a whole sales team relies on. When agents have to be **reusable, governable and scalable**, the next stage is
+> **pro-code agents hosted on an agent platform** (for example built with the Microsoft Agent Framework and hosted in Microsoft Foundry Agent Service):
+>
+> | | 🧪 Today: Copilot custom agents | 🏭 Next stage: pro-code, hosted agents |
+> | --- | --- | --- |
+> | **Who runs it** | One person, in VS Code, by hand | Many users — via an app, Teams or an API; on a schedule or triggered by events |
+> | **Data** | Local copies of files | Live, access-controlled connections to CRM and data platforms (APIs, MCP) |
+> | **Governance** | Instructions and your review | An identity per agent, policies, audit logs, content safety, evaluations |
+> | **Scale & operations** | One run at a time on one machine | Hosted runtime, monitoring, versioning, CI/CD |
+> | **Reuse** | Copy the files into the next repo | Shared agents and tools that other teams and processes can call |
+>
+> What you build today is not thrown away: **agent cards** become hosted agents, **handoff contracts** become typed interfaces,
+> **guardrails** become policies, and **acceptance criteria** become automated evaluations.
+
+</div>
+
 ## 1 · Architecture session
 
 **Together on the driver's screen**
