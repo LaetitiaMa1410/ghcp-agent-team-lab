@@ -381,7 +381,13 @@ Pick the 5–6 best questions as a team.
 **Interview.** Open a **new chat**, select the **`sabine`** (A) or **`jonas`** (B) agent and interview them.
 💼 The **interviewer** asks — one question at a time. Follow up with *"Why?"* and *"Can you give me an example?"*
 
-Finish with: *"Thanks! Please summarize what you told us as a bullet list."* Create **`design/interview-notes.md`** and paste the summary.
+Finish with:
+
+```text
+Thanks! Please summarize what you told us as a bullet list.
+```
+
+Create **`design/interview-notes.md`** and paste the summary.
 
 <div class="warning" data-title="Don't peek">
 
