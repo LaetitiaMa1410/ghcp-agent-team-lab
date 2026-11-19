@@ -381,13 +381,18 @@ Pick the 5–6 best questions as a team.
 **Interview.** Open a **new chat**, select the **`sabine`** (A) or **`jonas`** (B) agent and interview them.
 💼 The **interviewer** asks — one question at a time. Follow up with *"Why?"* and *"Can you give me an example?"*
 
-Finish with:
+Finish the interview in the stakeholder chat with:
 
 ```text
 Thanks! Please summarize what you told us as a bullet list.
 ```
 
-Create **`design/interview-notes.md`** and paste the summary.
+Copy the summary, go back to your **1a chat** (Agent) and send:
+
+```text
+Create design/interview-notes.md with the following interview summary. Keep the wording, add a title and today's date:
+<paste the summary here>
+```
 
 <div class="warning" data-title="Don't peek">
 
