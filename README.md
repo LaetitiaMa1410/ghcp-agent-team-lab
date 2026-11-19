@@ -1,6 +1,6 @@
 # 🤖 From Use Case to Agent Team
 
-A 3-hour hands-on lab for GitHub Copilot (2-hour variant): pick one of two real-world sales use cases, **interview the stakeholder**,
+A hands-on lab for GitHub Copilot: pick one of two real-world sales use cases, **interview the stakeholder**,
 run a full **architecture session** with Copilot — requirements, options, decision record, reviews — then design a team of **specialized agents**
 and build, run and improve it locally in VS Code.
 
@@ -8,7 +8,7 @@ and build, run and improve it locally in VS Code.
 
 | | |
 | --- | --- |
-| **Duration** | 3 hours (2-hour variant), teams of 3–4 |
+| **Format** | Teams of 3–4 |
 | **Level** | Step-by-step with copy-paste prompts and checkpoints — plus 🚀 bonus challenges (skill, hook) for fast teams |
 | **You need** | VS Code, GitHub Copilot, this repository |
 | **You don't need** | Deployments, API keys, internet research, GitHub issues or pull requests |
