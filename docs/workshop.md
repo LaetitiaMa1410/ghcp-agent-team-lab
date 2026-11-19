@@ -323,43 +323,51 @@ From task 2 on, everyone works on their own machine and you compare results as a
 
 # Hands-on
 
-## 🎯 Target picture
+## 🎯 Goal
 
-By the end of this hands-on your team has built an **agentic system in GitHub Copilot** for your use case —
-a team of **custom agents**, run by an **orchestrator**, with you in the loop. No code, only Markdown files in your repo:
+You build an **agent system** for your use case: a team of specialized AI agents that turns the raw data into the result
+your stakeholder needs — with a human checking every step.
 
-| Layer | What it is | Files |
+### How we get there
+
+| | Step | What happens | Result |
+| --- | --- | --- | --- |
+| 1 | 📐 **Architecture session** — together | Understand the data, interview the stakeholder, write requirements, compare architectures and decide, design and sketch the system | Design artifacts, reviewed by the team |
+| 2 | 🛠 **Implementation** — everyone | Turn the design into working agents | Agents and an orchestrator |
+| 3 | ▶️ **Run, check & improve** — everyone | Run the agents on the data, check the result against your acceptance criteria, fix the agent — not the output | The final result and better agents |
+
+### The design artifacts — your basis for the implementation
+
+The architecture session describes **what** the agent system does — not **with which technology**. That's why its artifacts
+are the basis for **either** implementation path:
+
+| Artifact | What it describes |
+| --- | --- |
+| `design/data-inventory.md` | Data sources, quality issues, personal and confidential data, traps |
+| `design/interview-notes.md` | What the stakeholder told you |
+| `design/requirements.md` | User stories, acceptance criteria, non-functional requirements |
+| `architecture.md` | Pattern, flow, agents, handoff contracts, human checkpoints, guardrails — platform-neutral |
+| `design/architecture.drawio` | The sketch for people: your team, your stakeholder, the pitch |
+
+### Two implementation paths
+
+Same spec, two purposes — and GitHub Copilot can automate both: it builds what your artifacts specify.
+
+| | 🧪 **Path 1 · Rapid testing** with GitHub Copilot custom agents | 🏭 **Path 2 · Deployable, scalable** hosted agents |
 | --- | --- | --- |
-| 📐 **Design** | What the user needs and how the system works — platform-neutral, reviewed by the team | `design/*.md`, `architecture.md`, `design/architecture.drawio` |
-| 🛡 **Shared guardrails** | Rules every agent follows: data protection, sources, where to write | `AGENTS.md` |
-| 🤖 **Custom agents** | One responsibility each, small context, least-privilege tools | `.github/agents/<agent>.agent.md` |
-| 🎛 **Orchestrator** | Runs the agents as subagents, step by step, and pauses at every human checkpoint | `.github/agents/orchestrator.agent.md` |
-| 📄 **Result** | Handoff files and the final result, checked against your acceptance criteria | `out/` |
+| **Purpose** | Validate the design fast: does the split into agents work, are the handoffs right, where do agents invent facts or leak data? | Run the system reliably for many users — **reusable, governable, scalable** |
+| **What Copilot generates** | `AGENTS.md`, one `.agent.md` per agent, an orchestrator — Markdown only, no code | Agent code (e.g. Microsoft Agent Framework), infrastructure as code, evaluations, CI/CD — hosted e.g. in Microsoft Foundry Agent Service |
+| **Who runs it** | One person, in VS Code, by hand | Many users via an app, Teams or an API; on a schedule or triggered by events |
+| **Data** | Local copies of files | Live, access-controlled connections to CRM and data platforms |
+| **Handoffs & checkpoints** | Files you can open; the agent pauses in the chat | Typed messages or storage; an approval step in an app or Teams |
+| **Governance** | Instructions and your review | An identity per agent, policies, audit logs, content safety, evaluations |
+| **Changing it** | Minutes — edit a sentence, run again | A development cycle with tests and deployment |
 
-### Why build it in GitHub Copilot first?
+<div class="info" data-title="In this lab: path 1">
 
-- ⚡ **Fast iteration:** an agent is a Markdown file. Change one sentence, re-run, see the effect — in minutes, not sprints.
-- 🧪 **Test the design before you invest:** does the split into agents work? Are the handoffs right? Where do agents invent facts or leak data?
-- 👀 **Human in the loop:** every intermediate file is visible, and the orchestrator stops after every step.
-- 🧰 **Nothing to set up:** it runs where developers already work — VS Code, local files, no infrastructure.
-- ♻️ **The design carries over:** requirements, architecture, handoff contracts and agent instructions are the spec for the next stage.
-
-<div class="important" data-title="This is a prototype — not the production system">
-
-> GitHub Copilot custom agents run **in one person's VS Code, started by hand**. That's ideal for exploring, prototyping and testing a design —
-> but not for a system a whole sales team relies on. When agents have to be **reusable, governable and scalable**, the next stage is
-> **pro-code agents hosted on an agent platform** (for example built with the Microsoft Agent Framework and hosted in Microsoft Foundry Agent Service):
->
-> | | 🧪 Today: Copilot custom agents | 🏭 Next stage: pro-code, hosted agents |
-> | --- | --- | --- |
-> | **Who runs it** | One person, in VS Code, by hand | Many users — via an app, Teams or an API; on a schedule or triggered by events |
-> | **Data** | Local copies of files | Live, access-controlled connections to CRM and data platforms (APIs, MCP) |
-> | **Governance** | Instructions and your review | An identity per agent, policies, audit logs, content safety, evaluations |
-> | **Scale & operations** | One run at a time on one machine | Hosted runtime, monitoring, versioning, CI/CD |
-> | **Reuse** | Copy the files into the next repo | Shared agents and tools that other teams and processes can call |
->
-> What you build today is not thrown away: **agent cards** become hosted agents, **handoff contracts** become typed interfaces,
-> **guardrails** become policies, and **acceptance criteria** become automated evaluations.
+> You take **path 1**: fast, nothing to set up, and you see every intermediate result. It's the right way to find out whether your
+> design works before anyone invests in code. When it holds up, path 2 starts from the **same artifacts**: agent cards become hosted agents,
+> handoff contracts become typed interfaces, guardrails become policies, and acceptance criteria become automated evaluations.
 
 </div>
 
