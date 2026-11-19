@@ -677,7 +677,14 @@ Then the driver shares the `design/` folder and `architecture.md` with the team 
 Your architecture is the spec — now your team chooses the **implementation path**. Both start from the same artifacts,
 and in both Copilot writes the implementation while your team reviews it.
 
-| | 🧪 Path 1 · GitHub Copilot custom agents | 🏭 Path 2 · Pro-code agents |
+<div class="tip" data-title="Recommended: Path 1">
+
+> **Path 1 is the recommended path for this workshop.** It needs no extra setup and fits the time box.
+> Choose Path 2 only if your team reads Python and has the Foundry environment ready.
+
+</div>
+
+| | 🧪 Path 1 · GitHub Copilot custom agents ⭐ *recommended* | 🏭 Path 2 · Pro-code agents |
 | --- | --- | --- |
 | **You build** | Markdown: `AGENTS.md`, `.agent.md` files, an orchestrator agent | Python with the Microsoft Agent Framework: agents, an orchestrator workflow, tests |
 | **You run it** | In the VS Code chat | In your terminal — and as an extension, as hosted agents in Microsoft Foundry |
