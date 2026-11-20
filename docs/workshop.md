@@ -295,7 +295,8 @@ code --install-extension hediet.vscode-drawio
 
 **Path 2 only** (pro-code, chosen in task 2): **Python 3.11+**, [uv](https://docs.astral.sh/uv/), the **Azure CLI** (`az login`)
 and access to a **Microsoft Foundry project** with a deployed chat model — your facilitator tells you which one.
-For the deployment extension also the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd).
+For the deployment extension also the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) —
+or, for the optional deployment without IaC, the **Foundry Toolkit** extension (`code --install-extension ms-windows-ai-studio.windows-ai-studio`).
 
 <div class="tip" data-title="Optional for path 1: GitHub Copilot Evals (preview)">
 
@@ -1094,7 +1095,7 @@ Ownership works like in path 1: each person owns one agent (someone takes the or
 | P3 | Generate the orchestrator | `app/workflow.py`, `app/main.py` |
 | P4 | Run the agent flow locally in the terminal | the result in `out/` |
 | P5 | Check & fix the agent, not the output | improved agents |
-| 🚀 P6 | Extension: deploy as hosted agents in Foundry, data through an MCP tool server | `tools/`, `infra/` (Bicep), `azure.yaml`, CI/CD workflow, `DEPLOY.md` |
+| 🚀 P6 | Extension: deploy as hosted agents in Foundry, data through an MCP tool server — with IaC, or *optionally* with the Foundry Toolkit | `tools/`, `infra/` (Bicep), `azure.yaml`, CI/CD workflow, `DEPLOY.md` |
 
 <div class="warning" data-title="Before you start">
 
@@ -1402,6 +1403,52 @@ Invoke the hosted orchestrator, walk through its checkpoints and compare the res
 ```bash
 azd down
 ```
+
+### Optional: deploy with the Foundry Toolkit instead of IaC
+
+<div class="tip" data-title="When to choose this">
+
+> Steps ③–④ build a **repeatable** deployment: Bicep, azd and a pipeline — the way to production.
+> If you just want to **see your agents running in Foundry quickly**, deploy them from VS Code with the **Foundry Toolkit** instead —
+> no Bicep, no pipeline. Your facilitator provides the Foundry project with a model; you do steps ① and ② as above, then continue here instead of ③–④.
+> **Trade-off:** clicks are not reviewable and not repeatable — nothing in your repo describes what you created.
+
+</div>
+
+**Prerequisites:** the **Foundry Toolkit** extension (`ms-windows-ai-studio.windows-ai-studio`), signed in to Azure in the Toolkit,
+access to the Foundry project from P1 — and your facilitator's OK, because this also creates resources that cost money.
+
+**Ⓐ Prepare the agents for the Toolkit.** **Agent**, same chat:
+
+```text
+We deploy our hosted agents with the Foundry Toolkit for VS Code, not with Bicep or azd.
+Use the Microsoft Learn MCP server to check the current docs for "Create hosted agents with Microsoft Foundry Toolkit for Visual Studio Code".
+- for the orchestrator and every specialized agent: a hosted agent entry point with the Agent Framework hosting integration
+  (Responses protocol), in the folder layout the Toolkit's "Deploy Hosted Agent" expects (main.py, requirements.txt, agent definition)
+- hosted, the specialized agents use the MCP tool server from step 2 (only their tools from the agent card) instead of the local function tools,
+  and the orchestrator passes the handoff artifacts as messages — `uv run python -m app.main` must keep working locally
+- the az command to deploy tools/ to Azure Container Apps with Entra authentication, and how to connect it as a Foundry MCP tool
+- no secrets in code — configuration through environment variables
+- DEPLOY-TOOLKIT.md: the order of the steps below and how to clean up
+```
+
+👀 **Review** the same points as in the box after ③ — identities, tools per agent, no secrets — minus IaC and pipeline.
+
+**Ⓑ Test locally with the Agent Inspector.** Start one agent's entry point in the terminal, then run
+**Foundry Toolkit: Open Agent Inspector** from the Command Palette and connect to the local server (default port **8088**). Send a test request.
+
+**Ⓒ Deploy the tool server.** Run the `az` command from your `DEPLOY-TOOLKIT.md` and connect the tool server to your Foundry project as an MCP tool.
+
+**Ⓓ Deploy the agents** — the specialized agents first, the orchestrator last:
+
+1. Command Palette → **Foundry Toolkit: Deploy Hosted Agent** (or in the Toolkit view: **Developer Tools → Build → Deploy to Microsoft Foundry**).
+2. Select **New agent**, enter the agent name, choose the deployment method (**Code** or **Container**) and **Deploy**.
+3. Under **My Resources → Agents → Hosted Agent**, select the agent and its version — wait until the status shows it is **running**.
+
+**Ⓔ Test in Foundry.** In the Toolkit view: **Developer Tools → Build → Hosted Agent Playground** → select your orchestrator → send
+*"Prepare the result for Sabine."* (A) or *"Prepare the partner cockpit for meeting 2."* (B) and walk through its checkpoints. Same result as your local run?
+
+**Clean up:** delete the hosted agents (Toolkit or Foundry portal) and the container app (`az containerapp delete`) — or ask your facilitator to remove the resource group.
 
 ### The Azure architecture you deploy
 
