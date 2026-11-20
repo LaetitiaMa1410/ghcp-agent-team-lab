@@ -299,7 +299,7 @@ For the deployment extension also the [Azure Developer CLI](https://learn.micros
 
 <div class="tip" data-title="Optional for path 1: GitHub Copilot Evals (preview)">
 
-> In P6 and P7 you can turn your checklist into a **repeatable eval** with [GitHub Copilot Evals](https://github.com/github/evals). To prepare:
+> In the optional step P8 you can turn your checklist into a **repeatable eval** with [GitHub Copilot Evals](https://github.com/github/evals). To prepare:
 > 1. Install the VS Code extension **GitHub Copilot Evals** (`GitHub.copilot-evals`, publisher **GitHub**):
 >    `code --install-extension GitHub.copilot-evals`
 > 2. Run **GitHub Copilot Evals: Set up test runner** from the Command Palette (or in the Evals Canvas: **Settings → Advanced → Install eval runner**).
@@ -727,9 +727,10 @@ An **orchestrator** agent then runs the team for you — and stops after every s
 | P3 | Generate the orchestrator | `.github/agents/orchestrator.agent.md` |
 | P4 | Own one agent & dry run on paper | reviewed agents |
 | P5 | Run the agent flow in the VS Code chat | the result in `out/` |
-| P6 | Check against your requirements | your findings — *optional:* an eval in `.copilot/evals/` |
-| P7 | Fix the agent, not the output | improved agents — *optional:* eval re-run & compare |
-| 🚀 P8 | Extension: bonus challenges — skill & hook | `.github/skills/`, `.github/hooks/` |
+| P6 | Check against your requirements | your findings |
+| P7 | Fix the agent, not the output | improved agents |
+| P8 | *Optional:* make your checks repeatable with GitHub Copilot Evals | an eval in `.copilot/evals/` and a before/after comparison |
+| 🚀 P9 | Extension: bonus challenges — skill & hook | `.github/skills/`, `.github/hooks/` |
 
 ## P1 · Shared guardrails in `AGENTS.md`
 
@@ -913,28 +914,6 @@ Compare with your teammates — **same agents, same data — same result?**
 **Stakeholder acceptance:** open your `sabine` / `jonas` chat from step 1b, paste the final result and ask:
 *"Would you take this into your meeting? What would you change?"*
 
-<div class="tip" data-title="Optional: turn your checklist into an eval">
-
-> A checklist you tick by hand is checked **once**. An **eval** checks it **every time** you change an agent — repeatable and saved for comparison.
-> Needs the **GitHub Copilot Evals** extension and runner from the setup page.
->
-> Pick the agent **you own** (or the one that produced a finding above). Open the **Evals** sidebar or the **Evals Canvas**, choose **Create eval**
-> (Copilot CLI: `/eval create`) and describe what passing looks like:
->
-> ```text
-> Create an eval for the custom agent .github/agents/<your-agent>.agent.md.
-> Use the files in data/ and the handoff files it reads from out/ as fixtures.
-> Run the agent without stopping at checkpoints.
-> Check its output file in out/ against these checklist items: <paste the items from above that concern this agent>.
-> Also check: no e-mail addresses or phone numbers in out/, and no file in data/ was changed.
-> ```
->
-> Review the proposed test cases and checks — **are they the ones your stakeholder would sign off?** — then save the eval.
-> **Run it** (**Review & run**, or `/eval run`): review the disclosed effects and token costs, then approve.
-> Results are saved in `.copilot/evals/results` — open the report and look at which checks fail.
-
-</div>
-
 ## P7 · Fix the agent, not the output
 
 🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **agent** makes the improvement repeatable.
@@ -951,27 +930,64 @@ Propose a minimal change to that agent file. Don't change any file in out/.
 
 Apply the change, then reply `re-run` in your orchestrator chat — it runs **that agent and every step after it** again, with checkpoints. Did the problem disappear?
 
-<div class="tip" data-title="Optional: prove the fix with your eval">
-
-> Created an eval in P6? Then you don't need to trust your eyes:
-> 1. **Run the eval again** after your change (**Review & run**, or `/eval run`).
-> 2. **Compare** the new run with the saved run from before the fix (Evals Canvas **Results**, or `/eval compare`): did the failing check turn green — and did **nothing else** break?
-> 3. Found a trap your eval didn't catch? Ask *"Add a failure case for this problem to the eval"* (`/eval improve`) — so it can never come back unnoticed.
->
-> A passing eval doesn't guarantee the agent gets it right every time — run it more than once before you trust it.
-
-</div>
-
 <div class="info" data-title="✅ Checkpoint 4">
 
-> **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent — *optional:* an eval with a before/after comparison.
+> **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
-> **Next:** if you have time left, take on a 🚀 bonus challenge below.
+> **Next:** if you have time left, make your checks repeatable with evals (P8, optional) or take on a 🚀 bonus challenge (P9).
 
 </div>
 
-## 🚀 P8 · Extension: bonus challenges
+## P8 · Optional: make your checks repeatable with GitHub Copilot Evals
+
+🎯 **Why:** A checklist you tick by hand is checked **once**. An **eval** checks the same things **every time** you change an agent — and saves the result,
+so you can prove that a fix worked and didn't break anything else.
+
+<div class="warning" data-title="Optional — check the prerequisites first">
+
+> - The **GitHub Copilot Evals** extension (preview) and its test runner — see the optional box on the setup page.
+> - **Node.js 22.15+**, **Git 2.28+**, **GitHub Copilot CLI 1.0.85+**, and `git init` once in your use case folder (runs are isolated with Git).
+> - Every eval run makes **model calls** and consumes tokens — you approve the costs before each run.
+
+</div>
+
+### 1 · Create the eval
+
+Pick the agent **you own** (or the one that caused a finding in P6). Open the **Evals** sidebar or the **Evals Canvas** and choose **Create eval**
+(Copilot CLI: `/eval create`). Describe what passing looks like:
+
+```text
+Create an eval for the custom agent .github/agents/<your-agent>.agent.md.
+Use the files in data/ and the handoff files it reads from out/ as fixtures.
+Run the agent without stopping at checkpoints.
+Check its output file in out/ against these checklist items: <paste the P6 items that concern this agent>.
+Also check: no e-mail addresses or phone numbers in out/, and no file in data/ was changed.
+```
+
+Review the proposed test cases and checks — **are these the criteria your stakeholder signed off in 1c?** — then save the eval.
+
+### 2 · Run it — your baseline
+
+**Review & run** in the Canvas (or `/eval run`). Review the disclosed effects and token costs, then approve.
+Results are saved in `.copilot/evals/results` — open the report: which checks pass, which fail?
+
+### 3 · Fix, re-run, compare
+
+1. A check fails? Fix the **agent** as in P7 — not the output.
+2. **Run the eval again.**
+3. **Compare** the new run with your baseline (Canvas **Results**, or `/eval compare`): did the failing check turn green — and did **nothing else** break?
+4. Found a trap the eval doesn't catch? Ask *"Add a failure case for this problem to the eval"* (`/eval improve`) — so it can't come back unnoticed.
+
+🤝 Split the work: each person creates the eval for **their** agent — together you get a test suite for the whole team.
+
+<div class="info" data-title="A passing eval is not a guarantee">
+
+> The model is not deterministic. Run an eval more than once before you trust it — and keep the human checkpoints.
+
+</div>
+
+## 🚀 P9 · Extension: bonus challenges
 
 **For teams that finished checkpoint 4 early.** Pick any challenge, in any order — each one extends the agent team you already have.
 

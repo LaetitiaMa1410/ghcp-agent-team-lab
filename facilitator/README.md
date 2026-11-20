@@ -6,7 +6,7 @@
 - [ ] Make sure participants can clone the repo **or** download it as ZIP.
 - [ ] Check that custom agents in `.github/agents/` show up in the agent picker in the participants' VS Code, and that an agent with the `agent` tool can run them as **subagents** (org policies may restrict features).
 - [ ] For bonus B2 (hook): check whether hooks are allowed by your organization's Copilot policy and whether participants have **Node.js**. If not, announce B2 as "read only".
-- [ ] **Optional GitHub Copilot Evals (path 1, P6/P7):** check that participants can install the VS Code extension `GitHub.copilot-evals` (preview) and its runner (Node.js 22.15+, Git, Copilot CLI 1.0.85+). Eval runs make model calls and consume tokens/credits. If it's blocked, skip the optional eval boxes — the manual checklist covers the same content.
+- [ ] **Optional GitHub Copilot Evals (path 1, P8):** check that participants can install the VS Code extension `GitHub.copilot-evals` (preview) and its runner (Node.js 22.15+, Git, Copilot CLI 1.0.85+). Eval runs make model calls and consume tokens/credits. If it's blocked, skip P8 — the manual checklist in P6 covers the same content.
 - [ ] Check that participants can install the **Draw.io Integration** extension (`hediet.vscode-drawio`) — or have the draw.io desktop app as a fallback.
 - [ ] Check that the stakeholder agents (`sabine`, `jonas`) show up in the agent picker and answer in character.
 - [ ] **Path 2 (pro-code):** decide whether you offer it. Teams need Python 3.11+, uv, the Azure CLI and access to a **Microsoft Foundry project with a deployed chat model** (endpoint + deployment name) — prepare one project per team or a shared one with enough quota, and give participants the *Azure AI User* role. Check that the Microsoft Learn MCP server (`https://learn.microsoft.com/api/mcp`) is allowed.
@@ -153,6 +153,6 @@ Tested with Copilot CLI: the reference hook blocked an `apply_patch` into `data/
 ## Adapting the lab
 
 - **2 hours:** see the 2-hour variant above.
-- **Longer (3.5 h):** make the [bonus challenges](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4#-p8--extension-bonus-challenges) (skill, hook) part of the plan for everyone — about 20–30 minutes.
+- **Longer (3.5 h):** make the [bonus challenges](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4#-p9--extension-bonus-challenges) (skill, hook) part of the plan for everyone — about 20–30 minutes.
 - **Architecture only (90 min):** run steps 1a–1f and stop at checkpoint 2 — a good format for architects and product owners.
 - **Your own use case:** copy a use case folder and replace `USE-CASE.md`, `MISSION.md`, `data/` and the stakeholder agent — the lab steps stay the same.
