@@ -6,6 +6,7 @@
 - [ ] Make sure participants can clone the repo **or** download it as ZIP.
 - [ ] Check that custom agents in `.github/agents/` show up in the agent picker in the participants' VS Code, and that an agent with the `agent` tool can run them as **subagents** (org policies may restrict features).
 - [ ] For bonus B2 (hook): check whether hooks are allowed by your organization's Copilot policy and whether participants have **Node.js**. If not, announce B2 as "read only".
+- [ ] **Optional GitHub Copilot Evals (path 1, P6/P7):** check that participants can install the VS Code extension `GitHub.copilot-evals` (preview) and its runner (Node.js 22.15+, Git, Copilot CLI 1.0.85+). Eval runs make model calls and consume tokens/credits. If it's blocked, skip the optional eval boxes — the manual checklist covers the same content.
 - [ ] Check that participants can install the **Draw.io Integration** extension (`hediet.vscode-drawio`) — or have the draw.io desktop app as a fallback.
 - [ ] Check that the stakeholder agents (`sabine`, `jonas`) show up in the agent picker and answer in character.
 - [ ] **Path 2 (pro-code):** decide whether you offer it. Teams need Python 3.11+, uv, the Azure CLI and access to a **Microsoft Foundry project with a deployed chat model** (endpoint + deployment name) — prepare one project per team or a shared one with enough quota, and give participants the *Azure AI User* role. Check that the Microsoft Learn MCP server (`https://learn.microsoft.com/api/mcp`) is allowed.
