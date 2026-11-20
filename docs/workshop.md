@@ -728,7 +728,7 @@ An **orchestrator** agent then runs the team for you — and stops after every s
 | P4 | Run the agent flow in the VS Code chat | the result in `out/` |
 | P5 | Check against your requirements | your findings |
 | P6 | Fix the agent, not the output | improved agents |
-| P7 | *Optional:* make your checks repeatable with GitHub Copilot Evals | an eval in `.copilot/evals/` and a before/after comparison |
+| P7 | *Optional:* GitHub Evals — make your checks repeatable | an eval in `.copilot/evals/` and a before/after comparison |
 | 🚀 P8 | Extension: bonus challenges — skill & hook | `.github/skills/`, `.github/hooks/` |
 
 ## P1 · Shared guardrails in `AGENTS.md`
@@ -918,7 +918,7 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 
 </div>
 
-## P7 · Optional: make your checks repeatable with GitHub Copilot Evals
+## P7 · Optional: GitHub Evals
 
 🎯 **Why:** A checklist you tick by hand is checked **once**. An **eval** checks the same things **every time** you change an agent — and saves the result,
 so you can prove that a fix worked and didn't break anything else.
