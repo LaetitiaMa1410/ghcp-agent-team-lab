@@ -1095,7 +1095,7 @@ Ownership works like in path 1: each person owns one agent (someone takes the or
 | P3 | Generate the orchestrator | `app/workflow.py`, `app/main.py` |
 | P4 | Run the agent flow locally in the terminal | the result in `out/` |
 | P5 | Check & fix the agent, not the output | improved agents |
-| 🚀 P6 | Extension: deploy as hosted agents in Foundry, data through an MCP tool server — with IaC, or *optionally* with the Foundry Toolkit | `tools/`, `infra/` (Bicep), `azure.yaml`, CI/CD workflow, `DEPLOY.md` |
+| 🚀 P6 | Extension: deploy as hosted agents in Foundry, data through an MCP tool server — with IaC, or *optionally* with the Foundry Toolkit (same step, second section) | `tools/`, `infra/` (Bicep), `azure.yaml`, CI/CD workflow, `DEPLOY.md` |
 
 <div class="warning" data-title="Before you start">
 
@@ -1404,13 +1404,30 @@ Invoke the hosted orchestrator, walk through its checkpoints and compare the res
 azd down
 ```
 
-### Optional: deploy with the Foundry Toolkit instead of IaC
+### The Azure architecture you deploy
+
+![Azure architecture: hosted agents in Foundry, MCP tool server on Container Apps](assets/path2-azure-architecture-v2.png)
+
+| Component | Role |
+| --- | --- |
+| **Foundry Agent Service** | Runs the orchestrator and every specialized agent as a hosted agent, each with its own Entra identity |
+| **Model deployment** | The chat model all agents use — in the same Foundry project |
+| **Foundry MCP tool** | The connection from the agents to the tool server; each agent only gets the tools from its agent card |
+| **MCP tool server on Azure Container Apps** | The only way to the data: list, read, search over the static `data/` files baked into its image — read-only, Entra-protected |
+| **Container Registry** | Images of the hosted agents and the tool server |
+| **Application Insights** | Traces, logs and metrics of agents and tools |
+| **GitHub Actions + Bicep + azd** | Tests, then provision and deploy — with OIDC, no secrets |
+
+Same `architecture.md`, three runtimes: VS Code (path 1), your terminal (path 2) and Azure. Only the **mapping** changes — the design stays.
+
+## 🚀 P6 · Optional: deploy with the Foundry Toolkit
 
 <div class="tip" data-title="When to choose this">
 
 > Steps ③–④ build a **repeatable** deployment: Bicep, azd and a pipeline — the way to production.
 > If you just want to **see your agents running in Foundry quickly**, deploy them from VS Code with the **Foundry Toolkit** instead —
 > no Bicep, no pipeline. Your facilitator provides the Foundry project with a model; you do steps ① and ② as above, then continue here instead of ③–④.
+> The target architecture is the same as above — only the way you deploy it changes.
 > **Trade-off:** clicks are not reviewable and not repeatable — nothing in your repo describes what you created.
 
 </div>
@@ -1432,7 +1449,7 @@ Use the Microsoft Learn MCP server to check the current docs for "Create hosted 
 - DEPLOY-TOOLKIT.md: the order of the steps below and how to clean up
 ```
 
-👀 **Review** the same points as in the box after ③ — identities, tools per agent, no secrets — minus IaC and pipeline.
+👀 **Review** the same points as in the box after step ③ above — identities, tools per agent, no secrets — minus IaC and pipeline.
 
 **Ⓑ Test locally with the Agent Inspector.** Start one agent's entry point in the terminal, then run
 **Foundry Toolkit: Open Agent Inspector** from the Command Palette and connect to the local server (default port **8088**). Send a test request.
@@ -1449,19 +1466,3 @@ Use the Microsoft Learn MCP server to check the current docs for "Create hosted 
 *"Prepare the result for Sabine."* (A) or *"Prepare the partner cockpit for meeting 2."* (B) and walk through its checkpoints. Same result as your local run?
 
 **Clean up:** delete the hosted agents (Toolkit or Foundry portal) and the container app (`az containerapp delete`) — or ask your facilitator to remove the resource group.
-
-### The Azure architecture you deploy
-
-![Azure architecture: hosted agents in Foundry, MCP tool server on Container Apps](assets/path2-azure-architecture-v2.png)
-
-| Component | Role |
-| --- | --- |
-| **Foundry Agent Service** | Runs the orchestrator and every specialized agent as a hosted agent, each with its own Entra identity |
-| **Model deployment** | The chat model all agents use — in the same Foundry project |
-| **Foundry MCP tool** | The connection from the agents to the tool server; each agent only gets the tools from its agent card |
-| **MCP tool server on Azure Container Apps** | The only way to the data: list, read, search over the static `data/` files baked into its image — read-only, Entra-protected |
-| **Container Registry** | Images of the hosted agents and the tool server |
-| **Application Insights** | Traces, logs and metrics of agents and tools |
-| **GitHub Actions + Bicep + azd** | Tests, then provision and deploy — with OIDC, no secrets |
-
-Same `architecture.md`, three runtimes: VS Code (path 1), your terminal (path 2) and Azure. Only the **mapping** changes — the design stays.
