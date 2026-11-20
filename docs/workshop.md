@@ -299,7 +299,7 @@ For the deployment extension also the [Azure Developer CLI](https://learn.micros
 
 <div class="tip" data-title="Optional for path 1: GitHub Copilot Evals (preview)">
 
-> In the optional step P8 you can turn your checklist into a **repeatable eval** with [GitHub Copilot Evals](https://github.com/github/evals). To prepare:
+> In the optional step P7 you can turn your checklist into a **repeatable eval** with [GitHub Copilot Evals](https://github.com/github/evals). To prepare:
 > 1. Install the VS Code extension **GitHub Copilot Evals** (`GitHub.copilot-evals`, publisher **GitHub**):
 >    `code --install-extension GitHub.copilot-evals`
 > 2. Run **GitHub Copilot Evals: Set up test runner** from the Command Palette (or in the Evals Canvas: **Settings → Advanced → Install eval runner**).
@@ -725,12 +725,11 @@ An **orchestrator** agent then runs the team for you — and stops after every s
 | P1 | Shared guardrails | `AGENTS.md` |
 | P2 | Generate the specialized agents | `.github/agents/<agent>.agent.md` — one per agent card |
 | P3 | Generate the orchestrator | `.github/agents/orchestrator.agent.md` |
-| P4 | Own one agent & dry run on paper | reviewed agents |
-| P5 | Run the agent flow in the VS Code chat | the result in `out/` |
-| P6 | Check against your requirements | your findings |
-| P7 | Fix the agent, not the output | improved agents |
-| P8 | *Optional:* make your checks repeatable with GitHub Copilot Evals | an eval in `.copilot/evals/` and a before/after comparison |
-| 🚀 P9 | Extension: bonus challenges — skill & hook | `.github/skills/`, `.github/hooks/` |
+| P4 | Run the agent flow in the VS Code chat | the result in `out/` |
+| P5 | Check against your requirements | your findings |
+| P6 | Fix the agent, not the output | improved agents |
+| P7 | *Optional:* make your checks repeatable with GitHub Copilot Evals | an eval in `.copilot/evals/` and a before/after comparison |
+| 🚀 P8 | Extension: bonus challenges — skill & hook | `.github/skills/`, `.github/hooks/` |
 
 ## P1 · Shared guardrails in `AGENTS.md`
 
@@ -792,7 +791,7 @@ Don't repeat the guardrails from AGENTS.md.
 
 Your agents should now appear in the agent picker. Not there? Check **Chat: Open Customizations → Agents** for frontmatter errors.
 
-👀 **Quick review:** one file per agent card in `architecture.md`, with the same names and output files? The detailed review of every agent follows in **P4**.
+👀 **Quick review:** one file per agent card in `architecture.md`, with the same names and output files?
 
 ## P3 · Generate the orchestrator
 
@@ -825,29 +824,9 @@ Body:
 ```
 
 👀 **Quick review:** open `orchestrator.agent.md` — is the *one step per turn* rule at the top? Are the steps in the order of `architecture.md`,
-with the right output files? The detailed review follows in **P4**.
+with the right output files?
 
 💬 **Think about it:** Why does the orchestrator have no `edit` tool?
-
-## P4 · Own one agent & dry run on paper
-
-🎯 **Why:** Copilot generated the agents — now every agent needs an owner. Reviewing one agent in depth catches the gaps **between** agents (who does what, which file is expected) before they show up in the result.
-
-**Each person owns one agent** (someone takes the orchestrator) and reviews it:
-
-| ✔ | Check |
-| --- | --- |
-| ☐ | **One** responsibility — nothing that belongs to another agent |
-| ☐ | Inputs and outputs are **exact paths**; the output is exactly what the **next agent** expects |
-| ☐ | It says what to do when data is **missing or ambiguous** |
-| ☐ | **Least privilege** tools — does it really need `edit`? |
-| ☐ | It knows when it is **done** — and the **acceptance criteria** it serves |
-
-Improve it by hand or with Copilot (*"Make the output section of #file:.github/agents/&lt;your-agent&gt;.agent.md
-match the handoff contract in #file:architecture.md"*) and share your changes so everyone has the same agents.
-
-Then do a **dry run on paper**: one person reads the orchestrator aloud, the others say what *their* agent reads and writes at each step.
-Does every file an agent reads exist by then?
 
 <div class="info" data-title="✅ Checkpoint 3">
 
@@ -855,7 +834,7 @@ Does every file an agent reads exist by then?
 
 </div>
 
-## P5 · Run the agent flow
+## P4 · Run the agent flow
 
 🎯 **Why:** Now you see whether your design works on the real data. Running step by step lets you catch an error **where it happens** — not three agents later.
 
@@ -863,11 +842,11 @@ New chat, select your **orchestrator** in the agent picker and send *"Prepare th
 Watch the subagents appear in the chat.
 
 At every **checkpoint** the orchestrator stops: **open the file(s) in `out/`** and look at what it points you to.
-All good? Reply `continue`. Something wrong? Describe it — then fix the agent (P7).
+All good? Reply `continue`. Something wrong? Describe it — then fix the agent (P6).
 
 🤝 Split the work: one person drives the orchestrator, the others review the handoff files at each checkpoint.
 
-## P6 · Check against your requirements 🥚
+## P5 · Check against your requirements 🥚
 
 🎯 **Why:** The result must meet the criteria your stakeholder signed off in 1c — not just look good. The checklist points you to the traps hidden in the data.
 
@@ -914,7 +893,7 @@ Compare with your teammates — **same agents, same data — same result?**
 **Stakeholder acceptance:** open your `sabine` / `jonas` chat from step 1b, paste the final result and ask:
 *"Would you take this into your meeting? What would you change?"*
 
-## P7 · Fix the agent, not the output
+## P6 · Fix the agent, not the output
 
 🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **agent** makes the improvement repeatable.
 
@@ -935,11 +914,11 @@ Apply the change, then reply `re-run` in your orchestrator chat — it runs **th
 > **You should have:** the final result in `out/`, your stakeholder's feedback and at least one improved agent.
 > Example results: [A · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/lead-generation/solutions/sample-output) ·
 > [B · `sample-output/`](https://github.com/LaetitiaMa1410/ghcp-agent-team-lab/tree/main/partner-cockpit/solutions/sample-output).
-> **Next:** if you have time left, make your checks repeatable with evals (P8, optional) or take on a 🚀 bonus challenge (P9).
+> **Next:** if you have time left, make your checks repeatable with evals (P7, optional) or take on a 🚀 bonus challenge (P8).
 
 </div>
 
-## P8 · Optional: make your checks repeatable with GitHub Copilot Evals
+## P7 · Optional: make your checks repeatable with GitHub Copilot Evals
 
 🎯 **Why:** A checklist you tick by hand is checked **once**. An **eval** checks the same things **every time** you change an agent — and saves the result,
 so you can prove that a fix worked and didn't break anything else.
@@ -954,14 +933,14 @@ so you can prove that a fix worked and didn't break anything else.
 
 ### 1 · Create the eval
 
-Pick the agent **you own** (or the one that caused a finding in P6). Open the **Evals** sidebar or the **Evals Canvas** and choose **Create eval**
+Pick the agent **you own** (or the one that caused a finding in P5). Open the **Evals** sidebar or the **Evals Canvas** and choose **Create eval**
 (Copilot CLI: `/eval create`). Describe what passing looks like:
 
 ```text
 Create an eval for the custom agent .github/agents/<your-agent>.agent.md.
 Use the files in data/ and the handoff files it reads from out/ as fixtures.
 Run the agent without stopping at checkpoints.
-Check its output file in out/ against these checklist items: <paste the P6 items that concern this agent>.
+Check its output file in out/ against these checklist items: <paste the P5 items that concern this agent>.
 Also check: no e-mail addresses or phone numbers in out/, and no file in data/ was changed.
 ```
 
@@ -974,7 +953,7 @@ Results are saved in `.copilot/evals/results` — open the report: which checks 
 
 ### 3 · Fix, re-run, compare
 
-1. A check fails? Fix the **agent** as in P7 — not the output.
+1. A check fails? Fix the **agent** as in P6 — not the output.
 2. **Run the eval again.**
 3. **Compare** the new run with your baseline (Canvas **Results**, or `/eval compare`): did the failing check turn green — and did **nothing else** break?
 4. Found a trap the eval doesn't catch? Ask *"Add a failure case for this problem to the eval"* (`/eval improve`) — so it can't come back unnoticed.
@@ -987,7 +966,7 @@ Results are saved in `.copilot/evals/results` — open the report: which checks 
 
 </div>
 
-## 🚀 P9 · Extension: bonus challenges
+## 🚀 P8 · Extension: bonus challenges
 
 **For teams that finished checkpoint 4 early.** Pick any challenge, in any order — each one extends the agent team you already have.
 
@@ -998,7 +977,7 @@ Results are saved in `.copilot/evals/results` — open the report: which checks 
 
 ### B1 · Skill
 
-Your quality checklist from P6 is useful again and again — for every run, and for every reviewer.
+Your quality checklist from P5 is useful again and again — for every run, and for every reviewer.
 That's what **skills** are for: a folder with instructions (and optionally scripts or templates) that Copilot loads **only when needed**.
 
 | Put it in… | when it is… |
@@ -1007,7 +986,7 @@ That's what **skills** are for: a folder with instructions (and optionally scrip
 | `.github/agents/*.agent.md` | a **role** with its own tools and responsibility |
 | `.github/skills/*/SKILL.md` | a **reusable capability** that any agent (or you) can use **on demand** |
 
-**Agent**, new chat — paste your checklist from P6 at the end:
+**Agent**, new chat — paste your checklist from P5 at the end:
 
 ```text
 Create a project skill in .github/skills/quality-check/SKILL.md.
@@ -1269,7 +1248,7 @@ Something wrong? `s` — and fix the agent first (P5).
 
 🎯 **Why:** The output is generated — the next run generates it again. Only a fix in the **code or instructions** makes the improvement repeatable.
 
-Check the final result with the checklist for your use case from [path 1 · P6 · Check against your requirements](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) —
+Check the final result with the checklist for your use case from [path 1 · P5 · Check against your requirements](https://moaw.dev/workshop/gh:LaetitiaMa1410/ghcp-agent-team-lab/main/docs/?step=4) —
 it's the same data, so it's the same traps. Found a problem? **Agent**, new chat:
 
 ```text
